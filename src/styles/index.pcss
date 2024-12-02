@@ -20,6 +20,7 @@ body {
 
 .page-wrapper {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
@@ -27,6 +28,7 @@ body {
     background-color: #fff;
 }
 
+/*Страница авторизации*/
 .form-authorization-wrapper {
     display: flex;
     flex-direction: column;
@@ -53,6 +55,7 @@ body {
         & .input-wrapper {
             display: flex;
             flex-direction: column;
+
             &:last-of-type {
                 margin-bottom: 47px;
             }
@@ -67,6 +70,83 @@ body {
     }
 }
 
+/*Страница профиля*/
+.page-profile {
+    display: flex;
+}
+
+.page-profile-content {
+    margin-top: 60px;
+    justify-content: flex-start;
+}
+
+.left-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #eaeaea;
+    max-width: 64px;
+    width: 100%;
+
+    & .left-panel-button {
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        border: none;
+        border-radius: 50%;
+        background: url("../assets/icons/left-row.svg") no-repeat var(--main-color);
+        background-position: center;
+        background-position-x: 7px;
+    }
+}
+
+.user-avatar {
+
+}
+
+.user-name {
+    margin-top: 21px;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.user-info {
+    margin-top: 60px;
+    max-width: 510px;
+    width: 100%;
+
+    & .user-info-item {
+        display: flex;
+
+        & .user-info-text {
+            font-size: 16px;
+            line-height: 16px;
+        }
+
+        & .user-info-label {
+            color: #1e1e1e;
+        }
+
+        & .user-info-description {
+            display: inline-block;
+            margin-left: auto;
+            color: #999;
+        }
+    }
+
+    & .user-info-border {
+        margin: 10px 0;
+        border: 1px solid #eaeaea;
+    }
+
+    & .user-info-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 60px;
+        gap: 21px;
+    }
+}
 
 /*стили компоненты Input*/
 .input {
