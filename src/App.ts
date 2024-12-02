@@ -15,6 +15,7 @@ Handlebars.registerPartial('Link', Link);
 
 export class App {
     appContainer: HTMLDivElement;
+    state: { urlPage: string };
 
     constructor() {
         const appContainer: HTMLDivElement | null = document.getElementById('app') as HTMLDivElement;
@@ -22,12 +23,53 @@ export class App {
             throw new Error('Not found app div');
         }
         this.appContainer = appContainer;
+        this.state = {urlPage: window.location.pathname};
     }
 
     render(): void {
-        const template: HandlebarsTemplateDelegate = Handlebars.compile(Pages.LoginPage);
+        let template: HandlebarsTemplateDelegate;
+        const templateData = {};
 
-        this.appContainer.innerHTML = template({});
-        console.log(Pages.LoginPage);
+        switch (this.state.urlPage) {
+            case '/registration':
+                template = Handlebars.compile(Pages.RegistrationPage);
+                break;
+            case '/chats':
+                template = Handlebars.compile(Pages.ChatsPage);
+                break;
+            case '/login':
+                template = Handlebars.compile(Pages.LoginPage);
+                break;
+            case '/profile':
+                template = Handlebars.compile(Pages.ProfilePage);
+                break;
+            case '/profile-edit':
+                template = Handlebars.compile(Pages.ProfileEdit);
+                break;
+            case '/profile-password':
+                template = Handlebars.compile(Pages.ChangePassword);
+                break;
+            case '/not-found':
+                template = Handlebars.compile(Pages.ErrorPage);
+                break;
+            case '/server-error':
+                template = Handlebars.compile(Pages.ErrorPage);
+                break;
+            default:
+                this.changePage('/not-found');
+                return;
+        }
+        this.appContainer.innerHTML = template(templateData);
+        this.addEventListeners();
+    }
+
+    addEventListeners(): void {
+
+    }
+
+    changePage(url: string): void {
+        this.state.urlPage = url;
+        window.location.pathname = url;
+        this.render();
     }
 }

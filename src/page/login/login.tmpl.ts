@@ -5,12 +5,11 @@ export default `
         <form class="authorization-form" name="login">
         <div class="input-wrapper">
             {{> Label for="login" label="Логин"}}
-            {{> Input id="login" name="login" type="text" placeholder="Логин"}}
-            {{> ErrorMessage errorText="Неверный логин"}}
+            {{> Input id="login" name="login" type="text" placeholder="Введите логин"}}
         </div>
         <div class="input-wrapper">
             {{> Label for="password" label="Пароль"}}
-            {{> Input for="id" name="password" type="password" placeholder="Пароль"}}
+            {{> Input for="password" name="password" type="password" placeholder="Введите пароль"}}
             {{> ErrorMessage errorText="Неверный пароль"}}
         </div>
         <footer class="authorization-footer">
