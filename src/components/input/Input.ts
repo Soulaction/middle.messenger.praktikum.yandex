@@ -1,5 +1,5 @@
 export default `
-<input class="input"
+<input class="input {{class}}"
        id="{{id}}"
        type="{{type}}"
        placeholder="{{placeholder}}"

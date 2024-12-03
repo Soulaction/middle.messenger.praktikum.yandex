@@ -1,3 +1,3 @@
 export default `
-               <a class="link" href="{{link}}" >{{label}}</a>
+               <a class="link {{class}}" href="{{link}}" >{{label}}</a>
 `

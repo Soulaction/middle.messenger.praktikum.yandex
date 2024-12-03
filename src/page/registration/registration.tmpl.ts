@@ -21,7 +21,7 @@ export default `
         </div>
          <div class="input-wrapper">
             {{> Label for="phone" label="Телефон"}}
-            {{> Input id="phone" name="phone" type="telephone" placeholder="Введите номер телефона"}}
+            {{> Input id="phone" name="phone" type="tel" placeholder="Введите номер телефона"}}
         </div>
         <div class="input-wrapper">
             {{> Label for="password" label="Пароль"}}

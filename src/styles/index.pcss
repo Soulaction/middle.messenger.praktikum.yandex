@@ -101,7 +101,32 @@ body {
 }
 
 .user-avatar {
+    display: block;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
+.user-avatar-wrapper {
+    position: relative;
+}
+
+.user-avatar-wrapper:hover::before {
+    content: 'Поменять\Aаватар';
+    position: absolute;
+    white-space: pre-wrap;
+    text-align: center;
+    align-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 13px;
+    line-height: 14px;
+    border-radius: 50%;
 }
 
 .user-name {
@@ -115,23 +140,30 @@ body {
     max-width: 510px;
     width: 100%;
 
-    & .user-info-item {
+    & .user-info-item-edit {
         display: flex;
+        align-items: flex-end;
+        margin-bottom: 13px;
+    }
 
-        & .user-info-text {
-            font-size: 16px;
-            line-height: 16px;
-        }
+    & .user-info-text {
+        font-size: 16px;
+        line-height: 16px;
+    }
 
-        & .user-info-label {
-            color: #1e1e1e;
-        }
+    & .user-info-label {
+        color: #1e1e1e;
+    }
 
-        & .user-info-description {
-            display: inline-block;
-            margin-left: auto;
-            color: #999;
-        }
+    & .user-info-label-edit {
+        margin-right: 9px;
+        white-space: nowrap;
+    }
+
+    & .user-info-description {
+        display: inline-block;
+        margin-left: auto;
+        color: #999;
     }
 
     & .user-info-border {
@@ -146,6 +178,18 @@ body {
         margin-top: 60px;
         gap: 21px;
     }
+
+    & .user-edit-data-footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 52px;
+    }
+
+    & .user-edit-psw-footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 154px;
+    }
 }
 
 /*стили компоненты Input*/
@@ -157,6 +201,10 @@ body {
     outline: none;
     border: none;
     border-bottom: 1px solid var(--main-color);
+}
+
+.right-placeholder {
+    text-align: end;
 }
 
 /*стили компоненты Button*/
@@ -171,6 +219,7 @@ body {
     font-size: 13px;
     line-height: 13px;
     border: none;
+    cursor: pointer;
 }
 
 /*стили компоненты Button*/
@@ -188,6 +237,10 @@ body {
     color: var(--main-color);
     text-decoration: none;
     text-align: center;
+}
+
+.danger {
+    color: var(--danger-color);
 }
 
 /*стили компоненты ErrorMessage*/

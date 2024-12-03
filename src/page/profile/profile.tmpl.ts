@@ -1,12 +1,12 @@
 export default `
 <main class="page-profile">
     <div class="left-panel">
-        <button class="left-panel-button">
-        
-        </button>
+        <button class="left-panel-button"></button>
     </div>
     <div class="page-wrapper page-profile-content">
-        <img class="user-avatar" src="../../assets/images/profile.png" alt="Иконка профиля"/>
+        <div class="user-avatar-wrapper">
+            <img class="user-avatar" src="/images/profile.png" alt="Иконка профиля"/>
+        </div>
         <h1 class="user-name">Дмитрий</h1>
         <div class="user-info">
             <div class="user-info-item">
@@ -41,7 +41,7 @@ export default `
             <footer class="user-info-footer">
             {{> Link label="Изменить данные"}}
             {{> Link label="Изменить пароль"}}
-            {{> Link label="Выйти"}}
+            {{> Link class="danger" label="Выйти"}}
             </footer>
         </div>
     </div>
