@@ -5,7 +5,7 @@ export default `
     </div>
     <div class="page-wrapper page-profile-content">
         <div class="user-avatar-wrapper">
-            <img class="user-avatar" src="/images/profile.png" alt="Иконка профиля"/>
+            <img class="user-avatar" src="src/assets/images/profile.png" alt="Иконка профиля"/>
         </div>
         <h1 class="user-name">Дмитрий</h1>
         <div class="user-info">
