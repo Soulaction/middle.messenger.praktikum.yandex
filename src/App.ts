@@ -28,7 +28,7 @@ export class App {
 
     render(): void {
         let template: HandlebarsTemplateDelegate;
-        const templateData = {};
+        let templateData = {};
 
         switch (this.state.urlPage) {
             case '/registration':
@@ -51,9 +51,11 @@ export class App {
                 break;
             case '/not-found':
                 template = Handlebars.compile(Pages.ErrorPage);
+                templateData = {code: 404, errorText: 'Не туда попали'};
                 break;
             case '/server-error':
                 template = Handlebars.compile(Pages.ErrorPage);
+                templateData = {code: 500, errorText: 'Мы уже фиксим'};
                 break;
             default:
                 this.changePage('/not-found');
