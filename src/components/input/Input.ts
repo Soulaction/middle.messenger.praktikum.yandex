@@ -3,4 +3,5 @@ export default `
        id="{{id}}"
        type="{{type}}"
        placeholder="{{placeholder}}"
-       name="{{name}}"/>`;
+       name="{{name}}"/>
+`;
