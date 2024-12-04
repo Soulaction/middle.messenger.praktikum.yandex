@@ -13,4 +13,4 @@ export const chats = [
         time: '10:40',
         countMsg: 5
     }
-]
+];
