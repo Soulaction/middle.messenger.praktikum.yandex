@@ -13,7 +13,7 @@ export default `
             {{> ErrorMessage errorText="Неверный пароль"}}
         </div>
         <footer class="authorization-footer">
-                {{> Button label="Авторизоваться"}}
+                {{> Button label="Войти" type="submit"}}
                 {{> Link label="Нет аккаунта?"}}
         </footer>
         </form>

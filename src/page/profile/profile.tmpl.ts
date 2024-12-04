@@ -1,7 +1,7 @@
 export default `
 <main class="page-profile">
     <div class="left-panel">
-        <button class="left-panel-button"></button>
+        <button class="button-row"></button>
     </div>
     <div class="page-wrapper page-profile-content">
         <div class="user-avatar-wrapper">

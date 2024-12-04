@@ -1,6 +1,7 @@
 export default `
 <button class="button" 
-        type="{{type}}">
+        type="{{type}}"
+        onclick="event.preventDefault()">
             {{label}}
         </button>
 `;
