@@ -47,7 +47,7 @@ Expecting `+C.join(", ")+", got '"+(this.terminals_[k]||k)+"'":x="Parse error on
         <form class="authorization-form" name="registration">
         <div class="input-wrapper">
             {{> Label for="email" label="Почта"}}
-            {{> Input for="id" name="email" type="email" placeholder="Введите почтовый адрес"}}
+            {{> Input id="email" for="id" name="email" type="email" placeholder="Введите почтовый адрес"}}
         </div>
         <div class="input-wrapper">
             {{> Label for="login" label="Логин"}}
@@ -59,7 +59,7 @@ Expecting `+C.join(", ")+", got '"+(this.terminals_[k]||k)+"'":x="Parse error on
         </div>
         <div class="input-wrapper">
             {{> Label for="second_name" label="Фамилия"}}
-            {{> Input for="second_name" name="second_name" type="text" placeholder="Введите фамилию"}}
+            {{> Input id="second_name" for="second_name" name="second_name" type="text" placeholder="Введите фамилию"}}
         </div>
          <div class="input-wrapper">
             {{> Label for="phone" label="Телефон"}}
@@ -71,7 +71,7 @@ Expecting `+C.join(", ")+", got '"+(this.terminals_[k]||k)+"'":x="Parse error on
         </div>        
         <div class="input-wrapper">
             {{> Label for="password_again" label="Пароль (ещё раз)"}}
-            {{> Input for="password_again" name="password_again" type="password" placeholder="Повторите пароль"}}
+            {{> Input id="password_again" for="password_again" name="password_again" type="password" placeholder="Повторите пароль"}}
             {{> ErrorMessage errorText="Пароли не совпадают"}}
         </div>
         <footer class="authorization-footer">
@@ -92,7 +92,7 @@ Expecting `+C.join(", ")+", got '"+(this.terminals_[k]||k)+"'":x="Parse error on
     </div>
     <div class="page-wrapper page-profile-content">
         <div class="user-avatar-wrapper">
-            <img class="user-avatar" src="src/assets/images/profile.png" alt="Иконка профиля"/>
+            <img class="user-avatar" src="/images/profile.png" alt="Иконка профиля"/>
         </div>
         <h1 class="user-name">Дмитрий</h1>
         <div class="user-info">
@@ -140,7 +140,7 @@ Expecting `+C.join(", ")+", got '"+(this.terminals_[k]||k)+"'":x="Parse error on
     </div>
     <div class="page-wrapper page-profile-content">
         <div class="user-avatar-wrapper">
-            <img class="user-avatar" src="src/assets/images/profile.png" alt="Иконка профиля"/>
+            <img class="user-avatar" src="/images/profile.png" alt="Иконка профиля"/>
         </div>
         <form class="user-info" name="edit-profile">
             <div class="user-info-item-edit">
@@ -186,7 +186,7 @@ Expecting `+C.join(", ")+", got '"+(this.terminals_[k]||k)+"'":x="Parse error on
     </div>
     <div class="page-wrapper page-profile-content">
         <div class="user-avatar-wrapper">
-            <img class="user-avatar" src="src/assets/images/profile.png" alt="Иконка профиля"/>
+            <img class="user-avatar" src="/images/profile.png" alt="Иконка профиля"/>
         </div>
         <form class="user-info" name="edit-profile">
             <div class="user-info-item-edit">
@@ -244,4 +244,4 @@ Expecting `+C.join(", ")+", got '"+(this.terminals_[k]||k)+"'":x="Parse error on
         </button>
 `,gr=`
                <a class="link {{class}}" href="{{link}}" >{{label}}</a>
-`;D.registerPartial("Label",pr);D.registerPartial("Input",hr);D.registerPartial("ErrorMessage",fr);D.registerPartial("Button",dr);D.registerPartial("Link",gr);class mr{constructor(){Se(this,"appContainer");Se(this,"state");const g=document.getElementById("app");if(!g)throw new Error("Not found app div");this.appContainer=g,this.state={urlPage:window.location.pathname}}render(){let g,y={};switch(this.state.urlPage){case"/registration":g=D.compile(ar);break;case"/chats":g=D.compile(or);break;case"/login":g=D.compile(sr);break;case"/profile":g=D.compile(ur);break;case"/profile-edit":g=D.compile(lr);break;case"/profile-password":g=D.compile(cr);break;case"/not-found":g=D.compile(mt),y={code:404,errorText:"Не туда попали"};break;case"/server-error":g=D.compile(mt),y={code:500,errorText:"Мы уже фиксим"};break;default:this.changePage("/not-found");return}this.appContainer.innerHTML=g(y),this.addEventListeners()}addEventListeners(){}changePage(g){this.state.urlPage=g,window.location.pathname=g,this.render()}}document.addEventListener("DOMContentLoaded",()=>{new mr().render()});
+`;D.registerPartial("Label",pr);D.registerPartial("Input",hr);D.registerPartial("ErrorMessage",fr);D.registerPartial("Button",dr);D.registerPartial("Link",gr);class mr{constructor(){Se(this,"appContainer");Se(this,"state");const g=document.getElementById("app");if(!g)throw new Error("Not found app div");this.appContainer=g,this.state={urlPage:window.location.pathname}}render(){let g,y={};switch(this.state.urlPage){case"/registration":g=D.compile(ar);break;case"/chats":g=D.compile(or);break;case"/":case"/login":g=D.compile(sr);break;case"/profile":g=D.compile(ur);break;case"/profile-edit":g=D.compile(lr);break;case"/profile-password":g=D.compile(cr);break;case"/not-found":g=D.compile(mt),y={code:404,errorText:"Не туда попали"};break;case"/server-error":g=D.compile(mt),y={code:500,errorText:"Мы уже фиксим"};break;default:this.changePage("/not-found");return}this.appContainer.innerHTML=g(y),this.addEventListeners()}addEventListeners(){}changePage(g){this.state.urlPage=g,window.location.pathname=g,this.render()}}document.addEventListener("DOMContentLoaded",()=>{new mr().render()});
