@@ -5,7 +5,7 @@ export default `
         <form class="authorization-form" name="registration">
         <div class="input-wrapper">
             {{> Label for="email" label="Почта"}}
-            {{> Input for="id" name="email" type="email" placeholder="Введите почтовый адрес"}}
+            {{> Input id="email" for="id" name="email" type="email" placeholder="Введите почтовый адрес"}}
         </div>
         <div class="input-wrapper">
             {{> Label for="login" label="Логин"}}
@@ -17,7 +17,7 @@ export default `
         </div>
         <div class="input-wrapper">
             {{> Label for="second_name" label="Фамилия"}}
-            {{> Input for="second_name" name="second_name" type="text" placeholder="Введите фамилию"}}
+            {{> Input id="second_name" for="second_name" name="second_name" type="text" placeholder="Введите фамилию"}}
         </div>
          <div class="input-wrapper">
             {{> Label for="phone" label="Телефон"}}
@@ -29,7 +29,7 @@ export default `
         </div>        
         <div class="input-wrapper">
             {{> Label for="password_again" label="Пароль (ещё раз)"}}
-            {{> Input for="password_again" name="password_again" type="password" placeholder="Повторите пароль"}}
+            {{> Input id="password_again" for="password_again" name="password_again" type="password" placeholder="Повторите пароль"}}
             {{> ErrorMessage errorText="Пароли не совпадают"}}
         </div>
         <footer class="authorization-footer">
