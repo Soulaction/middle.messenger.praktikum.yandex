@@ -29,7 +29,6 @@ export class App {
     render(): void {
         let template: HandlebarsTemplateDelegate;
         let templateData = {};
-
         switch (this.state.urlPage) {
             case '/registration':
                 template = Handlebars.compile(Pages.RegistrationPage);
@@ -37,6 +36,7 @@ export class App {
             case '/chats':
                 template = Handlebars.compile(Pages.ChatsPage);
                 break;
+            case '/':
             case '/login':
                 template = Handlebars.compile(Pages.LoginPage);
                 break;
