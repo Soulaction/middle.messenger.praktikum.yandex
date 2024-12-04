@@ -10,4 +10,14 @@
 
 ## Ссылки на ресуры
 1. Дизан приложения [Figma](https://www.figma.com/design/pAmKdba2f37r5mEAxTwpx2/Messager)
-2. Веб-приложение на удалённом сервере [Netlify]()
+2. Веб-приложение на удалённом сервере [Netlify](https://messenger-sa.netlify.app/login)
+
+## Ссылки на страницы приложения
+1. [Авторизация](https://messenger-sa.netlify.app/login);
+2. [Регистрация](https://messenger-sa.netlify.app/registration);
+3. [Список чатов](https://messenger-sa.netlify.app/chats);
+4. [Профиль](https://messenger-sa.netlify.app/profile);
+5. [Редактирование профиля](https://messenger-sa.netlify.app/profile-edit);
+6. [Смена пароля](https://messenger-sa.netlify.app/profile-password);
+7. [Страница 404](https://messenger-sa.netlify.app/not-found);
+8. [Страница 5**](https://messenger-sa.netlify.app/server-error).

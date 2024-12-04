@@ -33,7 +33,7 @@ export default `
             {{> ErrorMessage errorText="Пароли не совпадают"}}
         </div>
         <footer class="authorization-footer">
-                {{> Button label="Зарегестрироваться"}}
+                {{> Button label="Зарегестрироваться" type="submit"}}
                 {{> Link label="Войти"}}
         </footer>
         </form>

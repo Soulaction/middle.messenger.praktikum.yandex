@@ -6,12 +6,15 @@ import Input from './components/input/Input';
 import ErrorMessage from './components/errorMessage/ErrorMessage.ts';
 import Button from './components/button/Button';
 import Link from './components/link/Link';
+import Chat from './components/chat/Chat';
+import {chats} from "./utils/const.ts";
 
 Handlebars.registerPartial('Label', Label);
 Handlebars.registerPartial('Input', Input);
 Handlebars.registerPartial('ErrorMessage', ErrorMessage);
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('Link', Link);
+Handlebars.registerPartial('Chat', Chat);
 
 export class App {
     appContainer: HTMLDivElement;
@@ -35,6 +38,7 @@ export class App {
                 break;
             case '/chats':
                 template = Handlebars.compile(Pages.ChatsPage);
+                templateData = {chats: chats};
                 break;
             case '/':
             case '/login':
