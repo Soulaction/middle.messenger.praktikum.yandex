@@ -12,5 +12,5 @@ export const chats = [
         lastMsg: 'Привет',
         time: '10:40',
         countMsg: 5
-    }
-]
+    },
+];
