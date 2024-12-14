@@ -1,1 +1,1 @@
-export {default as RegistrationPage} from './registration.tmpl.ts';
+export {RegistrationPage} from './registration.tmpl.ts';

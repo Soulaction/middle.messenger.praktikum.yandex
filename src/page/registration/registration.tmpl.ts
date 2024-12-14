@@ -1,42 +1,179 @@
-export default `
-<main class="page-wrapper">
-    <div class="form-authorization-wrapper">
-        <h1 class="authorization-title">Регистрация</h1>
-        <form class="authorization-form" name="registration">
-        <div class="input-wrapper">
-            {{> Label for="email" label="Почта"}}
-            {{> Input id="email" for="id" name="email" type="email" placeholder="Введите почтовый адрес"}}
-        </div>
-        <div class="input-wrapper">
-            {{> Label for="login" label="Логин"}}
-            {{> Input id="login" name="login" type="text" placeholder="Введите логин"}}
-        </div>
-         <div class="input-wrapper">
-            {{> Label for="first_name" label="Имя"}}
-            {{> Input id="first_name" name="first_name" type="text" placeholder="Введите имя"}}
-        </div>
-        <div class="input-wrapper">
-            {{> Label for="second_name" label="Фамилия"}}
-            {{> Input id="second_name" for="second_name" name="second_name" type="text" placeholder="Введите фамилию"}}
-        </div>
-         <div class="input-wrapper">
-            {{> Label for="phone" label="Телефон"}}
-            {{> Input id="phone" name="phone" type="tel" placeholder="Введите номер телефона"}}
-        </div>
-        <div class="input-wrapper">
-            {{> Label for="password" label="Пароль"}}
-            {{> Input id="password" name="password" type="password" placeholder="Введите пароль"}}
-        </div>        
-        <div class="input-wrapper">
-            {{> Label for="password_again" label="Пароль (ещё раз)"}}
-            {{> Input id="password_again" for="password_again" name="password_again" type="password" placeholder="Повторите пароль"}}
-            {{> ErrorMessage errorText="Пароли не совпадают"}}
-        </div>
-        <footer class="authorization-footer">
-                {{> Button label="Зарегестрироваться" type="submit"}}
-                {{> Link label="Войти"}}
-        </footer>
-        </form>
-    </div>
-</main>
-`;
+import Block from "../../framework/Block.ts";
+import {Label} from "../../components/label/Label.ts";
+import {Input} from "../../components/input/Input.ts";
+import {Link} from "../../components/link/Link.ts";
+import {Button} from "../../components/button/Button.ts";
+import {ErrorMessage} from "../../components/errorMessage/ErrorMessage.ts";
+
+export class RegistrationPage extends Block {
+    constructor() {
+        super({
+            children: {
+                LabelEmail: new Label({
+                    props: {
+                        label: 'Почта',
+                        for: 'email'
+                    }
+                }),
+                InputEmail: new Input({
+                    props: {
+                        id: 'email',
+                        name: 'email',
+                        type: 'email',
+                        placeholder: 'Введите почтовый адрес'
+                    }
+                }),
+                // LabelLogin: new Label({
+                //     props: {
+                //         label: 'Логин',
+                //         for: 'login'
+                //     }
+                // }),
+                // InputLogin: new Input({
+                //     props: {
+                //         id: 'login',
+                //         name: 'login',
+                //         type: 'text',
+                //         placeholder: 'Введите логин'
+                //     }
+                // }),
+                // LabelFirstName: new Label({
+                //     props: {
+                //         label: 'Имя',
+                //         for: 'first_name'
+                //     }
+                // }),
+                // InputFirstName: new Input({
+                //     props: {
+                //         id: 'first_name',
+                //         name: 'first_name',
+                //         type: 'text',
+                //         placeholder: 'Введите имя'
+                //     }
+                // }),
+                // LabelSecondName: new Label({
+                //     props: {
+                //         label: 'Фамилия',
+                //         for: 'second_name'
+                //     }
+                // }),
+                // InputSecondName: new Input({
+                //     props: {
+                //         id: 'second_name',
+                //         name: 'second_name',
+                //         type: 'text',
+                //         placeholder: 'Введите фамилию'
+                //     }
+                // }),
+                // LabelPhone: new Label({
+                //     props: {
+                //         label: 'Телефон',
+                //         for: 'phone'
+                //     }
+                // }),
+                // InputPhone: new Input({
+                //     props: {
+                //         id: 'phone',
+                //         name: 'phone',
+                //         type: 'tel',
+                //         placeholder: 'Введите номер телефона'
+                //     }
+                // }),
+                // LabelPassword: new Label({
+                //     props: {
+                //         label: 'Пароль',
+                //         for: 'password'
+                //     }
+                // }),
+                // InputPassword: new Input({
+                //     props: {
+                //         id: 'password',
+                //         name: 'password',
+                //         type: 'password',
+                //         placeholder: 'Введите пароль'
+                //     }
+                // }),
+                // LabelPasswordAgain: new Label({
+                //     props: {
+                //         label: 'Пароль (ещё раз)',
+                //         for: 'password_again'
+                //     }
+                // }),
+                // InputPasswordAgain: new Input({
+                //     props: {
+                //         id: 'password_again',
+                //         name: 'password_again',
+                //         type: 'password',
+                //         placeholder: 'Повторите пароль'
+                //     }
+                // }),
+                // ErrorMessagePasswordAgain: new ErrorMessage({
+                //     props: {
+                //         errorText: 'Пароли не совпадают'
+                //     }
+                // }),
+                ButtonRegistration: new Button({
+                    props: {
+                        label: 'Зарегестрироваться',
+                        type: 'reset'
+                    },
+                    events: {
+                        click: () => console.log('click')
+                    }
+                }),
+                // LinkLogin: new Link({
+                //     props: {
+                //         label: 'Войти',
+                //         link: '#'
+                //     }
+                // })
+            }
+        });
+    }
+
+
+    protected override render(): string {
+        return `
+                <main class="page-wrapper">
+                    <div class="form-authorization-wrapper">
+                        <h1 class="authorization-title">Регистрация</h1>
+                        <form class="authorization-form" name="registration">
+                            <div class="input-wrapper">
+                                {{{LabelEmail}}}
+                                {{{InputEmail}}}
+                            </div>
+                            <div class="input-wrapper">
+                                {{{LabelLogin}}}
+                                {{{InputLogin}}}
+                            </div>
+                             <div class="input-wrapper">
+                                {{{LabelFirstName}}}
+                                {{{InputFirstName}}}
+                            </div>
+                            <div class="input-wrapper">
+                                {{{LabelSecondName}}}
+                                {{{InputSecondName}}}
+                            </div>
+                             <div class="input-wrapper">
+                                {{{LabelPhone}}}
+                                {{{InputPhone}}}
+                            </div>
+                            <div class="input-wrapper">
+                                {{{LabelPassword}}}
+                                {{{InputPassword}}}
+                            </div>        
+                            <div class="input-wrapper">
+                                {{{LabelPasswordAgain}}}
+                                {{{InputPasswordAgain}}}
+                                {{{ErrorMessagePasswordAgain}}}
+                            </div>
+                            <footer class="authorization-footer">
+                                    {{{ButtonRegistration}}}
+                                    {{{LinkLogin}}}
+                            </footer>
+                        </form>
+                    </div>
+                </main>
+                `;
+    }
+}
