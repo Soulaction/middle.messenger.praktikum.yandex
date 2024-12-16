@@ -15,6 +15,7 @@ export class App {
 
     render(): void {
         const regPage = new RegistrationPage();
+
         // let template: HandlebarsTemplateDelegate;
         // let templateData = {};
         // switch (this.state.urlPage) {
@@ -51,6 +52,7 @@ export class App {
         //         return;
         // }
         this.appContainer.replaceWith(regPage.getContent());
+        regPage.componentDidMount();
         // this.addEventListeners();
     }
 

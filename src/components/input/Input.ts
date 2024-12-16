@@ -25,9 +25,10 @@ export class Input extends Block {
         return `
                 <input class="input {{className}}"
                        id="{{id}}"
+                       name="{{name}}"
                        type="{{type}}"
                        placeholder="{{placeholder}}"
-                       name="{{name}}"/>
+                       />
                 `;
     }
 }

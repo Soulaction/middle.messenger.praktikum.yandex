@@ -1,6 +1,6 @@
 import EventBus, {EventCallback} from './EventBus';
 import Handlebars from 'handlebars';
-import {BlockProps, BlockProperties} from "./types/BlockProps.ts";
+import {BlockProps, BlockProperties, EventBlock} from "./types/BlockProps.ts";
 import {PropsForHandlebars} from "./types/PropsForHandlebars.ts";
 
 export default class Block {
@@ -14,9 +14,9 @@ export default class Block {
     protected _id: string = crypto.randomUUID();
     protected _element: HTMLElement | null = null;
     protected eventBus: EventBus;
-    protected blockProps: BlockProperties['props'];
-    protected blockChildren: BlockProperties['children'];
-    protected blockEvents: BlockProperties['events'];
+    protected blockProps: object;
+    protected blockChildren: Record<string, Block>;
+    protected blockEvents: Record<string, EventBlock>;
 
     constructor(propsBlock: BlockProperties = {}) {
         this.eventBus = new EventBus();
@@ -31,8 +31,7 @@ export default class Block {
     }
 
     private _addEvents(): void {
-        debugger
-        Object.entries(this.blockEvents!).forEach(([eventName, event]) => {
+        Object.entries(this.blockEvents).forEach(([eventName, event]) => {
             this._element && this._element.addEventListener(eventName, event);
         });
     }
@@ -50,7 +49,7 @@ export default class Block {
 
     private _componentDidMount(): void {
         this.componentDidMount();
-        Object.values(this.blockChildren!).forEach(child => {
+        Object.values(this.blockChildren).forEach(child => {
             child.dispatchComponentDidMount();
         });
     }
@@ -80,29 +79,26 @@ export default class Block {
             return;
         }
 
-        Object.assign(this.blockProps!, nextProps);
+        Object.assign(this.blockProps, nextProps);
     };
 
     private _render(): void {
         const childrenHTMLRow: PropsForHandlebars = {};
-        Object.entries(this.blockChildren!).forEach(([key, value]) => {
-            childrenHTMLRow[key] = value.getContent().outerHTML;
-        })
 
+        Object.entries(this.blockChildren).forEach(([key, child]) => {
+            childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`;
+        });
         const propsForHandlebars: PropsForHandlebars = {...this.blockProps, ...childrenHTMLRow};
-        // Object.entries(this.children).forEach(([key, child]) => {
-        //     propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
-        // });
 
         const fragment = this._createDocumentElement('template');
         fragment.innerHTML = Handlebars.compile<PropsForHandlebars>(this.render())(propsForHandlebars);
 
-        // Object.values(this.children).forEach(child => {
-        //     const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-        //     if (stub) {
-        //         stub.replaceWith(child.getContent());
-        //     }
-        // });
+        Object.values(this.blockChildren).forEach(child => {
+            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+            if (stub) {
+                stub.replaceWith(child.getContent());
+            }
+        });
 
         const newElement = fragment.content.firstElementChild as HTMLElement;
         if (this._element && newElement) {
