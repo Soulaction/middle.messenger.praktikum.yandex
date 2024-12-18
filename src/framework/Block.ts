@@ -16,7 +16,7 @@ export default class Block {
     protected eventBus: EventBus;
     protected props: object;
     protected children: Record<string, Block>;
-    protected blockEvents: Record<string, EventBlock>;
+    protected blockEvents: Record<string, EventBlock | undefined>;
 
     constructor(propsBlock: BlockProperties = {}) {
         this.eventBus = new EventBus();
@@ -32,7 +32,9 @@ export default class Block {
 
     private _addEvents(): void {
         Object.entries(this.blockEvents).forEach(([eventName, event]) => {
-            this._element && this._element.addEventListener(eventName, event);
+            if(event) {
+                this._element && this._element.addEventListener(eventName, event);
+            }
         });
     }
 

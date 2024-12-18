@@ -21,7 +21,7 @@ export class ErrorMessage<T> extends Block {
     override componentDidMount() {
         const props = this.props as ErrorMessageProps<T>;
         if (props) {
-            (props).validationFormService.changeValueForm((data) => {
+            props.validationFormService.changeValueForm((data) => {
                 const error: string = (data as FormValue<Record<string, unknown>>)[props.name]?.errors[0] ?? '';
                 if (props.errorText !== error) {
                     this.setProps({errorText: error});

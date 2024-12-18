@@ -1,1 +1,1 @@
-export {RegistrationPage} from './registration.tmpl.ts';
+export {RegistrationPage} from './Registration.ts';
