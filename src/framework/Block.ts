@@ -14,16 +14,16 @@ export default class Block {
     protected _id: string = crypto.randomUUID();
     protected _element: HTMLElement | null = null;
     protected eventBus: EventBus;
-    protected blockProps: object;
-    protected blockChildren: Record<string, Block>;
+    protected props: object;
+    protected children: Record<string, Block>;
     protected blockEvents: Record<string, EventBlock>;
 
     constructor(propsBlock: BlockProperties = {}) {
         this.eventBus = new EventBus();
 
         const {props = {}, children = {}, events = {}} = propsBlock;
-        this.blockProps = this._makePropsProxy({...props});
-        this.blockChildren = children;
+        this.props = this._makePropsProxy({...props});
+        this.children = children;
         this.blockEvents = events;
 
         this._registerEvents(this.eventBus);
@@ -49,7 +49,7 @@ export default class Block {
 
     private _componentDidMount(): void {
         this.componentDidMount();
-        Object.values(this.blockChildren).forEach(child => {
+        Object.values(this.children).forEach(child => {
             child.dispatchComponentDidMount();
         });
     }
@@ -79,21 +79,21 @@ export default class Block {
             return;
         }
 
-        Object.assign(this.blockProps, nextProps);
+        Object.assign(this.props, nextProps);
     };
 
     private _render(): void {
         const childrenHTMLRow: PropsForHandlebars = {};
 
-        Object.entries(this.blockChildren).forEach(([key, child]) => {
+        Object.entries(this.children).forEach(([key, child]) => {
             childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`;
         });
-        const propsForHandlebars: PropsForHandlebars = {...this.blockProps, ...childrenHTMLRow};
+        const propsForHandlebars: PropsForHandlebars = {...this.props, ...childrenHTMLRow};
 
         const fragment = this._createDocumentElement('template');
         fragment.innerHTML = Handlebars.compile<PropsForHandlebars>(this.render())(propsForHandlebars);
 
-        Object.values(this.blockChildren).forEach(child => {
+        Object.values(this.children).forEach(child => {
             const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
             if (stub) {
                 stub.replaceWith(child.getContent());

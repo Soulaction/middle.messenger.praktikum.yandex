@@ -6,7 +6,7 @@ import {Button} from "../../components/button/Button.ts";
 import {ErrorMessage} from "../../components/errorMessage/ErrorMessage.ts";
 import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 
-type FormData = {
+export type FormDataRegistration = {
     email: string;
     login: string;
     first_name: string;
@@ -17,9 +17,10 @@ type FormData = {
 }
 
 export class RegistrationPage extends Block {
-    validationService = new ValidationFormService<FormData>();
+    validationService: ValidationFormService<FormDataRegistration>;
 
     constructor() {
+        const validationService = new ValidationFormService<FormDataRegistration>();
         super({
             children: {
                 LabelEmail: new Label({
@@ -36,6 +37,12 @@ export class RegistrationPage extends Block {
                         placeholder: 'Введите почтовый адрес'
                     }
                 }),
+                ErrorEmail: new ErrorMessage<FormDataRegistration>({
+                    props: {
+                        name: 'email',
+                        validationFormService: validationService
+                    }
+                }),
                 LabelLogin: new Label({
                     props: {
                         label: 'Логин',
@@ -48,6 +55,12 @@ export class RegistrationPage extends Block {
                         name: 'login',
                         type: 'text',
                         placeholder: 'Введите логин'
+                    }
+                }),
+                ErrorLogin: new ErrorMessage<FormDataRegistration>({
+                    props: {
+                        name: 'login',
+                        validationFormService: validationService
                     }
                 }),
                 LabelFirstName: new Label({
@@ -64,6 +77,12 @@ export class RegistrationPage extends Block {
                         placeholder: 'Введите имя'
                     }
                 }),
+                ErrorFirstName: new ErrorMessage<FormDataRegistration>({
+                    props: {
+                        name: 'first_name',
+                        validationFormService: validationService
+                    }
+                }),
                 LabelSecondName: new Label({
                     props: {
                         label: 'Фамилия',
@@ -76,6 +95,12 @@ export class RegistrationPage extends Block {
                         name: 'second_name',
                         type: 'text',
                         placeholder: 'Введите фамилию'
+                    }
+                }),
+                ErrorSecondName: new ErrorMessage<FormDataRegistration>({
+                    props: {
+                        name: 'second_name',
+                        validationFormService: validationService
                     }
                 }),
                 LabelPhone: new Label({
@@ -92,6 +117,12 @@ export class RegistrationPage extends Block {
                         placeholder: 'Введите номер телефона'
                     }
                 }),
+                ErrorPhone: new ErrorMessage<FormDataRegistration>({
+                    props: {
+                        name: 'phone',
+                        validationFormService: validationService
+                    }
+                }),
                 LabelPassword: new Label({
                     props: {
                         label: 'Пароль',
@@ -104,6 +135,15 @@ export class RegistrationPage extends Block {
                         name: 'password',
                         type: 'password',
                         placeholder: 'Введите пароль'
+                    },
+                    events: {
+                        input: () => this.checkEqualPassword()
+                    }
+                }),
+                ErrorPassword: new ErrorMessage<FormDataRegistration>({
+                    props: {
+                        name: 'password',
+                        validationFormService: validationService
                     }
                 }),
                 LabelPasswordAgain: new Label({
@@ -118,11 +158,15 @@ export class RegistrationPage extends Block {
                         name: 'password_again',
                         type: 'password',
                         placeholder: 'Повторите пароль'
+                    },
+                    events: {
+                        input: () => this.checkEqualPassword()
                     }
                 }),
-                ErrorMessagePasswordAgain: new ErrorMessage({
+                ErrorMessagePasswordAgain: new ErrorMessage<FormDataRegistration>({
                     props: {
-                        errorText: 'Пароли не совпадают'
+                        name: 'password_again',
+                        validationFormService: validationService
                     }
                 }),
                 ButtonRegistration: new Button({
@@ -131,7 +175,7 @@ export class RegistrationPage extends Block {
                         type: 'reset'
                     },
                     events: {
-                        click: () => console.log('click')
+                        click: () => validationService.checkValidity()
                     }
                 }),
                 LinkLogin: new Link({
@@ -142,20 +186,60 @@ export class RegistrationPage extends Block {
                 })
             }
         });
+        this.validationService = validationService
     }
 
     override componentDidMount() {
         this.validationService.init('registration', {
-            email: {errors: {required: {rule: true, message: 'Обязательно для вввода'}}},
-            // first_name: {errors: undefined},
-            // login: {errors: undefined},
-            // password: {errors: undefined},
-            // password_again: {errors: undefined},
-            // phone: {errors: undefined},
-            // second_name: {errors: undefined},
+            email: {
+                errors: {
+                    required: {rule: true, message: 'Обязательно для вввода'}
+                }
+            },
+            first_name: {
+                errors: {
+                    required: {rule: true, message: 'Обязательно для вввода'}
+                }
+            },
+            login: {
+                errors: {
+                    required: {rule: true, message: 'Обязательно для вввода'}
+                }
+            },
+            password: {
+                errors: {
+                    required: {rule: true, message: 'Обязательно для вввода'}
+                }
+            },
+            password_again: {
+                errors: {
+                    required: {rule: true, message: 'Обязательно для вввода'}
+                }
+            },
+            phone: {
+                errors: {
+                    required: {rule: true, message: 'Обязательно для вввода'}
+                }
+            },
+            second_name: {
+                errors: {
+                    required: {rule: true, message: 'Обязательно для вввода'}
+                }
+            },
         });
     }
 
+    checkEqualPassword(): void {
+        const {password, password_again} = this.validationService.getFormValue();
+        debugger
+        if(password !== password_again) {
+            this.validationService.setError('password', 'Пароли не совпадают');
+            this.validationService.setError('password_again', 'Пароли не совпадают');
+        } else {
+            this.validationService.removeError('password', 'Пароли не совпадают');
+            this.validationService.removeError('password_again', 'Пароли не совпадают');
+        }
+    }
 
     override render(): string {
         return `
@@ -166,26 +250,32 @@ export class RegistrationPage extends Block {
                             <div class="input-wrapper">
                                 {{{LabelEmail}}}
                                 {{{InputEmail}}}
+                                {{{ErrorEmail}}}
                             </div>
                             <div class="input-wrapper">
                                 {{{LabelLogin}}}
                                 {{{InputLogin}}}
+                                {{{ErrorLogin}}}
                             </div>
                              <div class="input-wrapper">
                                 {{{LabelFirstName}}}
                                 {{{InputFirstName}}}
+                                {{{ErrorFirstName}}}
                             </div>
                             <div class="input-wrapper">
                                 {{{LabelSecondName}}}
                                 {{{InputSecondName}}}
+                                {{{ErrorSecondName}}}
                             </div>
                              <div class="input-wrapper">
                                 {{{LabelPhone}}}
                                 {{{InputPhone}}}
+                                {{{ErrorPhone}}}
                             </div>
                             <div class="input-wrapper">
                                 {{{LabelPassword}}}
                                 {{{InputPassword}}}
+                                {{{ErrorPassword}}}
                             </div>        
                             <div class="input-wrapper">
                                 {{{LabelPasswordAgain}}}

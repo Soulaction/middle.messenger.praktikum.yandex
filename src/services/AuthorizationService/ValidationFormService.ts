@@ -2,42 +2,54 @@ import {FormValue} from "./types/FormValue.ts";
 import {InitFormData} from "./types/ValidationConfig.ts";
 
 export class ValidationFormService<T> {
-    form: HTMLFormElement | null = null;
+    private _form: HTMLFormElement | null = null;
+    private _initFormData: InitFormData<T> = {};
+    private _subscribers: ((formValue: FormValue<T>) => void)[] = [];
     formValue: FormValue<T> = {};
-    initFormData: InitFormData<T> = {};
-    formElements: HTMLFormControlsCollection;
+
 
     constructor() {
 
     }
 
     init(nameForm: string, initFormData: InitFormData<T> = {}): void {
-        this.form = document.forms.namedItem(nameForm);
+        this._form = document.forms.namedItem(nameForm);
 
-        if (!this.form) {
+        if (!this._form) {
             throw new Error("Not found form!");
         }
 
-        Array.from(this.form.elements).forEach(elForm => {
+        Array.from(this._form.elements).forEach(elForm => {
             if (elForm instanceof HTMLInputElement) {
 
                 this.formValue[elForm.name as keyof T] = {
                     value: initFormData[elForm.name as keyof T]?.value ?? '',
                     errors: []
                 };
-                this.initFormData = initFormData;
+                this._initFormData = initFormData;
 
-                elForm.addEventListener('input', (evt: Event) => this.changeForm(evt.target as HTMLInputElement));
-                elForm.addEventListener('blur', (evt: Event) => this.blurForm(evt.target as HTMLInputElement));
+                elForm.addEventListener('input', (evt: Event) => this._changeForm(evt.target as HTMLInputElement));
+                elForm.addEventListener('blur', (evt: Event) => this._changeForm(evt.target as HTMLInputElement));
             }
-        })
+        });
+    }
+
+    getFormValue(): { [K in keyof T]?: T[K] } {
+        const formValue: { [K in keyof T]?: T[K] } = {};
+
+        Array.from(this._form!.elements).forEach(elForm => {
+            if (elForm instanceof HTMLInputElement) {
+                formValue[elForm.name as keyof T] = elForm.value as T[keyof T];
+            }
+        });
+        return formValue;
     }
 
     private _setInfoFormData(input: HTMLInputElement): void {
-        const errorsConfig = this.initFormData[input.name as keyof T];
-        const errors: string[] = [];
+        const errorsConfig = this._initFormData[input.name as keyof T];
+        const errors: string[] = this.formValue[input.name as keyof T]?.errors ?? [];
 
-        if(errorsConfig) {
+        if (errorsConfig && errors.length === 0) {
             if (errorsConfig.errors['required'] && errorsConfig.errors['required'].rule && !input.value) {
                 errors.push(errorsConfig.errors['required'].message);
 
@@ -58,15 +70,49 @@ export class ValidationFormService<T> {
         }
     }
 
-    changeForm(input: HTMLInputElement): void {
+    private _changeForm(input: HTMLInputElement): void {
         this._setInfoFormData(input);
-        console.log(this.formValue);
+        this._nextValueForm(this.formValue);
+
     }
 
-    blurForm(input: HTMLInputElement): void {
-        this._setInfoFormData(input);
-        console.log(this.formValue);
+    changeValueForm(subscriber: (formValue: FormValue<T>) => void): void {
+        this._subscribers.push(subscriber);
     }
 
+    private _nextValueForm(formValue: FormValue<T>): void {
+        this._subscribers.forEach((subscriber) => {
+            subscriber(formValue);
+        })
+    }
 
+    checkValidity(): void {
+        if (this._form) {
+            Array.from(this._form.elements).forEach(elForm => {
+                if (elForm instanceof HTMLInputElement) {
+                    this.dispatchBlurFormItem(elForm);
+                }
+            });
+        }
+    }
+
+    setError(controlName: string, value: string): void {
+        if (!this.formValue[controlName as keyof T]!.errors.includes(value)) {
+            this.formValue[controlName as keyof T]!.errors.push(value);
+            this.dispatchBlurFormItem((this._form!.elements).namedItem(controlName) as HTMLElement);
+        }
+    }
+
+    removeError(controlName: string, value: string): void {
+        if (this.formValue[controlName as keyof T]!.errors.includes(value)) {
+            this.formValue[controlName as keyof T]!.errors = this.formValue[controlName as keyof T]!.errors.filter(err => err !== value);
+            this.dispatchBlurFormItem((this._form!.elements).namedItem(controlName) as HTMLElement);
+        }
+
+    }
+
+    private dispatchBlurFormItem(element: HTMLElement): void {
+        const event = new Event('blur');
+        element.dispatchEvent(event);
+    }
 }

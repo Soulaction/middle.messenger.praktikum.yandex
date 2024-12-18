@@ -52,8 +52,7 @@ export class App {
         //         return;
         // }
         this.appContainer.replaceWith(regPage.getContent());
-        regPage.componentDidMount();
-        // this.addEventListeners();
+        regPage.dispatchComponentDidMount();
     }
 
     changePage(url: string): void {

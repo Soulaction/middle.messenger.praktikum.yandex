@@ -12,12 +12,7 @@ type InputProps = {
 export class Input extends Block {
     constructor(inputProps: BlockProperties<InputProps>) {
         super({
-            ...inputProps,
-            events: {
-                change: (e: Event) => {
-                    console.log(e)
-                },
-            }
+            ...inputProps
         });
     }
 
