@@ -1,4 +1,4 @@
-import {ErrorPage, LoginPage, ProfilePage, RegistrationPage} from "./page";
+import {ErrorPage, ChangePasswordPage, LoginPage, ProfilePage, RegistrationPage} from "./page";
 
 export class App {
     appContainer: HTMLDivElement;
@@ -29,7 +29,6 @@ export class App {
                 break;
             case '/':
             case '/login':
-                // template = Handlebars.compile(Pages.LoginPage);
                 const loginPage = new LoginPage();
                 this.appContainer.replaceWith(loginPage.getContent());
                 loginPage.dispatchComponentDidMount();
@@ -44,6 +43,9 @@ export class App {
                 break;
             case '/profile-password':
                 // template = Handlebars.compile(Pages.ChangePassword);
+                const changePasswordPage = new ChangePasswordPage();
+                this.appContainer.replaceWith(changePasswordPage.getContent());
+                changePasswordPage.dispatchComponentDidMount();
                 break;
             case '/not-found':
                 const errorPage = new ErrorPage({

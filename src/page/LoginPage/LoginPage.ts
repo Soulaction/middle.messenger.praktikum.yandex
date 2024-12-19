@@ -52,7 +52,7 @@ export class LoginPage extends Block {
                 })
             }
         });
-        this.validationService = validationService
+        this.validationService = validationService;
     }
 
     override componentDidMount() {

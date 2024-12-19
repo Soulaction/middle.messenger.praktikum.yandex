@@ -23,4 +23,3 @@ export class UserInfoItem extends Block {
         `;
     }
 }
-
