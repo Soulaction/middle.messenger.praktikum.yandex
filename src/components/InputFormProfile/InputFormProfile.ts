@@ -58,12 +58,3 @@ export class InputFormProfile<T> extends Block {
         `;
     }
 }
-
-
-
-
-
-
-export default `
-
-`;

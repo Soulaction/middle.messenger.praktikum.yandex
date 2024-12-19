@@ -21,12 +21,3 @@ export class Button extends Block {
                 </button>`;
     }
 }
-
-
-
-export default `
-<button class="button" 
-        type="{{type}}">
-            {{label}}
-        </button>
-`;

@@ -99,12 +99,3 @@ export class ChangePasswordPage extends Block {
         `;
     }
 }
-
-
-
-
-
-
-export default `
-
-`;
