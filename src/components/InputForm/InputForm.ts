@@ -1,9 +1,9 @@
 import Block from "../../framework/Block.ts";
 import {BlockProperties, EventBlock} from "../../framework/types/BlockProps.ts";
-import {Label} from "../label/Label.ts";
-import {Input} from "../input/Input.ts";
+import {Label} from "../Label/Label.ts";
+import {Input} from "../Input/Input.ts";
 import {ErrorMessage} from "../ErrorMessage/ErrorMessage.ts";
-import {FormDataRegistration} from "../../page/registration/Registration.ts";
+import {FormDataRegistration} from "../../page/registration/RegistrationPage.ts";
 import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 
 type InputFormProps<T> = {

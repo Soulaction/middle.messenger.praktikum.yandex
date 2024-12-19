@@ -1,1 +1,1 @@
-export {default as ProfilePage} from './profile.tmpl.ts';
+export {ProfilePage} from './ProfilePage.ts';

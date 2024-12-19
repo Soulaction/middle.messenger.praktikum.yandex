@@ -1,6 +1,6 @@
 import Block from "../../framework/Block.ts";
-import {Link} from "../../components/link/Link.ts";
-import {Button} from "../../components/button/Button.ts";
+import {Link} from "../../components/Link/Link.ts";
+import {Button} from "../../components/Button/Button.ts";
 import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputForm} from "../../components/InputForm/InputForm.ts";
 

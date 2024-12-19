@@ -1,1 +1,1 @@
-export {RegistrationPage} from './Registration.ts';
+export {RegistrationPage} from './RegistrationPage.ts';

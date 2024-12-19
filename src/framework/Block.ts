@@ -16,14 +16,16 @@ export default class Block {
     protected eventBus: EventBus;
     protected props: object;
     protected children: Record<string, Block>;
+    protected lists: Record<string, Block[]>;
     protected blockEvents: Record<string, EventBlock | undefined>;
 
     constructor(propsBlock: BlockProperties = {}) {
         this.eventBus = new EventBus();
 
-        const {props = {}, children = {}, events = {}} = propsBlock;
+        const {props = {}, children = {}, lists = {}, events = {}} = propsBlock;
         this.props = this._makePropsProxy({...props});
-        this.children = children;
+        this.children = this._makePropsProxy({...children});
+        this.lists = this._makePropsProxy({...lists});
         this.blockEvents = events;
 
         this._registerEvents(this.eventBus);
@@ -32,7 +34,7 @@ export default class Block {
 
     private _addEvents(): void {
         Object.entries(this.blockEvents).forEach(([eventName, event]) => {
-            if(event) {
+            if (event) {
                 this._element && this._element.addEventListener(eventName, event);
             }
         });
@@ -83,18 +85,49 @@ export default class Block {
 
         Object.assign(this.props, nextProps);
     };
+    public setLists = (nextList: Record<string, Block[]>): void => {
+        if (!nextList) {
+            return;
+        }
+
+        Object.assign(this.lists, nextList);
+    };
+
+    public setChildren = (nextList: Record<string, Block>): void => {
+        if (!nextList) {
+            return;
+        }
+
+        Object.assign(this.children, nextList);
+    };
 
     private _render(): void {
         const childrenHTMLRow: PropsForHandlebars = {};
+        const listHTMLRow: PropsForHandlebars = {};
 
         Object.entries(this.children).forEach(([key, child]) => {
             childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`;
         });
-        const propsForHandlebars: PropsForHandlebars = {...this.props, ...childrenHTMLRow};
+        const tmplId: string = crypto.randomUUID();
+        Object.entries(this.lists).forEach(([key]) => {
+            listHTMLRow[key] = `<div data-id="__l_${tmplId}"></div>`;
+        });
+        const propsForHandlebars: PropsForHandlebars = {...this.props, ...childrenHTMLRow, ...listHTMLRow};
 
         const fragment = this._createDocumentElement('template');
         fragment.innerHTML = Handlebars.compile<PropsForHandlebars>(this.render())(propsForHandlebars);
 
+        Object.entries(this.lists).forEach(([, child]) => {
+            debugger
+            const listCont = this._createDocumentElement('template');
+            child.forEach(item => {
+                listCont.content.append(item.getContent());
+            });
+            const stub = fragment.content.querySelector(`[data-id="__l_${tmplId}"]`);
+            if (stub) {
+                stub.replaceWith(listCont.content);
+            }
+        });
         Object.values(this.children).forEach(child => {
             const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
             if (stub) {
