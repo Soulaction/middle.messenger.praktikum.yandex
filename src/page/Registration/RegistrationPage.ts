@@ -107,7 +107,7 @@ export class RegistrationPage extends Block {
     }
 
     override componentDidMount() {
-        this.validationService.init('registration', {
+        this.validationService.init('Registration', {
             email: {
                 errors: {
                     required: {rule: true, message: 'Обязательно для вввода'}

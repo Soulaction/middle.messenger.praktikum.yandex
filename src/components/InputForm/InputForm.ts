@@ -3,7 +3,7 @@ import {BlockProperties, EventBlock} from "../../framework/types/BlockProps.ts";
 import {Label} from "../Label/Label.ts";
 import {Input} from "../Input/Input.ts";
 import {ErrorMessage} from "../ErrorMessage/ErrorMessage.ts";
-import {FormDataRegistration} from "../../page/registration/RegistrationPage.ts";
+import {FormDataRegistration} from "../../page/Registration/RegistrationPage.ts";
 import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 
 type InputFormProps<T> = {

@@ -1,4 +1,4 @@
-import {LoginPage, ProfilePage, RegistrationPage} from "./page";
+import {ErrorPage, LoginPage, ProfilePage, RegistrationPage} from "./page";
 
 export class App {
     appContainer: HTMLDivElement;
@@ -46,12 +46,24 @@ export class App {
                 // template = Handlebars.compile(Pages.ChangePassword);
                 break;
             case '/not-found':
-                // template = Handlebars.compile(Pages.ErrorPage);
-                // templateData = {code: 404, errorText: 'Не туда попали'};
+                const errorPage = new ErrorPage({
+                    props: {
+                        code: '404',
+                        errorText: 'Не туда попали'
+                    }
+                });
+                this.appContainer.replaceWith(errorPage.getContent());
+                errorPage.dispatchComponentDidMount();
                 break;
             case '/server-error':
-                // template = Handlebars.compile(Pages.ErrorPage);
-                // templateData = {code: 500, errorText: 'Мы уже фиксим'};
+                const errorServerPage = new ErrorPage({
+                    props: {
+                        code: '500',
+                        errorText: 'Мы уже фиксим'
+                    }
+                });
+                this.appContainer.replaceWith(errorServerPage.getContent());
+                errorServerPage.dispatchComponentDidMount();
                 break;
             default:
                 this.changePage('/not-found');

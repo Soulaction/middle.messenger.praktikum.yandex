@@ -56,7 +56,7 @@ export class LoginPage extends Block {
     }
 
     override componentDidMount() {
-        this.validationService.init('registration', {
+        this.validationService.init('Registration', {
             login: {
                 errors: {
                     required: {rule: true, message: 'Обязательно для вввода'}
