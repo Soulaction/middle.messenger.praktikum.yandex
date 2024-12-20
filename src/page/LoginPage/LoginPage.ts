@@ -56,7 +56,7 @@ export class LoginPage extends Block {
     }
 
     override componentDidMount() {
-        this.validationService.init('Registration', {
+        this.validationService.init('auth', {
             login: {
                 errors: {
                     required: {rule: true, message: 'Обязательно для вввода'}
@@ -74,8 +74,8 @@ export class LoginPage extends Block {
         return `
                 <main class="page-wrapper">
                     <div class="form-authorization-wrapper">
-                        <h1 class="authorization-title">Регистрация</h1>
-                        <form class="authorization-form" name="registration">
+                        <h1 class="authorization-title">Вход</h1>
+                        <form class="authorization-form" name="auth">
                             {{{InputFormLogin}}}
                             {{{InputFormPassword}}}
                         <footer class="authorization-footer">

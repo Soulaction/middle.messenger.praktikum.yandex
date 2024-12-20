@@ -4,6 +4,7 @@ import {BlockProperties, EventBlock} from "../../framework/types/BlockProps.ts";
 import {ErrorMessage} from "../ErrorMessage/ErrorMessage.ts";
 import {FormDataRegistration} from "../../page/Registration/RegistrationPage.ts";
 import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
+import s from './InputFormProfile.module.pcss';
 
 type InputFormProfileProps<T> = {
     classInput?: string;
@@ -37,7 +38,8 @@ export class InputFormProfile<T> extends Block {
                 }),
                 Error: new ErrorMessage<FormDataRegistration>({
                     props: {
-                        name: inputFormProfileProps.props?.name ?? '',
+                        className: s.errorMessageRight,
+                        formName: inputFormProfileProps.props?.name ?? '',
                         validationFormService: inputFormProfileProps.props!.validationService
                     }
                 }),
@@ -47,13 +49,15 @@ export class InputFormProfile<T> extends Block {
 
     override render(): string {
         return `
-                 <div class="user-info-item-edit">
-                     <label class="user-info-label user-info-label-edit user-info-text"
-                            for="{{name}}">
-                                {{label}}
-                            </label>
-                     {{{Input}}}
-                     {{{Error}}}
+                <div>
+                    <div class="${s.userInfoItemEdit}">
+                        <label class="${s.userInfoLabel}"
+                               for="{{name}}">
+                                   {{label}}
+                               </label>
+                        {{{Input}}}
+                    </div>
+                    {{{Error}}}
                  </div>
         `;
     }

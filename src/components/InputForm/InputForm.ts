@@ -38,7 +38,7 @@ export class InputForm<T> extends Block {
                 }),
                 Error: new ErrorMessage<FormDataRegistration>({
                     props: {
-                        name: inputFormProps.props?.name ?? '',
+                        formName: inputFormProps.props?.name ?? '',
                         validationFormService: inputFormProps.props!.validationService
                     }
                 }),

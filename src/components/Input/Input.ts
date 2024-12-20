@@ -1,5 +1,6 @@
 import Block from "../../framework/Block.ts";
 import {BlockProperties} from "../../framework/types/BlockProps.ts";
+import s from "./Input.module.pcss";
 
 type InputProps = {
     className?: string;
@@ -18,7 +19,7 @@ export class Input extends Block {
 
     override render(): string {
         return `
-                <input class="input {{className}}"
+                <input class="${s.input} {{className}}"
                        id="{{id}}"
                        name="{{name}}"
                        type="{{type}}"

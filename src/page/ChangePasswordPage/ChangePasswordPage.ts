@@ -2,11 +2,13 @@ import Block from "../../framework/Block.ts";
 import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputFormProfile} from "../../components/InputFormProfile/InputFormProfile.ts";
 import {Button} from "../../components/Button/Button.ts";
+import {checkEqualPassword} from "../../utils/utils.ts";
+import s from "./ChangePassword.module.pcss";
 
 export type FormDataChangePassword = {
     oldPassword: string;
-    newPassword: string;
-    newPasswordAgain: string;
+    password: string;
+    password_again: string;
 }
 
 export class ChangePasswordPage extends Block {
@@ -18,7 +20,7 @@ export class ChangePasswordPage extends Block {
             children: {
                 InputFormProfileOldPsw: new InputFormProfile<FormDataChangePassword>({
                     props: {
-                        classInput: 'right-placeholder',
+                        classInput: s.rightPlaceholder,
                         label: 'Старый пароль',
                         name: 'oldPassword',
                         type: 'password',
@@ -28,22 +30,24 @@ export class ChangePasswordPage extends Block {
                 }),
                 InputFormProfileNewPsw: new InputFormProfile<FormDataChangePassword>({
                     props: {
-                        classInput: 'right-placeholder',
+                        classInput: s.rightPlaceholder,
                         label: 'Новый пароль',
-                        name: 'newPassword',
+                        name: 'password',
                         type: 'password',
                         placeholder: 'Введите новый пароль',
-                        validationService
+                        validationService,
+                        inputChange: () => checkEqualPassword(validationService)
                     }
                 }),
                 InputFormProfileAgainNewPsw: new InputFormProfile<FormDataChangePassword>({
                     props: {
-                        classInput: 'right-placeholder',
+                        classInput: s.rightPlaceholder,
                         label: 'Повторите новый пароль',
-                        name: 'newPasswordAgain',
+                        name: 'password_again',
                         type: 'password',
                         placeholder: 'Повторите пароль',
-                        validationService
+                        validationService,
+                        inputChange: () => checkEqualPassword(validationService)
                     }
                 }),
                 Button: new Button({
@@ -63,12 +67,12 @@ export class ChangePasswordPage extends Block {
                     required: {rule: true, message: 'Обязательно для вввода'}
                 }
             },
-            newPassword: {
+            password: {
                 errors: {
                     required: {rule: true, message: 'Обязательно для вввода'}
                 }
             },
-            newPasswordAgain: {
+            password_again: {
                 errors: {
                     required: {rule: true, message: 'Обязательно для вввода'}
                 }
@@ -90,7 +94,7 @@ export class ChangePasswordPage extends Block {
                                 {{{InputFormProfileOldPsw}}}
                                 {{{InputFormProfileNewPsw}}}
                                 {{{InputFormProfileAgainNewPsw}}}
-                            <footer class="user-edit-psw-footer">
+                            <footer class="${s.userEditPswFooter}">
                                 {{{Button}}}
                             </footer>
                         </form>

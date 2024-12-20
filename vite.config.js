@@ -6,6 +6,13 @@ export default defineConfig({
         port: 5000,
     },
     css: {
+        modules: {
+            localsConvention: 'camelCase',
+            generateScopedName: '[name]__[local]___[hash:base64:5]',
+            globalModulePaths: [/global\.pcss$/],
+            getJSON: () => {
+            },
+        },
         postcss: './postcss.config.js',
     },
 });

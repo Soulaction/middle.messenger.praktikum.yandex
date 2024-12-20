@@ -23,8 +23,8 @@ export class ProfilePage extends Block {
                 }),
                 LinkChangeExit: new Link({
                     props: {
-                        class: 'danger',
                         label: 'Выйти',
+                        danger: true,
                         link: '#'
                     }
                 })

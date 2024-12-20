@@ -3,6 +3,7 @@ import {Link} from "../../components/Link/Link.ts";
 import {Button} from "../../components/Button/Button.ts";
 import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputForm} from "../../components/InputForm/InputForm.ts";
+import {checkEqualPassword} from "../../utils/utils.ts";
 
 export type FormDataRegistration = {
     email: string;
@@ -73,7 +74,7 @@ export class RegistrationPage extends Block {
                         placeholder: 'Введите пароль',
                         type: 'password',
                         validationService,
-                        inputChange: () => this.checkEqualPassword()
+                        inputChange: () => checkEqualPassword(validationService)
                     }
                 }),
                 InputFormPasswordAgain: new InputForm<FormDataRegistration>({
@@ -83,7 +84,7 @@ export class RegistrationPage extends Block {
                         placeholder: 'Повторите пароль',
                         type: 'password',
                         validationService,
-                        inputChange: () => this.checkEqualPassword()
+                        inputChange: () => checkEqualPassword(validationService)
                     }
                 }),
                 ButtonRegistration: new Button({
@@ -107,7 +108,7 @@ export class RegistrationPage extends Block {
     }
 
     override componentDidMount() {
-        this.validationService.init('Registration', {
+        this.validationService.init('registration', {
             email: {
                 errors: {
                     required: {rule: true, message: 'Обязательно для вввода'}
@@ -144,18 +145,6 @@ export class RegistrationPage extends Block {
                 }
             },
         });
-    }
-
-    checkEqualPassword(): void {
-        const {password, password_again} = this.validationService.getFormValue();
-        debugger
-        if (password !== password_again) {
-            this.validationService.setError('password', 'Пароли не совпадают');
-            this.validationService.setError('password_again', 'Пароли не совпадают');
-        } else {
-            this.validationService.removeError('password', 'Пароли не совпадают');
-            this.validationService.removeError('password_again', 'Пароли не совпадают');
-        }
     }
 
     override render(): string {
