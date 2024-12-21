@@ -1,6 +1,6 @@
 import {User} from "../../types/User.ts";
 import {UserApi} from "../../api/UserApi.ts";
-import {UserInfoItem} from "../../components/User-info-item/User-info-item.ts";
+import {UserInfoItem} from "../../components/UserInfoItem/UserInfoItem.ts";
 
 export class UserService {
     private userAPI: UserApi;

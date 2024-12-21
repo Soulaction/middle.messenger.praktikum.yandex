@@ -4,6 +4,7 @@ import s from "./Input.module.pcss";
 
 type InputProps = {
     className?: string;
+    rightPlaceholder?: boolean;
     id?: string;
     type?: string;
     placeholder?: string;
@@ -19,7 +20,7 @@ export class Input extends Block {
 
     override render(): string {
         return `
-                <input class="${s.input} {{className}}"
+                <input class="${s.input} {{className}} {{#if rightPlaceholder}}${s.rightPlaceholder}{{/if}}"
                        id="{{id}}"
                        name="{{name}}"
                        type="{{type}}"

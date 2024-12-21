@@ -1,7 +1,9 @@
 import Block from "../../framework/Block.ts";
-import {UserInfoItem} from "../../components/User-info-item/User-info-item.ts";
+import {UserInfoItem} from "../../components/UserInfoItem/UserInfoItem.ts";
 import {UserService} from "../../services/UserService/UserService.ts";
 import {Link} from "../../components/Link/Link.ts";
+import {AvatarUser} from "../../components/AvatarUser";
+import s from "./ProfilePage.module.pcss";
 
 export class ProfilePage extends Block {
     userService: UserService;
@@ -9,6 +11,11 @@ export class ProfilePage extends Block {
     constructor() {
         super({
             children: {
+                AvatarUser: new AvatarUser({
+                    props: {
+                        imgUrl: '/images/profile.png'
+                    }
+                }),
                 LinkChangeData: new Link({
                     props: {
                         label: 'Изменить данные',
@@ -46,27 +53,25 @@ export class ProfilePage extends Block {
                             <button class="button-row"></button>
                         </div>
                         <div class="page-wrapper page-profile-content">
-                            <div class="user-avatar-wrapper">
-                                <img class="user-avatar" src="/images/profile.png" alt="Иконка профиля"/>
-                            </div>
+                            {{{AvatarUser}}}
                             <h1 class="user-name">Дмитрий</h1>
                             <div class="user-info">
                                 {{{UserInfoItemEmail}}}
-                                <div class="user-info-border"></div>
+                                <div class="${s.userInfoBorder}"></div>
                                 {{{UserInfoItemLogin}}}
-                                <div class="user-info-border"></div>
+                                <div class="${s.userInfoBorder}"></div>
                                 {{{UserInfoItemFirstName}}}
-                                <div class="user-info-border"></div>
+                                <div class="${s.userInfoBorder}"></div>
                                 {{{UserInfoItemSecondName}}}
-                                <div class="user-info-border"></div>
+                                <div class="${s.userInfoBorder}"></div>
                                 {{{UserInfoItemNikName}}}
-                                <div class="user-info-border"></div>
+                                <div class="${s.userInfoBorder}"></div>
                                 {{{UserInfoItemPhone}}}
-                                <footer class="user-info-footer">
+                                <footer class="${s.userInfoFooter}">
                                     {{{LinkChangeData}}}
-                                    <div class="user-info-border"></div>
+                                    <div class="${s.userInfoBorder}"></div>
                                     {{{LinkChangePassword}}}
-                                    <div class="user-info-border"></div>
+                                    <div class="${s.userInfoBorder}"></div>
                                     {{{LinkChangeExit}}}
                                 </footer>
                             </div>

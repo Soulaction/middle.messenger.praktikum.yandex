@@ -106,35 +106,6 @@ body {
     background-position-x: 6px;
 }
 
-.user-avatar {
-    display: block;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.user-avatar-wrapper {
-    position: relative;
-}
-
-.user-avatar-wrapper:hover::before {
-    content: 'Поменять\Aаватар';
-    position: absolute;
-    white-space: pre-wrap;
-    text-align: center;
-    align-content: center;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    font-size: 13px;
-    line-height: 14px;
-    border-radius: 50%;
-}
-
 .user-name {
     margin-top: 21px;
     font-size: 16px;
@@ -146,46 +117,13 @@ body {
     max-width: 510px;
     width: 100%;
 
-    & .user-info-item {
-        display: flex;
+    & .user-info-label {
+           color: #1e1e1e;
+           margin-right: 9px;
+           white-space: nowrap;
+           font-size: 16px;
+           line-height: 16px;
     }
-
-    & .user-info-description {
-        display: inline-block;
-        margin-left: auto;
-        color: var(--grey-color);
-    }
-
-    & .user-info-border {
-        margin: 10px 0;
-        border: 1px solid #eaeaea;
-    }
-
-    & .user-info-footer {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-top: 60px;
-    }
-
-    & .user-edit-data-footer {
-        display: flex;
-        justify-content: center;
-        margin-top: 52px;
-    }
-}
-
-/*Страница ошибки*/
-.error-title {
-    margin-bottom: 20px;
-    font-size: 40px;
-    line-height: 40px;
-}
-
-.error-text {
-    margin-bottom: 69px;
-    font-size: 20px;
-    line-height: 20px;
 }
 
 /*Страница с чатами*/
@@ -240,28 +178,6 @@ body {
 
 .send-msg-submit {
     transform: rotate(180deg);
-}
-
-/*стили компоненты Button*/
-.button {
-    max-width: 280px;
-    width: 100%;
-    border-radius: 8px;
-    background-color: var(--main-color);
-    text-align: center;
-    color: #fff;
-    padding: 12px;
-    font-size: 13px;
-    line-height: 13px;
-    border: none;
-    cursor: pointer;
-}
-
-/*стили компоненты Button*/
-.label {
-    font-size: 10px;
-    line-height: 9px;
-    color: var(--grey-color);
 }
 
 /*стили компоненты Input*/

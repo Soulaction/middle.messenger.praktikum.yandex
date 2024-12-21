@@ -1,5 +1,6 @@
 import Block from "../../framework/Block.ts";
 import {BlockProperties} from "../../framework/types/BlockProps.ts";
+import s from "./Button.module.pcss";
 
 type ButtonProps = {
     class?: string;
@@ -15,7 +16,7 @@ export class Button extends Block {
     }
 
     override render(): string {
-        return `<button class="button {{class}}" 
+        return `<button class="${s.button} {{class}}" 
                         type="{{type}}">
                                         {{label}}
                 </button>`;

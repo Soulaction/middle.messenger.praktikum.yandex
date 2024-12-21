@@ -1,5 +1,6 @@
 import Block from "../../framework/Block.ts";
 import {BlockProperties} from "../../framework/types/BlockProps.ts";
+import s from "./UserInfoItem.module.pcss";
 
 export type UserInfoItemProps = {
     label: string;
@@ -16,9 +17,9 @@ export class UserInfoItem extends Block {
 
     override render(): string {
         return `
-            <div class="user-info-item">
-                <span class="user-info-label user-info-text">{{label}}</span>
-                <p class="user-info-description user-info-text">{{value}}</p>
+            <div class="${s.userInfoItem}">
+                <span class="user-info-label">{{label}}</span>
+                <p class="${s.userInfoDescription}">{{value}}</p>
             </div>
         `;
     }

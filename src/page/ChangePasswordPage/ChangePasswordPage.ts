@@ -4,6 +4,7 @@ import {InputFormProfile} from "../../components/InputFormProfile/InputFormProfi
 import {Button} from "../../components/Button/Button.ts";
 import {checkEqualPassword} from "../../utils/utils.ts";
 import s from "./ChangePassword.module.pcss";
+import {AvatarUser} from "../../components/AvatarUser";
 
 export type FormDataChangePassword = {
     oldPassword: string;
@@ -18,9 +19,13 @@ export class ChangePasswordPage extends Block {
         const validationService = new ValidationFormService<FormDataChangePassword>();
         super({
             children: {
+                AvatarUser: new AvatarUser({
+                    props: {
+                        imgUrl: '/images/profile.png'
+                    }
+                }),
                 InputFormProfileOldPsw: new InputFormProfile<FormDataChangePassword>({
                     props: {
-                        classInput: s.rightPlaceholder,
                         label: 'Старый пароль',
                         name: 'oldPassword',
                         type: 'password',
@@ -30,7 +35,6 @@ export class ChangePasswordPage extends Block {
                 }),
                 InputFormProfileNewPsw: new InputFormProfile<FormDataChangePassword>({
                     props: {
-                        classInput: s.rightPlaceholder,
                         label: 'Новый пароль',
                         name: 'password',
                         type: 'password',
@@ -41,7 +45,6 @@ export class ChangePasswordPage extends Block {
                 }),
                 InputFormProfileAgainNewPsw: new InputFormProfile<FormDataChangePassword>({
                     props: {
-                        classInput: s.rightPlaceholder,
                         label: 'Повторите новый пароль',
                         name: 'password_again',
                         type: 'password',
@@ -61,7 +64,7 @@ export class ChangePasswordPage extends Block {
     }
 
     override componentDidMount() {
-        this.validationService.init('edit-profile', {
+        this.validationService.init('edit-password', {
             oldPassword: {
                 errors: {
                     required: {rule: true, message: 'Обязательно для вввода'}
@@ -87,10 +90,8 @@ export class ChangePasswordPage extends Block {
                         <button class="button-row"></button>
                     </div>
                     <div class="page-wrapper page-profile-content">
-                        <div class="user-avatar-wrapper">
-                            <img class="user-avatar" src="/images/profile.png" alt="Иконка профиля"/>
-                        </div>
-                        <form class="user-info" name="edit-profile">
+                        {{{AvatarUser}}}
+                        <form class="user-info" name="edit-password">
                                 {{{InputFormProfileOldPsw}}}
                                 {{{InputFormProfileNewPsw}}}
                                 {{{InputFormProfileAgainNewPsw}}}

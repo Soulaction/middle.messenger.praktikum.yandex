@@ -7,7 +7,6 @@ import {ValidationFormService} from "../../services/AuthorizationService/Validat
 import s from './InputFormProfile.module.pcss';
 
 type InputFormProfileProps<T> = {
-    classInput?: string;
     label: string;
     name: string;
     type?: string;
@@ -27,7 +26,7 @@ export class InputFormProfile<T> extends Block {
                 Input: new Input({
                     props: {
                         id: inputFormProfileProps.props?.name,
-                        className: inputFormProfileProps.props?.classInput,
+                        rightPlaceholder: true,
                         name: inputFormProfileProps.props?.name,
                         type: inputFormProfileProps.props?.type,
                         placeholder: inputFormProfileProps.props?.placeholder
@@ -51,7 +50,7 @@ export class InputFormProfile<T> extends Block {
         return `
                 <div>
                     <div class="${s.userInfoItemEdit}">
-                        <label class="${s.userInfoLabel}"
+                        <label class="user-info-label"
                                for="{{name}}">
                                    {{label}}
                                </label>

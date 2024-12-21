@@ -1,4 +1,5 @@
 import {ErrorPage, ChangePasswordPage, LoginPage, ProfilePage, RegistrationPage} from "./page";
+import {ProfileEditedPage} from "./page/ProfileEditPage";
 
 export class App {
     appContainer: HTMLDivElement;
@@ -38,11 +39,12 @@ export class App {
                 this.appContainer.replaceWith(profilePage.getContent());
                 profilePage.dispatchComponentDidMount();
                 break;
-            case '/profile-edit':
-                // template = Handlebars.compile(Pages.ProfileEdit);
+            case '/profile-edit-page':
+                const profileEditedPage = new ProfileEditedPage();
+                this.appContainer.replaceWith(profileEditedPage.getContent());
+                profileEditedPage.dispatchComponentDidMount();
                 break;
             case '/profile-password':
-                // template = Handlebars.compile(Pages.ChangePassword);
                 const changePasswordPage = new ChangePasswordPage();
                 this.appContainer.replaceWith(changePasswordPage.getContent());
                 changePasswordPage.dispatchComponentDidMount();

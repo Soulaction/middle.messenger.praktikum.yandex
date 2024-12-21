@@ -1,5 +1,6 @@
 import Block from "../../framework/Block.ts";
 import {BlockProperties} from "../../framework/types/BlockProps.ts";
+import s from "./Label.module.pcss";
 
 type LabelProps = {
     className?: string;
@@ -15,7 +16,7 @@ export class Label extends Block {
     }
 
     override render(): string {
-        return `<label class="label {{className}}" for="{{for}}">{{label}}</label>`;
+        return `<label class="${s.label} {{className}}" for="{{for}}">{{label}}</label>`;
     }
 }
 

@@ -1,6 +1,7 @@
 import Block from "../../framework/Block.ts";
 import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import {Link} from "../../components/Link/Link.ts";
+import s from "./ErrorPage.module.pcss";
 
 export type ErrorProps = {
     code: string;
@@ -26,8 +27,8 @@ export class ErrorPage extends Block {
     override render(): string {
         return `
                 <main class="page-wrapper">
-                    <h1 class="error-title">{{code}}</h1>
-                    <p class="error-text">{{errorText}}</p>
+                    <h1 class="${s.errorTitle}">{{code}}</h1>
+                    <p class="${s.errorText}">{{errorText}}</p>
                     {{{Link}}}
                 </main>
         `;
