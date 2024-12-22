@@ -1,25 +1,24 @@
 import Block from "../framework/Block";
 import {Button} from "../components/Button/Button";
 import {ErrorMessage} from "../components/ErrorMessage/ErrorMessage";
-import {FormDataRegistration} from "../page/Registration/RegistrationPage";
 import {ValidationFormService} from "../services/AuthorizationService/ValidationFormService";
 import {BlockProperties} from "../framework/types/BlockProps";
 import s from "./UploadFileModal.module.pcss";
+import {UploadButton} from "../components/UploadButton/UploadButton.ts";
 
-type FormDataRegistration = {
+type FormDataFile = {
     file: string;
 }
 
 type UploadFileModalProps = {
-    isView: boolean;
-    titleModal: string;
+    titleModal?: string;
 }
 
 export class UploadFileModal extends Block {
-    validationService: ValidationFormService<FormDataRegistration>;
+    validationService: ValidationFormService<FormDataFile>;
 
     constructor(uploadFileModalProps: BlockProperties<UploadFileModalProps>) {
-        const validationService = new ValidationFormService<FormDataRegistration>();
+        const validationService = new ValidationFormService<FormDataFile>();
 
         super({
             props: {
@@ -27,16 +26,25 @@ export class UploadFileModal extends Block {
                 ...uploadFileModalProps.props
             },
             children: {
+                UploadButton: new UploadButton(
+                    {
+                        props: {
+                            label: 'Выбрать файл на компьютере',
+                            name: 'file',
+                            class: s.uploadFile
+                        }
+                    }),
                 Button: new Button({
                     props: {
                         label: 'Поменять',
-                        type: 'reset'
+                        type: 'reset',
+                        class: s.submitBtn
                     },
                     events: {
-                        click: () => console.log()
+                        click: () => this.validationService.checkValidity()
                     }
                 }),
-                Error: new ErrorMessage<FormDataRegistration>({
+                Error: new ErrorMessage<FormDataFile>({
                     props: {
                         formName: 'file',
                         validationFormService: validationService
@@ -44,15 +52,16 @@ export class UploadFileModal extends Block {
                 }),
             },
             events: {
-                click: event => console.log(event.target, event.currentTarget)
+                click: event => this.hideModal(event)
             }
         });
         this.validationService = validationService;
+        super.hide()
     }
 
     override componentDidMount() {
-        this.validationService.init('file', {
-            email: {
+        this.validationService.init('upload-file', {
+            file: {
                 errors: {
                     required: {rule: true, message: 'Нужно выбрать файл'}
                 }
@@ -60,20 +69,37 @@ export class UploadFileModal extends Block {
         });
     }
 
+    openModel(): void {
+        this.show();
+
+    }
+
+    override show(): void {
+        const content = this.getContent();
+        if (content) {
+            content.style.display = 'flex';
+        }
+    }
+
+    hideModal(event: Event): void {
+        if (event.target === event.currentTarget) {
+            super.hide()
+        }
+
+    }
+
     override render(): string {
         return `
-                        {{#if isView}}
-                            <div class="${s.overlayPanel}">
-                                <div class="${s.modal}">
-                                    <form class="${s.form}">
-                                        <h1 class="${s.titleModal}">{{titleModal}}</h1>
-                                        {{{null}}}
-                                        {{Button}}
-                                        {{Error}}
-                                    </form>
-                                </div>
-                            </div>
-                        {{/if}}
+                 <div class="${s.overlayPanel}">
+                     <div class="${s.modal}">
+                         <form class="${s.form}" name="upload-file">
+                             <h1 class="${s.titleModal}">{{titleModal}}</h1>
+                             {{{UploadButton}}}
+                             {{{Button}}}
+                             {{{Error}}}
+                         </form>
+                     </div>
+                 </div>
                 `;
     }
 }

@@ -9,7 +9,14 @@ import {UploadFileModal} from "../../modals/UploadFileModal";
 export class ProfilePage extends Block {
     userService: UserService;
 
+
     constructor() {
+        const uploadFileModal = new UploadFileModal({
+            props: {
+                titleModal: 'Загрузите файл'
+            }
+        });
+
         super({
             children: {
                 AvatarUser: new AvatarUser({
@@ -17,7 +24,7 @@ export class ProfilePage extends Block {
                         imgUrl: '/images/profile.png'
                     },
                     events: {
-                        click: () => this.changeAvatar()
+                        click: () => uploadFileModal.openModel()
                     }
                 }),
                 LinkChangeData: new Link({
@@ -38,7 +45,8 @@ export class ProfilePage extends Block {
                         danger: true,
                         link: '#'
                     }
-                })
+                }),
+                UploadFileModal: uploadFileModal
             },
         });
         this.userService = new UserService();
@@ -50,26 +58,15 @@ export class ProfilePage extends Block {
         this.setChildren(userInfoItems);
     }
 
-    changeAvatar(): void {
-        this.setChildren({
-            UploadFileModal: new UploadFileModal({
-                props: {
-                    isView: true,
-                    titleModal: 'Загрузите файл'
-                }
-            })
-        });
-    }
-
     override render(): string {
         return `
-                    <main class="page-profile">
+                    <main class="${s.pageProfile}">
                         <div class="left-panel">
                             <button class="button-row"></button>
                         </div>
-                        <div class="page-wrapper page-profile-content">
+                        <div class="${s.pageProfileContent}">
                             {{{AvatarUser}}}
-                            <h1 class="user-name">Дмитрий</h1>
+                            <h1 class="${s.userName}">Дмитрий</h1>
                             <div class="user-info">
                                 {{{UserInfoItemEmail}}}
                                 <div class="${s.userInfoBorder}"></div>
