@@ -65,8 +65,12 @@ export class UploadFileModal extends Block {
                         {{#if isView}}
                             <div class="${s.overlayPanel}">
                                 <div class="${s.modal}">
-                                    <h1>{{titleModal}}</h1>
-                                    
+                                    <form class="${s.form}">
+                                        <h1 class="${s.titleModal}">{{titleModal}}</h1>
+                                        {{{null}}}
+                                        {{Button}}
+                                        {{Error}}
+                                    </form>
                                 </div>
                             </div>
                         {{/if}}
