@@ -4,6 +4,7 @@ import {UserService} from "../../services/UserService/UserService.ts";
 import {Link} from "../../components/Link/Link.ts";
 import {AvatarUser} from "../../components/AvatarUser";
 import s from "./ProfilePage.module.pcss";
+import {UploadFileModal} from "../../modals/UploadFileModal";
 
 export class ProfilePage extends Block {
     userService: UserService;
@@ -14,6 +15,9 @@ export class ProfilePage extends Block {
                 AvatarUser: new AvatarUser({
                     props: {
                         imgUrl: '/images/profile.png'
+                    },
+                    events: {
+                        click: () => this.changeAvatar()
                     }
                 }),
                 LinkChangeData: new Link({
@@ -46,6 +50,17 @@ export class ProfilePage extends Block {
         this.setChildren(userInfoItems);
     }
 
+    changeAvatar(): void {
+        this.setChildren({
+            UploadFileModal: new UploadFileModal({
+                props: {
+                    isView: true,
+                    titleModal: 'Загрузите файл'
+                }
+            })
+        });
+    }
+
     override render(): string {
         return `
                     <main class="page-profile">
@@ -76,6 +91,7 @@ export class ProfilePage extends Block {
                                 </footer>
                             </div>
                         </div>
+                        {{{UploadFileModal}}}
                     </main>
                 `;
     }
