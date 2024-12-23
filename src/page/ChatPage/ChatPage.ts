@@ -52,7 +52,8 @@ export class ChatPage extends Block {
 
     protected override componentDidMount() {
         const chatList: DialogItem[] = this.chatService.getDialogItems();
-        this.setLists({ChatList: chatList})
+        const messageList: DialogItem[] = this.chatService.getMessageItems('1');
+        this.setLists({ChatList: chatList, MessageList: messageList})
     }
 
     override render(): string {
@@ -73,7 +74,7 @@ export class ChatPage extends Block {
                             {{{ButtonIconMenu}}}
                         </div>
                         <div class="${s.correspondence}">
-                             В разработке 
+                             {{{MessageList}}}
                         </div>
                         <form class="${s.sendMsgForm}" name="send-msg-form">
                             {{{ButtonIconClip}}}

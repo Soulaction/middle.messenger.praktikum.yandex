@@ -15,7 +15,7 @@ export class ButtonIcon extends Block {
     }
 
     override render(): string {
-        return `<button class="${s.button} {{className}}">
+        return `<button class="${s.button} {{className}}" type="button">
                     <img class="${s.icon}" src="{{iconLink}}" alt="Иконка кнопки"/>
                 </button`;
     }
