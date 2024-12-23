@@ -5,6 +5,7 @@ import {Button} from "../../components/Button/Button.ts";
 import {checkEqualPassword} from "../../utils/utils.ts";
 import s from "./ChangePassword.module.pcss";
 import {AvatarUser} from "../../components/AvatarUser";
+import {CircleButton} from "../../components/CircleButton/CircleButton";
 
 export type FormDataChangePassword = {
     oldPassword: string;
@@ -53,6 +54,11 @@ export class ChangePasswordPage extends Block {
                         inputChange: () => checkEqualPassword(validationService)
                     }
                 }),
+                CircleButton: new CircleButton({
+                    props: {
+                        type: 'button'
+                    }
+                }),
                 Button: new Button({
                     props: {
                         label: 'Сохранить'
@@ -87,7 +93,7 @@ export class ChangePasswordPage extends Block {
         return `
                 <main class="page-profile">
                     <div class="left-panel">
-                        <button class="button-row"></button>
+                        {{{CircleButton}}}
                     </div>
                     <div class="page-wrapper page-profile-content">
                         {{{AvatarUser}}}

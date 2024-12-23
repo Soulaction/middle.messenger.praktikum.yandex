@@ -1,15 +1,24 @@
 import Block from "../../framework/Block.ts";
 import s from "./ChatPage.module.pcss";
-import {ChatApi} from "../../api/ChatApi";
 import {ChatService} from "../../services/ChatService/ChatService";
 import {DialogItem} from "../../components/DialogItem/DialogItem";
+import {CircleButton} from "../../components/CircleButton/CircleButton";
 
 
 export class ChatPage extends Block {
     chatService: ChatService;
 
     constructor() {
-        super();
+        super({
+            children: {
+                CircleButton: new CircleButton({
+                    props: {
+                        className: s.sendMsgSubmit,
+                        type: 'submit'
+                    }
+                })
+            }
+        });
         this.chatService = new ChatService();
     }
 
@@ -31,7 +40,7 @@ export class ChatPage extends Block {
                         </div>
                         <form class="${s.sendMsgForm}" name="send-msg-form">
                             <input class="send-msg-input" name="message" placeholder="Сообщение"/>
-                            <button class="button-row send-msg-submit" type="submit"></button>
+                            {{{CircleButton}}}
                         </form>
                     </div>
                 </main>`;

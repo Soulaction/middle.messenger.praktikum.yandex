@@ -5,6 +5,7 @@ import {Link} from "../../components/Link/Link.ts";
 import {AvatarUser} from "../../components/AvatarUser";
 import s from "./ProfilePage.module.pcss";
 import {UploadFileModal} from "../../modals/UploadFileModal";
+import {CircleButton} from "../../components/CircleButton/CircleButton";
 
 export class ProfilePage extends Block {
     userService: UserService;
@@ -46,6 +47,11 @@ export class ProfilePage extends Block {
                         link: '#'
                     }
                 }),
+                CircleButton: new CircleButton({
+                    props: {
+                        type: 'button'
+                    }
+                }),
                 UploadFileModal: uploadFileModal
             },
         });
@@ -62,7 +68,7 @@ export class ProfilePage extends Block {
         return `
                     <main class="${s.pageProfile}">
                         <div class="left-panel">
-                            <button class="button-row"></button>
+                            {{{CircleButton}}}
                         </div>
                         <div class="${s.pageProfileContent}">
                             {{{AvatarUser}}}

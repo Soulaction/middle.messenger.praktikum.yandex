@@ -4,6 +4,7 @@ import {InputFormProfile} from "../../components/InputFormProfile/InputFormProfi
 import {Button} from "../../components/Button/Button.ts";
 import s from "./ProfileEditPage.module.pcss";
 import {AvatarUser} from "../../components/AvatarUser";
+import {CircleButton} from "../../components/CircleButton/CircleButton";
 
 export type FormDataProfileEdite = {
     email: string;
@@ -80,6 +81,11 @@ export class ProfileEditedPage extends Block {
                         validationService
                     }
                 }),
+                CircleButton: new CircleButton({
+                    props: {
+                        type: 'button'
+                    }
+                }),
                 Button: new Button({
                     props: {
                         label: 'Сохранить'
@@ -129,7 +135,7 @@ export class ProfileEditedPage extends Block {
         return `
                 <main class="page-profile">
                     <div class="left-panel">
-                        <button class="button-row"></button>
+                        {{{CircleButton}}}
                     </div>
                     <div class="page-wrapper page-profile-content">
                         {{{AvatarUser}}}
