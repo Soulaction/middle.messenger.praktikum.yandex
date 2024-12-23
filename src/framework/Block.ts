@@ -118,7 +118,6 @@ export default class Block {
         fragment.innerHTML = Handlebars.compile<PropsForHandlebars>(this.render())(propsForHandlebars);
 
         Object.entries(this.lists).forEach(([, child]) => {
-            debugger
             const listCont = this._createDocumentElement('template');
             child.forEach(item => {
                 listCont.content.append(item.getContent());

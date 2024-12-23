@@ -19,17 +19,17 @@ export class ChatPage extends Block {
     }
 
     override render(): string {
-        return `<main class="page-chats-wrapper">
-                    <div class="left-panel-chat">
-                        <ul class="list-chat">
+        return `<main class="${s.pageChatsWrapper}">
+                    <div class="${s.leftPanelChat}">
+                        <ul class="${s.listChat}">
                                 {{{ChatList}}}
                         </ul>
                     </div>
-                    <div class="chat">
+                    <div class="${s.chat}">
                         <div class="correspondence">
                              В разработке 
                         </div>
-                        <form class="send-msg-form" name="send-msg-form">
+                        <form class="${s.sendMsgForm}" name="send-msg-form">
                             <input class="send-msg-input" name="message" placeholder="Сообщение"/>
                             <button class="button-row send-msg-submit" type="submit"></button>
                         </form>

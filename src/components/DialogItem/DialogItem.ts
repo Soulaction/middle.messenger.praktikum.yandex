@@ -1,5 +1,6 @@
 import Block from "../../framework/Block.ts";
 import {BlockProperties} from "../../framework/types/BlockProps.ts";
+import s from "./DialogItem.module.pcss";
 
 type ChatProps = {
     iconChatLink: string;
@@ -17,16 +18,16 @@ export class DialogItem extends Block {
     }
 
     override render(): string {
-        return `<li class="chat-item">
-                    <img class="chat-icon" src="{{iconChatLink}}" alt="Иконка чата"/>
-                    <div class="chat-block">
-                        <div class="chat-info">
-                            <h2 class="chat-name-chat">{{nameChat}}</h2>
-                            <p class="chat-last-msg"><span class="chat-last-msg-me">Вы: </span>{{lastMsg}}</p>
+        return `<li class="${s.chatItem}">
+                    <img class="${s.chatIcon}" src="{{iconChatLink}}" alt="Иконка чата"/>
+                    <div class="${s.chatBlock}">
+                        <div class="${s.chatInfo}">
+                            <h2 class="${s.chatNameChat}">{{nameChat}}</h2>
+                            <p class="${s.chatLastMsg}"><span class="${s.chatLastMsgMe}">Вы: </span>{{lastMsg}}</p>
                         </div>
-                        <div class="chat-content">
-                            <span class="chat-time">{{time}}</span>
-                            <span class="chat-count-msg">{{countMsg}}</span>
+                        <div class="${s.chatContent}">
+                            <span class="${s.chatTime}">{{time}}</span>
+                            <span class="${s.chatCountMsg}">{{countMsg}}</span>
                         </div>
                     </div>
                 </li>`;
