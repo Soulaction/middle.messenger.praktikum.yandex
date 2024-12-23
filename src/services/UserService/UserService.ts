@@ -20,35 +20,35 @@ export class UserService {
                 }
             }),
             UserInfoItemLogin: new UserInfoItem({
-                    props: {
-                        label: 'Логин',
-                        value: user.login,
-                    }
-                }),
+                props: {
+                    label: 'Логин',
+                    value: user.login,
+                }
+            }),
             UserInfoItemFirstName: new UserInfoItem({
-                    props: {
-                        label: 'Имя',
-                        value: user.firstName,
-                    }
-                }),
+                props: {
+                    label: 'Имя',
+                    value: user.firstName,
+                }
+            }),
             UserInfoItemSecondName: new UserInfoItem({
-                    props: {
-                        label: 'Фамилия',
-                        value: user.secondName,
-                    }
-                }),
+                props: {
+                    label: 'Фамилия',
+                    value: user.secondName,
+                }
+            }),
             UserInfoItemNikName: new UserInfoItem({
-                    props: {
-                        label: 'Имя в чате',
-                        value: user.nikName,
-                    }
-                }),
+                props: {
+                    label: 'Имя в чате',
+                    value: user.nikName,
+                }
+            }),
             UserInfoItemPhone: new UserInfoItem({
-                    props: {
-                        label: 'Телефон',
-                        value: user.phone,
-                    }
-                })
-    };
+                props: {
+                    label: 'Телефон',
+                    value: user.phone,
+                }
+            })
+        };
     }
 }

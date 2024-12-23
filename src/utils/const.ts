@@ -1,13 +1,15 @@
 export const chats = [
     {
-        iconChatLink: '/images/img-Chat.png',
+        id: crypto.randomUUID(),
+        iconChatLink: '/images/img-chat.png',
         nameChat: 'Андрей',
         lastMsg: 'Привет',
         time: '10:49',
         countMsg: 2
     },
     {
-        iconChatLink: '/images/img-Chat.png',
+        id: crypto.randomUUID(),
+        iconChatLink: '/images/img-chat.png',
         nameChat: 'Андрей',
         lastMsg: 'Привет',
         time: '10:40',

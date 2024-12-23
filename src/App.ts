@@ -1,5 +1,6 @@
 import {ErrorPage, ChangePasswordPage, LoginPage, ProfilePage, RegistrationPage} from "./page";
 import {ProfileEditedPage} from "./page/ProfileEditPage";
+import {ChatPage} from "./page/ChatPage/ChatPage";
 
 export class App {
     appContainer: HTMLDivElement;
@@ -15,18 +16,16 @@ export class App {
     }
 
     render(): void {
-
-
         switch (this.state.urlPage) {
             case '/registration':
                 const regPage = new RegistrationPage();
                 this.appContainer.replaceWith(regPage.getContent());
                 regPage.dispatchComponentDidMount();
                 break;
-            case '/chats':
-                // const chatsPage = new RegistrationPage();
-                // this.appContainer.replaceWith(chatsPage.getContent());
-                // regPage.dispatchComponentDidMount();
+            case '/chat':
+                const chatsPage = new ChatPage();
+                this.appContainer.replaceWith(chatsPage.getContent());
+                chatsPage.dispatchComponentDidMount();
                 break;
             case '/':
             case '/login':
