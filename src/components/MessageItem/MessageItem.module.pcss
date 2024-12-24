@@ -1,5 +1,14 @@
+.data-msg {
+    margin: 38px 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    color: var(--grey-color);
+}
+
 .message {
-    max-width: 402px;
+    margin-bottom: 10px;
 }
 
 .message-me {
@@ -8,18 +17,19 @@
 
 .message-img-block {
     position: relative;
+    width: fit-content;
 }
 
 .message-img {
     display: block;
     object-fit: contain;
-    width: 100%;
     border: 1px solid #eaeaea;
     border-radius: 12px;
 }
 
 .message-img-date {
     position: absolute;
+    max-width: 402px;
     border-radius: 30px;
     font-size: 11px;
     line-height: 11px;
@@ -31,6 +41,7 @@
 }
 
 .message-text {
+    max-width: 402px;
     border-radius: 0 12px 12px 12px;
     padding: 11px;
     font-size: 14px;
@@ -46,5 +57,17 @@
 }
 
 .message-text-date {
+    color: var(--grey-color);
+}
 
+.message-text-date-me {
+    color: var(--main-color);
+}
+
+.text-date {
+    display: inline-block;
+    font-size: 11px;
+    line-height: 11px;
+    float: right;
+    margin: 5px 3px 0 4px;
 }
