@@ -1,21 +1,48 @@
 .message {
+    max-width: 402px;
+}
 
+.message-me {
+    align-self: end;
 }
 
 .message-img-block {
-
+    position: relative;
 }
 
 .message-img {
-
+    display: block;
+    object-fit: contain;
+    width: 100%;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
 }
 
 .message-img-date {
-
+    position: absolute;
+    border-radius: 30px;
+    font-size: 11px;
+    line-height: 11px;
+    background-color: #afafaf;
+    color: #fff;
+    padding: 2px 7px;
+    right: 11px;
+    bottom: 11px;
 }
 
 .message-text {
+    border-radius: 0 12px 12px 12px;
+    padding: 11px;
+    font-size: 14px;
+    line-height: 15px;
+    white-space: pre-line;
+    color: #1e1e1e;
+    background-color: #f8f8f8;
+}
 
+.message-text-me {
+    border-radius: 12px 12px 0 12px;
+    background-color: #e4edfd;
 }
 
 .message-text-date {

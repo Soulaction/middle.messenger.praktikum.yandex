@@ -18,16 +18,17 @@ export class MessageItem extends Block {
     }
 
     override render(): string {
-        return `<div class="${s.message}">
+        return `<div class="${s.message} {{#if meMessage}}${s.messageMe}{{/if}}">
                     {{#if linkImg}}
                         <div class="${s.messageImgBlock}">
                             <img class="${s.messageImg}" src="{{linkImg}}" alt="Сообщение с картинкой"/>
                             <span class="${s.messageImgDate}">{{dateMsg}}</span>
                         </div>
                     {{else}}
-                        <p class="${s.messageText}">
+                        <p class="${s.messageText} {{#if meMessage}}${s.messageTextMe}{{/if}}">
                             {{text}}
                             <span class="${s.messageTextDate}">{{dateMsg}}</span>
+                            dsdnsldvlskdnvksldvnkslvs
                         </p>
                     {{/if}}
                 </div>`;
