@@ -7,6 +7,7 @@ import {FormDataRegistration} from "../../page/Registration/RegistrationPage.ts"
 import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 
 type InputFormProps<T> = {
+    className?: string;
     label: string;
     name: string;
     type?: string;
@@ -18,6 +19,9 @@ type InputFormProps<T> = {
 export class InputForm<T> extends Block {
     constructor(inputFormProps: BlockProperties<InputFormProps<T>>) {
         super({
+            props: {
+                className: inputFormProps.props?.className ?? ''
+            },
             children: {
                 Label: new Label({
                     props: {
@@ -48,7 +52,7 @@ export class InputForm<T> extends Block {
 
     override render(): string {
         return `
-                <div class="input-wrapper">
+                <div class="input-wrapper {{className}}">
                         {{{Label}}}
                         {{{Input}}}
                         {{{Error}}}

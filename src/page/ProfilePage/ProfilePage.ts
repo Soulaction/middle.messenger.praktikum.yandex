@@ -4,17 +4,22 @@ import {UserService} from "../../services/UserService/UserService.ts";
 import {Link} from "../../components/Link/Link.ts";
 import {AvatarUser} from "../../components/AvatarUser";
 import s from "./ProfilePage.module.pcss";
-import {UploadFileModal} from "../../modals/UploadFileModal";
+import {UploadFileModal} from "../../modals/UploadFileModal/UploadFileModal.ts";
 import {CircleButton} from "../../components/CircleButton/CircleButton";
+import {Modal} from "../../components/Modal/Modal.ts";
 
 export class ProfilePage extends Block {
     userService: UserService;
 
 
     constructor() {
-        const uploadFileModal = new UploadFileModal({
-            props: {
-                titleModal: 'Загрузите файл'
+        const uploadFileModal = new Modal({
+            children: {
+                ContentModal: new UploadFileModal({
+                    props: {
+                        titleModal: 'Загрузите файл'
+                    }
+                })
             }
         });
 

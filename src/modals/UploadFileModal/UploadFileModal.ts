@@ -1,10 +1,10 @@
-import Block from "../framework/Block";
-import {Button} from "../components/Button/Button";
-import {ErrorMessage} from "../components/ErrorMessage/ErrorMessage";
-import {ValidationFormService} from "../services/AuthorizationService/ValidationFormService";
-import {BlockProperties} from "../framework/types/BlockProps";
+import Block from "../../framework/Block.ts";
+import {Button} from "../../components/Button/Button.ts";
+import {ErrorMessage} from "../../components/ErrorMessage/ErrorMessage.ts";
+import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
+import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import s from "./UploadFileModal.module.pcss";
-import {UploadButton} from "../components/UploadButton/UploadButton.ts";
+import {UploadButton} from "../../components/UploadButton/UploadButton.ts";
 
 type FormDataFile = {
     file: string;
@@ -50,13 +50,9 @@ export class UploadFileModal extends Block {
                         validationFormService: validationService
                     }
                 }),
-            },
-            events: {
-                click: event => this.hideModal(event)
             }
         });
         this.validationService = validationService;
-        super.hide()
     }
 
     override componentDidMount() {
@@ -69,36 +65,14 @@ export class UploadFileModal extends Block {
         });
     }
 
-    openModel(): void {
-        this.show();
-    }
-
-    override show(): void {
-        const content = this.getContent();
-        if (content) {
-            content.style.display = 'flex';
-        }
-    }
-
-    hideModal(event: Event): void {
-        if (event.target === event.currentTarget) {
-            super.hide()
-        }
-
-    }
-
     override render(): string {
         return `
-                 <div class="${s.overlayPanel}">
-                     <div class="${s.modal}">
-                         <form class="${s.form}" name="upload-file">
-                             <h1 class="${s.titleModal}">{{titleModal}}</h1>
-                             {{{UploadButton}}}
-                             {{{Button}}}
-                             {{{Error}}}
-                         </form>
-                     </div>
-                 </div>
+                 <form class="form-modal" name="upload-file">
+                     <h1 class="title-modal">{{titleModal}}</h1>
+                     {{{UploadButton}}}
+                     {{{Button}}}
+                     {{{Error}}}
+                 </form>
                 `;
     }
 }

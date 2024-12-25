@@ -11,6 +11,9 @@ import addIcon from "/icons/add.svg?url";
 import deleteIcon from "/icons/delete.svg?url";
 import fileIcon from "/icons/file.svg?url";
 import locationIcon from "/icons/location.svg?url";
+import {Modal} from "../../components/Modal/Modal.ts";
+import {AddUserModal} from "../../modals/AddUserModal/AddUserModal.ts";
+import {RemoveUserModal} from "../../modals/RemoveUserModal/RemoveUserModal.ts";
 
 export class ChatPage extends Block {
     chatService: ChatService;
@@ -18,16 +21,28 @@ export class ChatPage extends Block {
     contextMenuChat: ContextMenu;
 
     constructor() {
+        const addUserModal = new Modal({
+            children: {
+                ContentModal: new AddUserModal()
+            }
+        });
+
+        const removeUserModal = new Modal({
+            children: {
+                ContentModal: new RemoveUserModal()
+            }
+        });
+
         const menuItemClip: MenuItem[] = [
             {
                 iconURL: fileIcon,
                 text: 'Файл',
-                event: () => this.showModalAddUser()
+                event: () => {}
             },
             {
                 iconURL: locationIcon,
                 text: 'Локация',
-                event: () => this.showModalDeleteUser()
+                event: () => {}
             }
         ];
 
@@ -41,12 +56,12 @@ export class ChatPage extends Block {
             {
                 iconURL: addIcon,
                 text: 'Добавить пользователя',
-                event: () => this.showModalAddUser()
+                event: () => addUserModal.openModel()
             },
             {
                 iconURL: deleteIcon,
                 text: 'Удалить пользователя',
-                event: () => this.showModalDeleteUser()
+                event: () => removeUserModal.openModel()
             }
         ];
 
@@ -55,7 +70,6 @@ export class ChatPage extends Block {
                 items: menuItem
             }
         });
-
 
         super({
             props: {
@@ -98,7 +112,9 @@ export class ChatPage extends Block {
                     }
                 }),
                 ContextMenuClip,
-                ContextMenuChat
+                ContextMenuChat,
+                AddUserModal: addUserModal,
+                RemoveUserModal: removeUserModal,
             }
         });
         this.chatService = new ChatService();
@@ -130,14 +146,6 @@ export class ChatPage extends Block {
         this.contextMenuClip.openContextMenu({bottom, left});
     }
 
-    showModalAddUser(): void {
-
-    }
-
-    showModalDeleteUser(): void {
-
-    }
-
     override render(): string {
         return `<main class="${s.pageChatsWrapper}">
                     <div class="${s.leftPanelChat}">
@@ -164,9 +172,10 @@ export class ChatPage extends Block {
                             {{{CircleButton}}}
                         </form>
                     </div>
-                    {{{ContextMenu}}}
                     {{{ContextMenuClip}}}
                     {{{ContextMenuChat}}}
+                    {{{AddUserModal}}}
+                    {{{RemoveUserModal}}}
                 </main>`;
     }
 }

@@ -1,6 +1,7 @@
 import Block from "../../framework/Block.ts";
 import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import s from "./ContextMenu.module.pcss";
+import {ContextMenuItem} from "../ContextMenuItem/ContextMenuItem.ts";
 
 export type PositionContextMenu = {
     top?: number;
@@ -23,6 +24,19 @@ export class ContextMenu extends Block {
     constructor(contextMenuProps: BlockProperties<ContextMenuProps>) {
         super({
             ...contextMenuProps,
+            lists: {
+                MenuItems: contextMenuProps.props!.items.map(item => {
+                    return new ContextMenuItem({
+                        props: {
+                            iconURL: item.iconURL,
+                            text: item.text,
+                        },
+                        events: {
+                            click: item.event
+                        }
+                    })
+                })
+            },
             events: {
                 click: () => this.hideContextMenu()
             }
@@ -47,12 +61,7 @@ export class ContextMenu extends Block {
                                    {{#if left}}left: {{left}}px;{{/if}}
                                    {{#if right}}right: {{right}}px;{{/if}}
                                    {{#if bottom}}bottom: {{bottom}}px;{{/if}}">
-                            {{#each items}}
-                                <li class="${s.contextListItem}">
-                                    <img class="${s.listItemIcon}" src="{{this.iconURL}}" alt="Иконка кнопки"/>
-                                    {{this.text}}
-                                </li>
-                            {{/each}}
+                                {{{MenuItems}}}
                         </ul
                     </div>
                 `;
