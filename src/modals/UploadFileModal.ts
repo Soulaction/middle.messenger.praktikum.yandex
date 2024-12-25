@@ -71,7 +71,6 @@ export class UploadFileModal extends Block {
 
     openModel(): void {
         this.show();
-
     }
 
     override show(): void {
