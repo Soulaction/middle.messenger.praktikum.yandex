@@ -18,7 +18,7 @@ export class CreateChatModal extends Block {
                 titleModal: 'Создать чат'
             },
             children: {
-                InputFormLogin: new InputForm<FormDataCreateChat>({
+                InputFormName: new InputForm<FormDataCreateChat>({
                     props: {
                         label: 'Наименование чата',
                         name: 'name',
@@ -57,9 +57,8 @@ export class CreateChatModal extends Block {
         return `
                  <form class="form-modal" name="chat-create">
                      <h1 class="title-modal">{{titleModal}}</h1>
-                     {{{UploadButton}}}
+                     {{{InputFormName}}}
                      {{{Button}}}
-                     {{{Error}}}
                  </form>
                 `;
     }
