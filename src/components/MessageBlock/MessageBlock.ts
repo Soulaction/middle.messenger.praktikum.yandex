@@ -12,13 +12,18 @@ import {AddUserModal} from "../../modals/AddUserModal/AddUserModal.ts";
 import {RemoveUserModal} from "../../modals/RemoveUserModal/RemoveUserModal.ts";
 import {MessageItem} from "../MessageItem/MessageItem.ts";
 import {ChatService} from "../../services/ChatService/ChatService.ts";
+import {BlockProperties} from "../../framework/types/BlockProps";
+
+export type MessageBlockProps = {
+    MessageList: MessageItem[];
+}
 
 export class MessageBlock extends Block {
     chatService: ChatService;
     contextMenuClip: ContextMenu;
     contextMenuChat: ContextMenu;
 
-    constructor() {
+    constructor(messageBlockProps: BlockProperties<MessageBlockProps>) {
         const addUserModal = new Modal({
             children: {
                 ContentModal: new AddUserModal()
@@ -102,6 +107,9 @@ export class MessageBlock extends Block {
                 ContextMenuChat,
                 AddUserModal: addUserModal,
                 RemoveUserModal: removeUserModal,
+            },
+            lists: {
+                MessageList: messageBlockProps.props.MessageList
             }
         });
         this.contextMenuClip = ContextMenuClip;

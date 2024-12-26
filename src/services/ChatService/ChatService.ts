@@ -13,12 +13,23 @@ export class ChatService {
 
     getDialogItems(): DialogItem[] {
         const chats: Chat[] = this.chatApi.getChats();
-        return chats.map(chat => {
-            return new DialogItem({
-                props: {
-                    ...chat
-                }
-            })
+        return chats.map((chat, index) => {
+            if(!index) {
+                return new DialogItem({
+                    props: {
+                        ...chat,
+                        selected: true
+                    }
+                })
+            } else {
+                return new DialogItem({
+                    props: {
+                        ...chat,
+                        selected: false
+                    }
+                })
+            }
+
         })
     };
 

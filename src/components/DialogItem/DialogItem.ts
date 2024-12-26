@@ -4,6 +4,7 @@ import s from "./DialogItem.module.pcss";
 
 type ChatProps = {
     iconChatLink: string;
+    selected?: boolean;
     nameChat: string;
     lastMsg: string;
     time: string;
@@ -18,7 +19,7 @@ export class DialogItem extends Block {
     }
 
     override render(): string {
-        return `<li class="${s.chatItem}">
+        return `<li class="${s.chatItem} {{#if selected}}${s.chatItemSelected}{{\if}}">
                     <img class="${s.chatIcon}" src="{{iconChatLink}}" alt="Иконка чата"/>
                     <div class="${s.chatBlock}">
                         <div class="${s.chatInfo}">
