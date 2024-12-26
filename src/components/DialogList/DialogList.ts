@@ -1,17 +1,19 @@
 import Block from "../../framework/Block.ts";
 import s from "./DialogList.module.pcss";
-import {ChatService} from "../../services/ChatService/ChatService";
 import {DialogItem} from "../DialogItem/DialogItem.ts";
 import {LinkProfile} from "../LinkProfile/LinkProfile.ts";
 import {SearchInput} from "../SearchInput/SearchInput.ts";
 import {Modal} from "../Modal/Modal.ts";
 import {CreateChatModal} from "../../modals/CreateChatModal/CreateChatModal.ts";
 import {ButtonIcon} from "../ButtonIcon/ButtonIcon.ts";
+import {BlockProperties} from "../../framework/types/BlockProps.ts";
+
+export type DialogListProps = {
+    ChatList: DialogItem[]
+}
 
 export class DialogList extends Block {
-    chatService: ChatService;
-
-    constructor() {
+    constructor(dialogListProps: BlockProperties<DialogListProps>) {
         const createChatModal = new Modal({
             children: {
                 ContentModal: new CreateChatModal()
@@ -40,14 +42,11 @@ export class DialogList extends Block {
                     }
                 }),
                 CreateChatModal: createChatModal
+            },
+            lists: {
+                ChatList: dialogListProps.props!.ChatList
             }
         });
-        this.chatService = new ChatService();
-    }
-
-    protected override componentDidMount() {
-        const chatList: DialogItem[] = this.chatService.getDialogItems();
-        this.setLists({ChatList: chatList})
     }
 
     override render(): string {

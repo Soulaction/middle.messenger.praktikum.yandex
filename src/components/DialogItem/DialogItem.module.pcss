@@ -1,10 +1,22 @@
 .chat-item {
-    display: flex;
-    padding: 12px 0;
-    border-bottom: 1px solid #eaeaea;
+    cursor: pointer;
 
-    &:first-of-type {
+    &:first-of-type::before, &::after{
+        content: "";
+        display: block;
         border-top: 1px solid #eaeaea;
+        width: 95%;
+        margin: 0 10px;
+    }
+
+    &:first-of-type::before{
+        margin-top: 4px;
+        transform: translateY(-2px);
+    }
+
+    &::after{
+        margin-bottom: 4px;
+        transform: translateY(2px);
     }
 }
 
@@ -22,7 +34,9 @@
 
 .chat-block {
     display: flex;
+    box-sizing: border-box;
     width: 100%;
+    padding: 12px 10px;
 }
 
 .chat-info {

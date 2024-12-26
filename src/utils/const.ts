@@ -48,5 +48,23 @@ export const message: Message[] = [
         newDay: null,
         dateMsg: '12:00',
         idChat: '1'
+    },
+    {
+        id: '11',
+        linkImg: null,
+        text: 'Привет!',
+        meMessage: false,
+        newDay: '19 июня',
+        dateMsg: '11:56',
+        idChat: '2'
+    },
+    {
+        id: '31',
+        linkImg: null,
+        text: 'Привет!',
+        meMessage: true,
+        newDay: null,
+        dateMsg: '12:00',
+        idChat: '2'
     }
 ];

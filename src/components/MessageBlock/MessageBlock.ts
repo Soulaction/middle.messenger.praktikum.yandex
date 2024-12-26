@@ -11,7 +11,6 @@ import {Modal} from "../Modal/Modal.ts";
 import {AddUserModal} from "../../modals/AddUserModal/AddUserModal.ts";
 import {RemoveUserModal} from "../../modals/RemoveUserModal/RemoveUserModal.ts";
 import {MessageItem} from "../MessageItem/MessageItem.ts";
-import {ChatService} from "../../services/ChatService/ChatService.ts";
 import {BlockProperties} from "../../framework/types/BlockProps";
 
 export type MessageBlockProps = {
@@ -19,7 +18,6 @@ export type MessageBlockProps = {
 }
 
 export class MessageBlock extends Block {
-    chatService: ChatService;
     contextMenuClip: ContextMenu;
     contextMenuChat: ContextMenu;
 
@@ -109,17 +107,11 @@ export class MessageBlock extends Block {
                 RemoveUserModal: removeUserModal,
             },
             lists: {
-                MessageList: messageBlockProps.props.MessageList
+                MessageList: messageBlockProps.props!.MessageList
             }
         });
         this.contextMenuClip = ContextMenuClip;
         this.contextMenuChat = ContextMenuChat;
-        this.chatService = new ChatService();
-    }
-
-    protected override componentDidMount() {
-        const messageList: MessageItem[] = this.chatService.getMessageItems('1');
-        this.setLists({MessageList: messageList})
     }
 
     showMenuChat(event: Event): void {

@@ -19,9 +19,9 @@ export class DialogItem extends Block {
     }
 
     override render(): string {
-        return `<li class="${s.chatItem} {{#if selected}}${s.chatItemSelected}{{\if}}">
-                    <img class="${s.chatIcon}" src="{{iconChatLink}}" alt="Иконка чата"/>
+        return `<li class="${s.chatItem} {{#if selected}}${s.chatItemSelected}{{/if}}">
                     <div class="${s.chatBlock}">
+                        <img class="${s.chatIcon}" src="{{iconChatLink}}" alt="Иконка чата"/>
                         <div class="${s.chatInfo}">
                             <h2 class="${s.chatNameChat}">{{nameChat}}</h2>
                             <p class="${s.chatLastMsg}"><span class="${s.chatLastMsgMe}">Вы: </span>{{lastMsg}}</p>
