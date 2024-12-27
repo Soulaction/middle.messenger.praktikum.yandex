@@ -51,21 +51,32 @@
     line-height: 12px;
 }
 
-.send-msg-form {
+.send-msg-input-block {
     display: flex;
+    margin-top: 11px;
     align-items: center;
+    width: 100%;
+}
+
+.error-msg {
+    margin-left: 60px;
 }
 
 .send-msg-input {
     display: block;
-    margin: 11px 10px;
+    margin: 0 10px;
     padding: 10px 20px;
+    box-sizing: border-box;
     border-radius: 30px;
     width: 100%;
     background-color: #efefef;
-    color: var(--grey-color);
+    color: black;
     border: none;
     outline: none;
+}
+
+.send-msg-input::placeholder {
+    color: var(--grey-color);
 }
 
 .send-msg-submit {

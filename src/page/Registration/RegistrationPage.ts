@@ -138,6 +138,7 @@ export class RegistrationPage extends Block {
 
     registration(event: Event): void {
         event.preventDefault();
+        this.validationService.checkValidity();
         console.log(this.validationService.getFormValue());
     }
 

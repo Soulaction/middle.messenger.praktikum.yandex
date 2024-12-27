@@ -12,6 +12,15 @@ import {RemoveUserModal} from "../../modals/RemoveUserModal/RemoveUserModal.ts";
 import {MessageItem} from "../MessageItem/MessageItem.ts";
 import Block from "../../core/Block/Block.ts";
 import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
+import {ErrorMessage} from "../ErrorMessage/ErrorMessage.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import {errorsForm} from "../../utils/const.ts";
+
+
+type FormDataMessageBlock = {
+    message: string;
+}
+
 
 export type MessageBlockProps = {
     chatIcon: string;
@@ -20,11 +29,13 @@ export type MessageBlockProps = {
 }
 
 export class MessageBlock extends Block {
+    validationService: ValidationForm<FormDataMessageBlock>;
     contextMenuClip: ContextMenu;
     contextMenuChat: ContextMenu;
     isNotMsg: boolean;
 
     constructor(messageBlockProps: BlockProperties<MessageBlockProps>) {
+        const validationService = new ValidationForm<FormDataMessageBlock>();
         const addUserModal = new Modal({
             children: {
                 ContentModal: new AddUserModal()
@@ -100,10 +111,20 @@ export class MessageBlock extends Block {
                         click: event => this.showMenuClip(event)
                     }
                 }),
+                ErrorMessage: new ErrorMessage<FormDataMessageBlock>({
+                    props: {
+                        className: s.errorMsg,
+                        formName: 'message',
+                        validationFormService: validationService
+                    }
+                }),
                 CircleButton: new CircleButton({
                     props: {
                         className: s.sendMsgSubmit,
                         type: 'submit'
+                    },
+                    events: {
+                        click: (event: Event) => this.sendMessage(event)
                     }
                 }),
                 ContextMenuClip,
@@ -117,7 +138,22 @@ export class MessageBlock extends Block {
         });
         this.contextMenuClip = ContextMenuClip;
         this.contextMenuChat = ContextMenuChat;
+        this.validationService = validationService;
         this.isNotMsg = isNotMsg;
+    }
+
+    override componentDidMount() {
+        this.validationService.init('send-msg', {
+            message: {
+                errors: errorsForm['message']
+            }
+        });
+    }
+
+    sendMessage(event: Event): void {
+        event.preventDefault();
+        this.validationService.checkValidity();
+        console.log(this.validationService.getFormValue());
     }
 
     showMenuChat(event: Event): void {
@@ -154,10 +190,14 @@ export class MessageBlock extends Block {
                           <h2 class="${s.noMessageTitle}">Нет сообщений, начните диалог</h2>
                      </div>
                      {{/if}}
-                     <form class="${s.sendMsgForm}" name="send-msg-form">
-                         {{{ButtonIconClip}}}
-                         <input class="${s.sendMsgInput}" name="message" placeholder="Сообщение"/>
-                         {{{CircleButton}}}
+                     <form class="${s.sendMsgForm}" name="send-msg">
+                         <div  class="${s.sendMsgInputBlock}">
+                            {{{ButtonIconClip}}}
+                            <input class="${s.sendMsgInput}" name="message" placeholder="Сообщение"/>
+                            {{{CircleButton}}}
+                         </div>
+                         
+                         {{{ErrorMessage}}}
                      </form>
                   
                     {{{ContextMenuClip}}}

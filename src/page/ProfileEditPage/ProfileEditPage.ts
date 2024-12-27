@@ -5,6 +5,8 @@ import {AvatarUser} from "../../components/AvatarUser";
 import {CircleButton} from "../../components/CircleButton/CircleButton";
 import Block from "../../core/Block/Block.ts";
 import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import {errorsForm} from "../../utils/const.ts";
+import {navigate} from "../../utils/utils.ts";
 
 export type FormDataProfileEdite = {
     email: string;
@@ -84,11 +86,18 @@ export class ProfileEditedPage extends Block {
                 CircleButton: new CircleButton({
                     props: {
                         type: 'button'
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/chat', event)
                     }
                 }),
                 Button: new Button({
                     props: {
-                        label: 'Сохранить'
+                        label: 'Сохранить',
+                        type: 'submit'
+                    },
+                    events: {
+                        click: (event: Event) => this.save(event)
                     }
                 })
             }
@@ -99,36 +108,27 @@ export class ProfileEditedPage extends Block {
     override componentDidMount() {
         this.validationService.init('edit-profile', {
             email: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['email']
             },
             login: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['login']
             },
             first_name: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['first_name']
             },
             second_name: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
-            },
-            display_name: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['second_name']
             },
             phone: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['phone']
             }
         });
+    }
+
+    save(event: Event): void {
+        event.preventDefault();
+        this.validationService.checkValidity();
+        console.log(this.validationService.getFormValue());
     }
 
     override render(): string {

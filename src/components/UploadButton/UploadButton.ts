@@ -23,7 +23,7 @@ export class UploadButton extends Block {
 
     uploadFile(event: Event): void {
         const inputHTML: HTMLInputElement = event.target as HTMLInputElement;
-        console.log(inputHTML);
+        console.dir(inputHTML);
     }
 
     override render(): string {

@@ -41,7 +41,7 @@ export class InputFormProfile<T> extends Block {
                         formName: inputFormProfileProps.props?.name ?? '',
                         validationFormService: inputFormProfileProps.props!.validationService
                     }
-                }),
+                })
             }
         });
     }

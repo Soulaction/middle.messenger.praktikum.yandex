@@ -1,11 +1,12 @@
 import {InputFormProfile} from "../../components/InputFormProfile/InputFormProfile.ts";
 import {Button} from "../../components/Button/Button.ts";
-import {checkEqualPassword} from "../../utils/utils.ts";
+import {checkEqualPassword, navigate} from "../../utils/utils.ts";
 import s from "./ChangePassword.module.pcss";
 import {AvatarUser} from "../../components/AvatarUser";
 import {CircleButton} from "../../components/CircleButton/CircleButton";
 import Block from "../../core/Block/Block.ts";
 import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import {errorsForm} from "../../utils/const.ts";
 
 export type FormDataChangePassword = {
     oldPassword: string;
@@ -57,11 +58,18 @@ export class ChangePasswordPage extends Block {
                 CircleButton: new CircleButton({
                     props: {
                         type: 'button'
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/chat', event)
                     }
                 }),
                 Button: new Button({
                     props: {
-                        label: 'Сохранить'
+                        label: 'Сохранить',
+                        type: 'submit'
+                    },
+                    events: {
+                        click: (event: Event) => this.save(event)
                     }
                 })
             }
@@ -72,21 +80,21 @@ export class ChangePasswordPage extends Block {
     override componentDidMount() {
         this.validationService.init('edit-password', {
             oldPassword: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['password']
             },
             password: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['password']
             },
             password_again: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['password']
             }
         });
+    }
+
+    save(event: Event): void {
+        event.preventDefault();
+        this.validationService.checkValidity();
+        console.log(this.validationService.getFormValue());
     }
 
     override render(): string {

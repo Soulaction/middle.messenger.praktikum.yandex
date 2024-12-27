@@ -31,11 +31,11 @@ export class RemoveUserModal extends Block {
                 Button: new Button({
                     props: {
                         label: 'Удалить',
-                        type: 'reset',
+                        type: 'submit',
                         class: 'submit-btn-modal'
                     },
                     events: {
-                        click: () => this.validationService.checkValidity()
+                        click: (event: Event) => this.deleteUser(event)
                     }
                 })
             }
@@ -51,6 +51,12 @@ export class RemoveUserModal extends Block {
                 }
             }
         });
+    }
+
+    deleteUser(event: Event): void {
+        event.preventDefault();
+        this.validationService.checkValidity();
+        console.log(this.validationService.getFormValue());
     }
 
     override render(): string {

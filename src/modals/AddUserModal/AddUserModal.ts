@@ -31,11 +31,11 @@ export class AddUserModal extends Block {
                 Button: new Button({
                     props: {
                         label: 'Поменять',
-                        type: 'reset',
+                        type: 'submit',
                         class: 'submit-btn-modal'
                     },
                     events: {
-                        click: () => this.validationService.checkValidity()
+                        click: (event: Event) => this.addUser(event)
                     }
                 })
             }
@@ -51,6 +51,12 @@ export class AddUserModal extends Block {
                 }
             }
         });
+    }
+
+    addUser(event: Event): void {
+        event.preventDefault();
+        this.validationService.checkValidity();
+        console.log(this.validationService.getFormValue());
     }
 
     override render(): string {
