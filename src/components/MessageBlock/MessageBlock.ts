@@ -14,12 +14,15 @@ import {MessageItem} from "../MessageItem/MessageItem.ts";
 import {BlockProperties} from "../../framework/types/BlockProps";
 
 export type MessageBlockProps = {
-    MessageList: MessageItem[];
+    chatIcon: string;
+    chatName: string;
+    messageList: MessageItem[];
 }
 
 export class MessageBlock extends Block {
     contextMenuClip: ContextMenu;
     contextMenuChat: ContextMenu;
+    isNotMsg: boolean;
 
     constructor(messageBlockProps: BlockProperties<MessageBlockProps>) {
         const addUserModal = new Modal({
@@ -71,11 +74,13 @@ export class MessageBlock extends Block {
                 items: menuItem
             }
         });
+        const isNotMsg = !!messageBlockProps.props!.messageList.length;
 
         super({
             props: {
-                chatIcon: 'images/img-chat.png',
-                chatName: 'Вадим',
+                chatIcon: messageBlockProps.props!.chatIcon,
+                chatName: messageBlockProps.props!.chatName,
+                isNotMsg
             },
             children: {
                 ButtonIconChat: new ButtonIcon({
@@ -107,11 +112,12 @@ export class MessageBlock extends Block {
                 RemoveUserModal: removeUserModal,
             },
             lists: {
-                MessageList: messageBlockProps.props!.MessageList
+                MessageList: messageBlockProps.props!.messageList
             }
         });
         this.contextMenuClip = ContextMenuClip;
         this.contextMenuChat = ContextMenuChat;
+        this.isNotMsg = isNotMsg;
     }
 
     showMenuChat(event: Event): void {
@@ -139,9 +145,15 @@ export class MessageBlock extends Block {
                          <h1 class="${s.chatName}">{{chatName}}</h1>
                          {{{ButtonIconChat}}}
                      </div>
+                     {{#if isNotMsg}}
                      <div class="${s.correspondence}">
                           {{{MessageList}}}
                      </div>
+                     {{else}}
+                     <div class="${s.noMessage}">
+                          <h2 class="${s.noMessageTitle}">Нет сообщений, начните диалог</h2>
+                     </div>
+                     {{/if}}
                      <form class="${s.sendMsgForm}" name="send-msg-form">
                          {{{ButtonIconClip}}}
                          <input class="${s.sendMsgInput}" name="message" placeholder="Сообщение"/>

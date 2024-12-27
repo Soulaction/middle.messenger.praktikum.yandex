@@ -18,7 +18,7 @@ export class ChatPage extends Block {
 
         super({
             children: {
-                DialogList:  new DialogList({
+                DialogList: new DialogList({
                     props: {
                         ChatList: []
                     }
@@ -40,7 +40,16 @@ export class ChatPage extends Block {
         const messageList: MessageItem[] = this.chatService.getMessageItems(messages);
 
         this.setChildren({DialogList: new DialogList({props: {ChatList: chatList}})});
-        this.setChildren({MessageBlock: new MessageBlock({props: {MessageList: messageList}})});
+        this.setChildren({
+            MessageBlock: new MessageBlock({
+                    props: {
+                        chatName: this.chats[indexDialog].nameChat,
+                        chatIcon: this.chats[indexDialog].iconChatLink,
+                        messageList: messageList
+                    }
+                }
+            )
+        });
     }
 
     override render(): string {

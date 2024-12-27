@@ -24,11 +24,11 @@ export class DialogItem extends Block {
                         <img class="${s.chatIcon}" src="{{iconChatLink}}" alt="Иконка чата"/>
                         <div class="${s.chatInfo}">
                             <h2 class="${s.chatNameChat}">{{nameChat}}</h2>
-                            <p class="${s.chatLastMsg}"><span class="${s.chatLastMsgMe}">Вы: </span>{{lastMsg}}</p>
+                            {{#if countMsg}}<p class="${s.chatLastMsg}"><span class="${s.chatLastMsgMe}">Вы: </span>{{lastMsg}}</p>{{/if}}
                         </div>
                         <div class="${s.chatContent}">
                             <span class="${s.chatTime}">{{time}}</span>
-                            <span class="${s.chatCountMsg}">{{countMsg}}</span>
+                            {{#if countMsg}}<span class="${s.chatCountMsg}">{{countMsg}}</span>{{/if}}
                         </div>
                     </div>
                 </li>`;

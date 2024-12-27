@@ -12,10 +12,18 @@ export const chats = [
     {
         id: '2',
         iconChatLink: '/images/img-chat.png',
-        nameChat: 'Андрей',
+        nameChat: 'Владимир',
         lastMsg: 'Привет',
         time: '10:40',
         countMsg: 5
+    },
+    {
+        id: '3',
+        iconChatLink: '/images/img-chat.png',
+        nameChat: 'Виталя',
+        lastMsg: null,
+        time: null,
+        countMsg: null
     },
 ];
 
