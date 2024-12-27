@@ -17,9 +17,12 @@
     "moduleDetection": "force",
     "noEmit": true,
     /* Linting */
-    "strict": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
