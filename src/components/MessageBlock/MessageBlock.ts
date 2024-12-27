@@ -1,4 +1,3 @@
-import Block from "../../framework/Block.ts";
 import s from "./MessageBlock.module.pcss";
 import {CircleButton} from "../CircleButton/CircleButton.ts";
 import {ButtonIcon} from "../ButtonIcon/ButtonIcon.ts";
@@ -11,7 +10,8 @@ import {Modal} from "../Modal/Modal.ts";
 import {AddUserModal} from "../../modals/AddUserModal/AddUserModal.ts";
 import {RemoveUserModal} from "../../modals/RemoveUserModal/RemoveUserModal.ts";
 import {MessageItem} from "../MessageItem/MessageItem.ts";
-import {BlockProperties} from "../../framework/types/BlockProps";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 export type MessageBlockProps = {
     chatIcon: string;

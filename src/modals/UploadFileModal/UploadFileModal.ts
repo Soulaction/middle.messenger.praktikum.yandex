@@ -1,10 +1,10 @@
-import Block from "../../framework/Block.ts";
 import {Button} from "../../components/Button/Button.ts";
 import {ErrorMessage} from "../../components/ErrorMessage/ErrorMessage.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import s from "./UploadFileModal.module.pcss";
 import {UploadButton} from "../../components/UploadButton/UploadButton.ts";
+import Block from "../../core/Block/Block.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 type FormDataFile = {
     file: string;
@@ -15,10 +15,10 @@ type UploadFileModalProps = {
 }
 
 export class UploadFileModal extends Block {
-    validationService: ValidationFormService<FormDataFile>;
+    validationService: ValidationForm<FormDataFile>;
 
     constructor(uploadFileModalProps: BlockProperties<UploadFileModalProps>) {
-        const validationService = new ValidationFormService<FormDataFile>();
+        const validationService = new ValidationForm<FormDataFile>();
 
         super({
             props: {
@@ -38,7 +38,7 @@ export class UploadFileModal extends Block {
                     props: {
                         label: 'Поменять',
                         type: 'reset',
-                        class: s.submitBtn
+                        class: 'submit-btn-modal'
                     },
                     events: {
                         click: () => this.validationService.checkValidity()

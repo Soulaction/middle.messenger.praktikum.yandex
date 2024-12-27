@@ -1,63 +1,57 @@
-import Block from "../../framework/Block.ts";
 import {UserInfoItem} from "../../components/UserInfoItem/UserInfoItem.ts";
 import {UserService} from "../../services/UserService/UserService.ts";
 import {Link} from "../../components/Link/Link.ts";
 import {AvatarUser} from "../../components/AvatarUser";
 import s from "./ProfilePage.module.pcss";
-import {UploadFileModal} from "../../modals/UploadFileModal/UploadFileModal.ts";
 import {CircleButton} from "../../components/CircleButton/CircleButton";
-import {Modal} from "../../components/Modal/Modal.ts";
+import Block from "../../core/Block/Block.ts";
+import {navigate} from "../../utils/utils.ts";
 
 export class ProfilePage extends Block {
     userService: UserService;
 
 
     constructor() {
-        const uploadFileModal = new Modal({
-            children: {
-                ContentModal: new UploadFileModal({
-                    props: {
-                        titleModal: 'Загрузите файл'
-                    }
-                })
-            }
-        });
-
         super({
             children: {
                 AvatarUser: new AvatarUser({
                     props: {
                         imgUrl: '/images/profile.png'
-                    },
-                    events: {
-                        click: () => uploadFileModal.openModel()
                     }
                 }),
                 LinkChangeData: new Link({
                     props: {
-                        label: 'Изменить данные',
-                        link: '#'
+                        label: 'Изменить данные'
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/profile-edit-page', event)
                     }
                 }),
                 LinkChangePassword: new Link({
                     props: {
-                        label: 'Изменить пароль',
-                        link: '#'
+                        label: 'Изменить пароль'
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/profile-password', event)
                     }
                 }),
                 LinkChangeExit: new Link({
                     props: {
                         label: 'Выйти',
-                        danger: true,
-                        link: '#'
+                        danger: true
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/login', event)
                     }
                 }),
                 CircleButton: new CircleButton({
                     props: {
                         type: 'button'
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/chat', event)
                     }
-                }),
-                UploadFileModal: uploadFileModal
+                })
             },
         });
         this.userService = new UserService();
@@ -71,7 +65,7 @@ export class ProfilePage extends Block {
 
     override render(): string {
         return `
-                    <main class="${s.pageProfile}">
+                    <main class="page-profile">
                         <div class="left-panel">
                             {{{CircleButton}}}
                         </div>
@@ -99,7 +93,6 @@ export class ProfilePage extends Block {
                                 </footer>
                             </div>
                         </div>
-                        {{{UploadFileModal}}}
                     </main>
                 `;
     }

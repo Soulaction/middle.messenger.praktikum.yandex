@@ -1,10 +1,10 @@
-import Block from "../../framework/Block.ts";
-import {BlockProperties, EventBlock} from "../../framework/types/BlockProps.ts";
 import {Label} from "../Label/Label.ts";
 import {Input} from "../Input/Input.ts";
 import {ErrorMessage} from "../ErrorMessage/ErrorMessage.ts";
 import {FormDataRegistration} from "../../page/Registration/RegistrationPage.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties, EventBlock} from "../../core/Block/types/BlockProps.ts";
 
 type InputFormProps<T> = {
     className?: string;
@@ -12,7 +12,7 @@ type InputFormProps<T> = {
     name: string;
     type?: string;
     placeholder: string;
-    validationService: ValidationFormService<T>;
+    validationService: ValidationForm<T>;
     inputChange?: () => void;
 }
 

@@ -1,7 +1,7 @@
 import {FormValue} from "./types/FormValue.ts";
 import {InitFormData} from "./types/ValidationConfig.ts";
 
-export class ValidationFormService<T> {
+export class ValidationForm<T> {
     private _form: HTMLFormElement | null = null;
     private _initFormData: InitFormData<T> = {};
     private _subscribers: ((formValue: FormValue<T>) => void)[] = [];
@@ -47,13 +47,13 @@ export class ValidationFormService<T> {
 
     private _setInfoFormData(input: HTMLInputElement): void {
         const errorsConfig = this._initFormData[input.name as keyof T];
-        const errors: string[] = this.formValue[input.name as keyof T]?.errors ?? [];
+        const errors: string[] = [];
 
-        if (errorsConfig && errors.length === 0) {
+        if (errorsConfig) {
             if (errorsConfig.errors['required'] && errorsConfig.errors['required'].rule && !input.value) {
                 errors.push(errorsConfig.errors['required'].message);
 
-            } else if (errorsConfig.errors['pattern'] && errorsConfig.errors['pattern'].rule.test(input.value)) {
+            } else if (errorsConfig.errors['pattern'] && !errorsConfig.errors['pattern'].rule.test(input.value)) {
                 errors.push(errorsConfig.errors['pattern'].message);
 
             } else if (errorsConfig.errors['maxlength'] && errorsConfig.errors['maxlength'].rule < +input.value) {

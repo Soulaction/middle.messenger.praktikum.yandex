@@ -1,8 +1,9 @@
-import Block from "../../framework/Block.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputForm} from "../../components/InputForm/InputForm.ts";
 import {Button} from "../../components/Button/Button.ts";
 import {Link} from "../../components/Link/Link.ts";
+import Block from "../../core/Block/Block.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import {navigate} from "../../utils/utils.ts";
 
 
 export type FormDataLogin = {
@@ -11,10 +12,10 @@ export type FormDataLogin = {
 }
 
 export class LoginPage extends Block {
-    validationService: ValidationFormService<FormDataLogin>;
+    validationService: ValidationForm<FormDataLogin>;
 
     constructor() {
-        const validationService = new ValidationFormService<FormDataLogin>();
+        const validationService = new ValidationForm<FormDataLogin>();
         super({
             children: {
                 InputFormLogin: new InputForm<FormDataLogin>({
@@ -38,16 +39,18 @@ export class LoginPage extends Block {
                 ButtonLogin: new Button({
                     props: {
                         label: 'Войти',
-                        type: 'reset'
+                        type: 'submit'
                     },
                     events: {
-                        click: () => validationService.getFormValue()
+                        click: (event: Event) => this.login(event)
                     }
                 }),
                 LinkLogin: new Link({
                     props: {
-                        label: 'Нет аккаунта?',
-                        link: '#'
+                        label: 'Нет аккаунта?'
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/registration', event)
                     }
                 })
             }
@@ -68,6 +71,12 @@ export class LoginPage extends Block {
                 }
             }
         });
+    }
+
+    login(event: Event): void {
+        event.preventDefault();
+        this.validationService.checkValidity();
+        console.log(this.validationService.getFormValue());
     }
 
     override render(): string {

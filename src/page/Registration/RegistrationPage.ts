@@ -1,9 +1,10 @@
-import Block from "../../framework/Block.ts";
 import {Link} from "../../components/Link/Link.ts";
 import {Button} from "../../components/Button/Button.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputForm} from "../../components/InputForm/InputForm.ts";
-import {checkEqualPassword} from "../../utils/utils.ts";
+import {checkEqualPassword, navigate} from "../../utils/utils.ts";
+import Block from "../../core/Block/Block.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import {errorsForm} from "../../utils/const.ts";
 
 export type FormDataRegistration = {
     email: string;
@@ -16,10 +17,10 @@ export type FormDataRegistration = {
 }
 
 export class RegistrationPage extends Block {
-    validationService: ValidationFormService<FormDataRegistration>;
+    validationService: ValidationForm<FormDataRegistration>;
 
     constructor() {
-        const validationService = new ValidationFormService<FormDataRegistration>();
+        const validationService = new ValidationForm<FormDataRegistration>();
         super({
             children: {
                 InputFormEmail: new InputForm<FormDataRegistration>({
@@ -90,16 +91,18 @@ export class RegistrationPage extends Block {
                 ButtonRegistration: new Button({
                     props: {
                         label: 'Зарегестрироваться',
-                        type: 'reset'
+                        type: 'submit'
                     },
                     events: {
-                        click: () => validationService.getFormValue()
+                        click: (event: Event) => this.registration(event)
                     }
                 }),
                 LinkLogin: new Link({
                     props: {
-                        label: 'Войти',
-                        link: '#'
+                        label: 'Войти'
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/login', event)
                     }
                 })
             }
@@ -110,41 +113,32 @@ export class RegistrationPage extends Block {
     override componentDidMount() {
         this.validationService.init('registration', {
             email: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['email']
             },
             first_name: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['first_name']
             },
             login: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['login']
             },
             password: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['password']
             },
             password_again: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['password']
             },
             phone: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['phone']
             },
             second_name: {
-                errors: {
-                    required: {rule: true, message: 'Обязательно для вввода'}
-                }
+                errors: errorsForm['second_name']
             },
         });
+    }
+
+    registration(event: Event): void {
+        event.preventDefault();
+        console.log(this.validationService.getFormValue());
     }
 
     override render(): string {

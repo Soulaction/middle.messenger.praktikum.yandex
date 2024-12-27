@@ -1,6 +1,6 @@
-import Block from "../../framework/Block.ts";
 import s from "./UploadButton.module.pcss";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 type UploadButtonProps = {
     label: string;

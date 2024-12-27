@@ -1,4 +1,4 @@
-import EventBus, {EventCallback} from './EventBus';
+import EventBus, {EventCallback} from '../EventBus.ts';
 import Handlebars from 'handlebars';
 import {BlockProps, BlockProperties, EventBlock} from "./types/BlockProps.ts";
 import {PropsForHandlebars} from "./types/PropsForHandlebars.ts";

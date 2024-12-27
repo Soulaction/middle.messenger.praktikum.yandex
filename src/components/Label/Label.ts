@@ -1,6 +1,6 @@
-import Block from "../../framework/Block.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import s from "./Label.module.pcss";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 type LabelProps = {
     className?: string;

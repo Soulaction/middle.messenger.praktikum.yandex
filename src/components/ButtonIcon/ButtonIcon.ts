@@ -1,6 +1,6 @@
-import Block from "../../framework/Block.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import s from "./ButtonIcon.module.pcss";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 export type ButtonIconProps = {
     iconLink: string;
@@ -8,9 +8,9 @@ export type ButtonIconProps = {
 }
 
 export class ButtonIcon extends Block {
-    constructor(linkProps: BlockProperties<ButtonIconProps>) {
+    constructor(buttonIconProps: BlockProperties<ButtonIconProps>) {
         super({
-            ...linkProps
+            ...buttonIconProps
         });
     }
 

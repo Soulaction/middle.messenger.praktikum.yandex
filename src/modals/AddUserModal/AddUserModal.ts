@@ -1,17 +1,17 @@
-import Block from "../../framework/Block.ts";
 import {Button} from "../../components/Button/Button.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputForm} from "../../components/InputForm/InputForm.ts";
+import Block from "../../core/Block/Block.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
 
 export type FormDataAddUser = {
     login: string;
 }
 
 export class AddUserModal extends Block {
-    validationService: ValidationFormService<FormDataAddUser>;
+    validationService: ValidationForm<FormDataAddUser>;
 
     constructor() {
-        const validationService = new ValidationFormService<FormDataAddUser>();
+        const validationService = new ValidationForm<FormDataAddUser>();
 
         super({
             props: {

@@ -1,4 +1,5 @@
 import {Message} from "../types/Message.ts";
+import {InitFormDataErrors} from "../core/Validation/types/ValidationConfig.ts";
 
 export const chats = [
     {
@@ -76,3 +77,48 @@ export const message: Message[] = [
         idChat: '2'
     }
 ];
+
+export const errorsForm: { [key in string]: InitFormDataErrors } = {
+    first_name: {
+        pattern: {
+            rule: /^[a-zA-Zа-яА-ЯёЁ]{1}[a-zA-Zа-яА-ЯёЁ-]*$/,
+            message: 'Допустима латиница, кириллица и дефис, первая буква заглавная'
+        },
+        required: {rule: true, message: 'Обязательно для вввода'}
+    },
+    second_name: {
+        pattern: {
+            rule: /^[a-zA-Zа-яА-ЯёЁ]{1}[a-zA-Zа-яА-ЯёЁ-]*$/,
+            message: 'Допустима латиница, кириллица и дефис, первая буква заглавная'
+        },
+        required: {rule: true, message: 'Обязательно для вввода'}
+    },
+    login: {
+        pattern: {
+            rule: /^(?=.*[a-zA-Z])[a-zA-Z0-9_-]{3,20}$/,
+            message: 'От 3 до 20 символов, допустима латиница, кириллица, цифры, но не состоять из них и дефис'
+        },
+        required: {rule: true, message: 'Обязательно для вввода'}
+    },
+    email: {
+        pattern: {
+            rule: /^[a-zA-Z0-9_.-]+@[a-zA-Z]+\.[a-zA-Z]+$/,
+            message: 'Не соответствует формату email'
+        },
+        required: {rule: true, message: 'Обязательно для вввода'}
+    },
+    password: {
+        pattern: {
+            rule: /^(?=.*[A-ZА-ЯЁ])(?=.*[0-9]).{8,40}$/,
+            message: 'От 8 до 40 символов, допустима латиница, кириллица и дефис, первая буква заглавная'
+        },
+        required: {rule: true, message: 'Обязательно для вввода'}
+    },
+    phone: {
+        pattern: {
+            rule: /^(\+{1}\d{9,15})|(\d{10,15})$/,
+            message: 'От 10 до 15 символов, состоит из цифр, может начинается с плюса'
+        }
+    },
+    message: {required: {rule: true, message: 'Введите сообщение'}}
+}

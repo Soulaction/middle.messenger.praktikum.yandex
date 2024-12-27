@@ -1,6 +1,6 @@
 import s from "./Modal.module.pcss";
-import Block from "../../framework/Block.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 
 export class Modal extends Block {
@@ -29,6 +29,7 @@ export class Modal extends Block {
     hideModal(event: Event): void {
         if (event.target === event.currentTarget) {
             super.hide()
+            event.stopPropagation();
         }
 
     }

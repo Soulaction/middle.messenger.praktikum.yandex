@@ -1,17 +1,17 @@
-import Block from "../../framework/Block.ts";
 import {Button} from "../../components/Button/Button.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputForm} from "../../components/InputForm/InputForm.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import Block from "../../core/Block/Block.ts";
 
 type FormDataCreateChat = {
     name: string;
 }
 
 export class CreateChatModal extends Block {
-    validationService: ValidationFormService<FormDataCreateChat>;
+    validationService: ValidationForm<FormDataCreateChat>;
 
     constructor() {
-        const validationService = new ValidationFormService<FormDataCreateChat>();
+        const validationService = new ValidationForm<FormDataCreateChat>();
 
         super({
             props: {

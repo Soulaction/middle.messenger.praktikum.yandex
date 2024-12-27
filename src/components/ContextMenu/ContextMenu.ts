@@ -1,7 +1,7 @@
-import Block from "../../framework/Block.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import s from "./ContextMenu.module.pcss";
 import {ContextMenuItem} from "../ContextMenuItem/ContextMenuItem.ts";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 export type PositionContextMenu = {
     top?: number;

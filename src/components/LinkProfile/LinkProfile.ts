@@ -1,19 +1,15 @@
-import Block from "../../framework/Block.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import s from "./LinkProfile.module.pcss";
-
-export type LinkProfileProps = {
-    link: string;
-}
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 export class LinkProfile extends Block {
-    constructor(linkProps: BlockProperties<LinkProfileProps>) {
+    constructor(linkProps: BlockProperties) {
         super({
             ...linkProps
         });
     }
 
     override render(): string {
-        return `<a class="${s.link}" href="{{link}}" >Профиль ></a>`;
+        return `<a class="${s.link}" href="#" >Профиль ></a>`;
     }
 }

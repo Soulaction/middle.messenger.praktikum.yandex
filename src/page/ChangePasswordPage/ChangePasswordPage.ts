@@ -1,11 +1,11 @@
-import Block from "../../framework/Block.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputFormProfile} from "../../components/InputFormProfile/InputFormProfile.ts";
 import {Button} from "../../components/Button/Button.ts";
 import {checkEqualPassword} from "../../utils/utils.ts";
 import s from "./ChangePassword.module.pcss";
 import {AvatarUser} from "../../components/AvatarUser";
 import {CircleButton} from "../../components/CircleButton/CircleButton";
+import Block from "../../core/Block/Block.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
 
 export type FormDataChangePassword = {
     oldPassword: string;
@@ -14,10 +14,10 @@ export type FormDataChangePassword = {
 }
 
 export class ChangePasswordPage extends Block {
-    validationService: ValidationFormService<FormDataChangePassword>;
+    validationService: ValidationForm<FormDataChangePassword>;
 
     constructor() {
-        const validationService = new ValidationFormService<FormDataChangePassword>();
+        const validationService = new ValidationForm<FormDataChangePassword>();
         super({
             children: {
                 AvatarUser: new AvatarUser({

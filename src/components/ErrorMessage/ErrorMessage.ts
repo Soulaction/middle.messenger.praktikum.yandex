@@ -1,14 +1,14 @@
-import Block from "../../framework/Block.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
-import {FormValue} from "../../services/AuthorizationService/types/FormValue.ts";
 import s from './ErrorMessage.module.pcss';
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
+import Block from "../../core/Block/Block.ts";
+import {FormValue} from "../../core/Validation/types/FormValue.ts";
 
 type ErrorMessageProps<T> = {
     className?: string;
     formName: string;
     errorText?: string;
-    validationFormService: ValidationFormService<T>;
+    validationFormService: ValidationForm<T>;
 }
 
 export class ErrorMessage<T> extends Block {

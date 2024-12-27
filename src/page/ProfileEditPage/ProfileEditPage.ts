@@ -1,10 +1,10 @@
-import Block from "../../framework/Block.ts";
-import {ValidationFormService} from "../../services/AuthorizationService/ValidationFormService.ts";
 import {InputFormProfile} from "../../components/InputFormProfile/InputFormProfile.ts";
 import {Button} from "../../components/Button/Button.ts";
 import s from "./ProfileEditPage.module.pcss";
 import {AvatarUser} from "../../components/AvatarUser";
 import {CircleButton} from "../../components/CircleButton/CircleButton";
+import Block from "../../core/Block/Block.ts";
+import {ValidationForm} from "../../core/Validation/ValidationForm.ts";
 
 export type FormDataProfileEdite = {
     email: string;
@@ -16,10 +16,10 @@ export type FormDataProfileEdite = {
 }
 
 export class ProfileEditedPage extends Block {
-    validationService: ValidationFormService<FormDataProfileEdite>;
+    validationService: ValidationForm<FormDataProfileEdite>;
 
     constructor() {
-        const validationService = new ValidationFormService<FormDataProfileEdite>();
+        const validationService = new ValidationForm<FormDataProfileEdite>();
         super({
             children: {
                 AvatarUser: new AvatarUser({

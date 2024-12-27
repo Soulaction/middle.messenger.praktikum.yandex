@@ -1,9 +1,9 @@
-import {ValidationFormService} from "../services/AuthorizationService/ValidationFormService.ts";
+import {ValidationForm} from "../core/Validation/ValidationForm.ts";
 
 export const checkEqualPassword = <T extends {
     password?: string;
     password_again?: string
-}>(validationService: ValidationFormService<T>): void => {
+}>(validationService: ValidationForm<T>): void => {
     const formValue = validationService.getFormValue();
 
     if ('password' in formValue && 'password_again' in formValue) {
@@ -17,4 +17,13 @@ export const checkEqualPassword = <T extends {
             validationService.removeError('password_again', 'Пароли не совпадают');
         }
     }
+}
+
+export const navigate = <T extends object>(url: string, event?: Event, state?: T) => {
+    if(event) {
+        event.preventDefault();
+    }
+    history.pushState(state, "", `${url}`);
+    const eventPushState = new Event("pushstate");
+    window.dispatchEvent(eventPushState);
 }

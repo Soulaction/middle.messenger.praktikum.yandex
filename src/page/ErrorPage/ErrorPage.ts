@@ -1,7 +1,8 @@
-import Block from "../../framework/Block.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import {Link} from "../../components/Link/Link.ts";
 import s from "./ErrorPage.module.pcss";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
+import {navigate} from "../../utils/utils.ts";
 
 export type ErrorProps = {
     code: string;
@@ -16,8 +17,10 @@ export class ErrorPage extends Block {
             children: {
                 Link: new Link({
                     props: {
-                        label: 'Назад к чатам',
-                        link: '#'
+                        label: 'Назад к чатам'
+                    },
+                    events: {
+                        click: (event: Event) => navigate('/chat', event)
                     }
                 })
             }

@@ -1,51 +1,51 @@
 import {ErrorPage, ChangePasswordPage, LoginPage, ProfilePage, RegistrationPage} from "./page";
-import {ProfileEditedPage} from "./page/ProfileEditPage";
-import {ChatPage} from "./page/ChatPage/ChatPage";
+import {ProfileEditedPage} from "./page";
+import {ChatPage} from "./page";
+import {navigate} from "./utils/utils.ts";
 
 export class App {
-    appContainer: HTMLDivElement;
-    state: { urlPage: string };
+    appContainer: HTMLElement;
 
     constructor() {
-        const appContainer: HTMLDivElement | null = document.getElementById('app') as HTMLDivElement;
+        const appContainer: HTMLElement | null = document.getElementById('app') as HTMLElement;
         if (!appContainer) {
             throw new Error('Not found app div');
         }
         this.appContainer = appContainer;
-        this.state = {urlPage: window.location.pathname};
     }
 
     render(): void {
-        switch (this.state.urlPage) {
+        this.appContainer.innerHTML = ''
+        switch (window.location.pathname) {
             case '/registration':
                 const regPage = new RegistrationPage();
-                this.appContainer.replaceWith(regPage.getContent());
+                this.appContainer.appendChild(regPage.getContent());
                 regPage.dispatchComponentDidMount();
                 break;
             case '/chat':
                 const chatsPage = new ChatPage();
-                this.appContainer.replaceWith(chatsPage.getContent());
+                this.appContainer.appendChild(chatsPage.getContent());
                 chatsPage.dispatchComponentDidMount();
                 break;
             case '/':
             case '/login':
                 const loginPage = new LoginPage();
-                this.appContainer.replaceWith(loginPage.getContent());
+                this.appContainer.appendChild(loginPage.getContent());
                 loginPage.dispatchComponentDidMount();
                 break;
             case '/profile':
                 const profilePage = new ProfilePage();
-                this.appContainer.replaceWith(profilePage.getContent());
+                this.appContainer.appendChild(profilePage.getContent());
                 profilePage.dispatchComponentDidMount();
                 break;
             case '/profile-edit-page':
                 const profileEditedPage = new ProfileEditedPage();
-                this.appContainer.replaceWith(profileEditedPage.getContent());
+                this.appContainer.appendChild(profileEditedPage.getContent());
                 profileEditedPage.dispatchComponentDidMount();
                 break;
             case '/profile-password':
                 const changePasswordPage = new ChangePasswordPage();
-                this.appContainer.replaceWith(changePasswordPage.getContent());
+                this.appContainer.appendChild(changePasswordPage.getContent());
                 changePasswordPage.dispatchComponentDidMount();
                 break;
             case '/not-found':
@@ -55,7 +55,7 @@ export class App {
                         errorText: 'Не туда попали'
                     }
                 });
-                this.appContainer.replaceWith(errorPage.getContent());
+                this.appContainer.appendChild(errorPage.getContent());
                 errorPage.dispatchComponentDidMount();
                 break;
             case '/server-error':
@@ -65,18 +65,12 @@ export class App {
                         errorText: 'Мы уже фиксим'
                     }
                 });
-                this.appContainer.replaceWith(errorServerPage.getContent());
+                this.appContainer.appendChild(errorServerPage.getContent());
                 errorServerPage.dispatchComponentDidMount();
                 break;
             default:
-                this.changePage('/not-found');
+                navigate('/not-found')
                 return;
         }
-    }
-
-    changePage(url: string): void {
-        this.state.urlPage = url;
-        window.location.pathname = url;
-        this.render();
     }
 }

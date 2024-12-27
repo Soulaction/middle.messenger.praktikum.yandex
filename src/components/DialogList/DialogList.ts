@@ -1,4 +1,3 @@
-import Block from "../../framework/Block.ts";
 import s from "./DialogList.module.pcss";
 import {DialogItem} from "../DialogItem/DialogItem.ts";
 import {LinkProfile} from "../LinkProfile/LinkProfile.ts";
@@ -6,7 +5,9 @@ import {SearchInput} from "../SearchInput/SearchInput.ts";
 import {Modal} from "../Modal/Modal.ts";
 import {CreateChatModal} from "../../modals/CreateChatModal/CreateChatModal.ts";
 import {ButtonIcon} from "../ButtonIcon/ButtonIcon.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
+import {navigate} from "../../utils/utils.ts";
 
 export type DialogListProps = {
     ChatList: DialogItem[]
@@ -24,15 +25,15 @@ export class DialogList extends Block {
             children: {
                 ButtonIconAdd: new ButtonIcon({
                     props: {
-                        iconLink: '/icons/add.svg'
+                        iconLink: '/icons/add-grey.svg'
                     },
                     events: {
                         click: () => createChatModal.openModel()
                     }
                 }),
                 LinkProfile: new LinkProfile({
-                    props: {
-                        link: '#'
+                    events: {
+                        click: (event: Event) => navigate('/profile', event)
                     }
                 }),
                 SearchInput: new SearchInput({

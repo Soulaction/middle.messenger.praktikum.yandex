@@ -1,4 +1,3 @@
-import Block from "../../framework/Block.ts";
 import s from "./ChatPage.module.pcss";
 import {MessageBlock} from "../../components/MessageBlock/MessageBlock.ts";
 import {DialogList} from "../../components/DialogList/DialogList.ts";
@@ -8,6 +7,7 @@ import {DialogItem} from "../../components/DialogItem/DialogItem.ts";
 import {ChatApi} from "../../api/ChatApi.ts";
 import {Chat} from "../../types/Chat.ts";
 import {Message} from "../../types/Message.ts";
+import Block from "../../core/Block/Block.ts";
 
 export class ChatPage extends Block {
     chatApi: ChatApi;

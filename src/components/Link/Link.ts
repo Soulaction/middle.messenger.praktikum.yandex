@@ -1,11 +1,10 @@
-import Block from "../../framework/Block.ts";
-import {BlockProperties} from "../../framework/types/BlockProps.ts";
 import s from "./Link.module.pcss";
+import Block from "../../core/Block/Block.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 type LinkProps = {
     class?: string;
     label: string;
-    link: string;
     danger?: boolean;
 }
 
@@ -17,6 +16,6 @@ export class Link extends Block {
     }
 
     override render(): string {
-        return `<a class="${s.link} {{#if danger}}${s.danger}{{/if}} {{class}}" href="{{link}}" >{{label}}</a>`;
+        return `<a class="${s.link} {{#if danger}}${s.danger}{{/if}} {{class}}" href="#" >{{label}}</a>`;
     }
 }
