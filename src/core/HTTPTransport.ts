@@ -19,14 +19,12 @@ function queryStringify<T extends { [key in string]: string | number }>(data: T)
     throw new Error('Data must be object');
   }
 
-  // Здесь достаточно и [object Object] для объекта
   const keys = Object.keys(data);
   return keys.reduce((result, key, index) => {
     return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
   }, '?');
 }
-// @ts-ignore игнорируем, так как необходимо по заданию, но пока не используем
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 class HTTPTransport {
   get<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
     return this.request<K, T>(url, { ...options, method: METHODS.GET });
@@ -85,3 +83,6 @@ class HTTPTransport {
     });
   }
 }
+
+
+export default new HTTPTransport();
