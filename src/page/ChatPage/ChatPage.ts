@@ -1,61 +1,63 @@
-import s from "./ChatPage.module.pcss";
-import {MessageBlock} from "../../components/MessageBlock/MessageBlock.ts";
-import {DialogList} from "../../components/DialogList/DialogList.ts";
-import {MessageItem} from "../../components/MessageItem/MessageItem";
-import {ChatService} from "../../services/ChatService/ChatService.ts";
-import {DialogItem} from "../../components/DialogItem/DialogItem.ts";
-import {ChatApi} from "../../api/ChatApi.ts";
-import {Chat} from "../../types/Chat.ts";
-import {Message} from "../../types/Message.ts";
-import Block from "../../core/Block/Block.ts";
+import s from './ChatPage.module.pcss';
+import { MessageBlock } from '../../components/MessageBlock/MessageBlock.ts';
+import { DialogList } from '../../components/DialogList/DialogList.ts';
+import { MessageItem } from '../../components/MessageItem/MessageItem';
+import { ChatService } from '../../services/ChatService/ChatService.ts';
+import { DialogItem } from '../../components/DialogItem/DialogItem.ts';
+import { ChatApi } from '../../api/ChatApi.ts';
+import { Chat } from '../../types/Chat.ts';
+import { Message } from '../../types/Message.ts';
+import Block from '../../core/Block/Block.ts';
 
 export class ChatPage extends Block {
-    chatApi: ChatApi;
-    chatService: ChatService;
-    chats: Chat[] = [];
+  chatApi: ChatApi;
 
-    constructor() {
+  chatService: ChatService;
 
-        super({
-            children: {
-                DialogList: new DialogList({
-                    props: {
-                        ChatList: []
-                    }
-                }),
-            }
-        });
-        this.chatService = new ChatService();
-        this.chatApi = new ChatApi();
-    }
+  chats: Chat[] = [];
 
-    protected override componentDidMount() {
-        this.chats = this.chatApi.getChats();
-        this.getMessages(0);
-    }
+  constructor() {
 
-    protected getMessages(indexDialog: number): void {
-        const chatList: DialogItem[] = this.chatService.getDialogItems(this.chats, indexDialog, this.getMessages.bind(this));
-        const messages: Message[] = this.chatApi.getMessageForChat(this.chats[indexDialog].id);
-        const messageList: MessageItem[] = this.chatService.getMessageItems(messages);
+    super({
+      children: {
+        DialogList: new DialogList({
+          props: {
+            ChatList: [],
+          },
+        }),
+      },
+    });
+    this.chatService = new ChatService();
+    this.chatApi = new ChatApi();
+  }
 
-        this.setChildren({DialogList: new DialogList({props: {ChatList: chatList}})});
-        this.setChildren({
-            MessageBlock: new MessageBlock({
-                    props: {
-                        chatName: this.chats[indexDialog].nameChat,
-                        chatIcon: this.chats[indexDialog].iconChatLink,
-                        messageList: messageList
-                    }
-                }
-            )
-        });
-    }
+  protected override componentDidMount() {
+    this.chats = this.chatApi.getChats();
+    this.getMessages(0);
+  }
 
-    override render(): string {
-        return `<main class="${s.pageChatsWrapper}">
+  protected getMessages(indexDialog: number): void {
+    const chatList: DialogItem[] = this.chatService.getDialogItems(this.chats, indexDialog, this.getMessages.bind(this));
+    const messages: Message[] = this.chatApi.getMessageForChat(this.chats[indexDialog].id);
+    const messageList: MessageItem[] = this.chatService.getMessageItems(messages);
+
+    this.setChildren({ DialogList: new DialogList({ props: { ChatList: chatList } }) });
+    this.setChildren({
+      MessageBlock: new MessageBlock({
+        props: {
+          chatName: this.chats[indexDialog].nameChat,
+          chatIcon: this.chats[indexDialog].iconChatLink,
+          messageList: messageList,
+        },
+      },
+      ),
+    });
+  }
+
+  override render(): string {
+    return `<main class="${s.pageChatsWrapper}">
                     {{{DialogList}}}
                     {{{MessageBlock}}}
                 </main>`;
-    }
+  }
 }

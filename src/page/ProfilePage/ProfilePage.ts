@@ -1,70 +1,70 @@
-import {UserInfoItem} from "../../components/UserInfoItem/UserInfoItem.ts";
-import {UserService} from "../../services/UserService/UserService.ts";
-import {Link} from "../../components/Link/Link.ts";
-import {AvatarUser} from "../../components/AvatarUser";
-import s from "./ProfilePage.module.pcss";
-import {CircleButton} from "../../components/CircleButton/CircleButton";
-import Block from "../../core/Block/Block.ts";
-import {navigate} from "../../utils/utils.ts";
+import { UserInfoItem } from '../../components/UserInfoItem/UserInfoItem.ts';
+import { UserService } from '../../services/UserService/UserService.ts';
+import { Link } from '../../components/Link/Link.ts';
+import { AvatarUser } from '../../components/AvatarUser';
+import s from './ProfilePage.module.pcss';
+import { CircleButton } from '../../components/CircleButton/CircleButton';
+import Block from '../../core/Block/Block.ts';
+import { navigate } from '../../utils/utils.ts';
 
 export class ProfilePage extends Block {
-    userService: UserService;
+  userService: UserService;
 
 
-    constructor() {
-        super({
-            children: {
-                AvatarUser: new AvatarUser({
-                    props: {
-                        imgUrl: '/images/profile.png'
-                    }
-                }),
-                LinkChangeData: new Link({
-                    props: {
-                        label: 'Изменить данные'
-                    },
-                    events: {
-                        click: (event: Event) => navigate('/profile-edit-page', event)
-                    }
-                }),
-                LinkChangePassword: new Link({
-                    props: {
-                        label: 'Изменить пароль'
-                    },
-                    events: {
-                        click: (event: Event) => navigate('/profile-password', event)
-                    }
-                }),
-                LinkChangeExit: new Link({
-                    props: {
-                        label: 'Выйти',
-                        danger: true
-                    },
-                    events: {
-                        click: (event: Event) => navigate('/login', event)
-                    }
-                }),
-                CircleButton: new CircleButton({
-                    props: {
-                        type: 'button'
-                    },
-                    events: {
-                        click: (event: Event) => navigate('/chat', event)
-                    }
-                })
-            },
-        });
-        this.userService = new UserService();
-    }
+  constructor() {
+    super({
+      children: {
+        AvatarUser: new AvatarUser({
+          props: {
+            imgUrl: '/images/profile.png',
+          },
+        }),
+        LinkChangeData: new Link({
+          props: {
+            label: 'Изменить данные',
+          },
+          events: {
+            click: (event: Event) => navigate('/profile-edit-page', event),
+          },
+        }),
+        LinkChangePassword: new Link({
+          props: {
+            label: 'Изменить пароль',
+          },
+          events: {
+            click: (event: Event) => navigate('/profile-password', event),
+          },
+        }),
+        LinkChangeExit: new Link({
+          props: {
+            label: 'Выйти',
+            danger: true,
+          },
+          events: {
+            click: (event: Event) => navigate('/login', event),
+          },
+        }),
+        CircleButton: new CircleButton({
+          props: {
+            type: 'button',
+          },
+          events: {
+            click: (event: Event) => navigate('/chat', event),
+          },
+        }),
+      },
+    });
+    this.userService = new UserService();
+  }
 
-    override componentDidMount() {
-        const userInfoItems: Record<string, UserInfoItem> = this.userService.getUserInfoProfile();
+  override componentDidMount() {
+    const userInfoItems: Record<string, UserInfoItem> = this.userService.getUserInfoProfile();
 
-        this.setChildren(userInfoItems);
-    }
+    this.setChildren(userInfoItems);
+  }
 
-    override render(): string {
-        return `
+  override render(): string {
+    return `
                     <main class="page-profile">
                         <div class="left-panel">
                             {{{CircleButton}}}
@@ -95,5 +95,5 @@ export class ProfilePage extends Block {
                         </div>
                     </main>
                 `;
-    }
+  }
 }

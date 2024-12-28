@@ -1,1 +1,1 @@
-export {ChatPage} from './ChatPage.ts';
+export { ChatPage } from './ChatPage.ts';

@@ -1,6 +1,6 @@
-import {FormValue} from "./FormValue.ts";
+import { FormValue } from './FormValue.ts';
 
 export type FormInfo<T> = {
-    data: FormValue<T>;
-    valid: boolean;
-}
+  data: FormValue<T>;
+  valid: boolean;
+};

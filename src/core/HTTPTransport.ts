@@ -1,86 +1,87 @@
 enum METHODS {
-    GET = 'GET',
-    POST = 'POST',
-    PUT = 'PUT',
-    DELETE = 'DELETE'
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
 }
 
 export type Options<T> = {
-    headers?: {
-        [key in string]: string
-    };
-    method?: METHODS;
-    data?: T;
-    timeout?: number;
+  headers?: {
+    [key in string]: string
+  };
+  method?: METHODS;
+  data?: T;
+  timeout?: number;
+};
+
+function queryStringify<T extends { [key in string]: string | number }>(data: T) {
+  if (typeof data !== 'object') {
+    throw new Error('Data must be object');
+  }
+
+  // Здесь достаточно и [object Object] для объекта
+  const keys = Object.keys(data);
+  return keys.reduce((result, key, index) => {
+    return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
+  }, '?');
 }
-
-function queryStringify<T extends object>(data: T) {
-    if (typeof data !== 'object') {
-        throw new Error('Data must be object');
-    }
-
-    // Здесь достаточно и [object Object] для объекта
-    const keys = Object.keys(data);
-    return keys.reduce((result, key, index) => {
-        return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
-    }, '?');
-}
-
+// @ts-ignore игнорируем, так как необходимо по заданию, но пока не используем
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class HTTPTransport {
-    get(url: string, options: Options<null> = {}) {
-        return this.request(url, {...options, method: METHODS.GET}, options.timeout);
-    };
+  get<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
+    return this.request<K, T>(url, { ...options, method: METHODS.GET });
+  }
 
-    post<T>(url: string, options: Options<T> = {}) {
-        return this.request(url, {...options, method: METHODS.POST}, options.timeout);
-    };
+  post<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
+    return this.request<K, T>(url, { ...options, method: METHODS.POST });
+  }
 
-    put = (url: string, options = {}) => {
-        return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
-    };
+  put<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
+    return this.request<K, T>(url, { ...options, method: METHODS.PUT });
+  }
 
-    delete = (url: string, options = {}) => {
-        return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
-    };
+  delete<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
+    return this.request<K, T>(url, { ...options, method: METHODS.DELETE });
+  }
 
-    request = (url: string, options = {}, timeout = 5000) => {
-        const {headers = {}, method, data} = options;
+  request<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
+    const { headers = {}, method, data, timeout } = options;
 
-        return new Promise(function (resolve, reject) {
-            if (!method) {
-                reject('No method');
-                return;
-            }
+    return new Promise<K>(function (resolve, reject) {
+      if (!method) {
+        reject('No method');
+        return;
+      }
 
-            const xhr = new XMLHttpRequest();
-            const isGet = method === METHODS.GET;
+      const xhr = new XMLHttpRequest();
+      const isGet = method === METHODS.GET;
 
-            xhr.open(
-                method,
-                isGet && !!data
-                    ? `${url}${queryStringify(data)}`
-                    : url,
-            );
+      xhr.open(
+        method,
+        isGet && !!data
+          ? `${url}${queryStringify(data as unknown as { [key in string]: string | number })}`
+          : url,
+      );
 
-            Object.keys(headers).forEach(key => {
-                xhr.setRequestHeader(key, headers[key]);
-            });
+      Object.keys(headers).forEach(key => {
+        xhr.setRequestHeader(key, headers[key]);
+      });
 
-            xhr.onload = function () {
-                resolve(xhr);
-            };
+      xhr.onload = function () {
+        resolve(xhr as K);
+      };
 
-            xhr.onabort = reject;
-            xhr.onerror = reject;
+      xhr.onabort = reject;
+      xhr.onerror = reject;
 
-            xhr.timeout = timeout;
-            xhr.ontimeout = reject;
+      xhr.timeout = timeout ?? 0;
+      xhr.ontimeout = reject;
 
-            if (isGet || !data) {
-                xhr.send();
-            } else {
-                xhr.send(data);
-            }
-        });
-    };
+      if (isGet || !data) {
+        xhr.send();
+      } else {
+        xhr.send(data);
+      }
+    });
+  }
 }

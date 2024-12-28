@@ -1,1 +1,1 @@
-export {ErrorPage} from './ErrorPage.ts';
+export { ErrorPage } from './ErrorPage.ts';

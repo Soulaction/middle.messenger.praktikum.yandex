@@ -1,6 +1,6 @@
 export type FormError = {
-    required: string;
-    pattern: string;
-    maxlength: string;
-    minlength: string;
-}
+  required: string;
+  pattern: string;
+  maxlength: string;
+  minlength: string;
+};

@@ -1,60 +1,60 @@
-import s from "./ContextMenu.module.pcss";
-import {ContextMenuItem} from "../ContextMenuItem/ContextMenuItem.ts";
-import Block from "../../core/Block/Block.ts";
-import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
+import s from './ContextMenu.module.pcss';
+import { ContextMenuItem } from '../ContextMenuItem/ContextMenuItem.ts';
+import Block from '../../core/Block/Block.ts';
+import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
 
 export type PositionContextMenu = {
-    top?: number;
-    bottom?: number;
-    left?: number;
-    right?: number;
-}
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
 
 export type MenuItem = {
-    iconURL: string;
-    text: string;
-    event: () => void;
-}
+  iconURL: string;
+  text: string;
+  event: () => void;
+};
 
 type ContextMenuProps = {
-    items: MenuItem[];
+  items: MenuItem[];
 } & PositionContextMenu;
 
 export class ContextMenu extends Block {
-    constructor(contextMenuProps: BlockProperties<ContextMenuProps>) {
-        super({
-            ...contextMenuProps,
-            lists: {
-                MenuItems: contextMenuProps.props!.items.map(item => {
-                    return new ContextMenuItem({
-                        props: {
-                            iconURL: item.iconURL,
-                            text: item.text,
-                        },
-                        events: {
-                            click: item.event
-                        }
-                    })
-                })
+  constructor(contextMenuProps: BlockProperties<ContextMenuProps>) {
+    super({
+      ...contextMenuProps,
+      lists: {
+        MenuItems: contextMenuProps.props!.items.map(item => {
+          return new ContextMenuItem({
+            props: {
+              iconURL: item.iconURL,
+              text: item.text,
             },
             events: {
-                click: () => this.hideContextMenu()
-            }
-        });
-        super.hide();
-    }
+              click: item.event,
+            },
+          });
+        }),
+      },
+      events: {
+        click: () => this.hideContextMenu(),
+      },
+    });
+    super.hide();
+  }
 
-    openContextMenu(positionContextMenu: PositionContextMenu): void {
-        this.setProps(positionContextMenu);
-        super.show();
-    }
+  openContextMenu(positionContextMenu: PositionContextMenu): void {
+    this.setProps(positionContextMenu);
+    super.show();
+  }
 
-    hideContextMenu(): void {
-        super.hide();
-    }
+  hideContextMenu(): void {
+    super.hide();
+  }
 
-    override render(): string {
-        return `
+  override render(): string {
+    return `
                     <div class="${s.contextWrapper}">
                         <ul class="${s.contextList}" 
                             style="{{#if top}}top: {{top}}px;{{/if}}
@@ -65,5 +65,5 @@ export class ContextMenu extends Block {
                         </ul
                     </div>
                 `;
-    }
+  }
 }

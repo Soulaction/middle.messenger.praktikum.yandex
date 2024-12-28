@@ -2,11 +2,11 @@
     cursor: pointer;
 
     &:first-of-type::before, &::after{
+        border-top: 1px solid #eaeaea;
         content: "";
         display: block;
-        border-top: 1px solid #eaeaea;
-        width: 95%;
         margin: 0 10px;
+        width: 95%;
     }
 
     &:first-of-type::before{
@@ -26,17 +26,17 @@
 
 .chat-icon {
     display: block;
-    width: 47px;
     height: 47px;
-    object-fit: cover;
     margin-right: 10px;
+    object-fit: cover;
+    width: 47px;
 }
 
 .chat-block {
-    display: flex;
     box-sizing: border-box;
-    width: 100%;
+    display: flex;
     padding: 12px 10px;
+    width: 100%;
 }
 
 .chat-info {
@@ -46,8 +46,8 @@
 .chat-name-chat {
     color: #1e1e1e;
     font-size: 13px;
-    line-height: 13px;
     font-weight: 600;
+    line-height: 13px;
 }
 
 .chat-last-msg-me {
@@ -55,38 +55,38 @@
 }
 
 .chat-last-msg {
-    margin-top: 5px;
     color: var(--grey-color);
     font-size: 12px;
-    line-height: 15px;
     font-weight: 500;
+    line-height: 15px;
+    margin-top: 5px;
 }
 
 .chat-content {
+    align-items: flex-end;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     margin-left: 17px;
 }
 
 .chat-time {
     color: var(--grey-color);
     font-size: 9px;
-    line-height: 13px;
     font-weight: 500;
+    line-height: 13px;
 }
 
 .chat-count-msg {
-    display: block;
-    margin-top: 14px;
-    width: 20px;
-    height: 20px;
-    text-align: center;
     align-content: center;
-    color: #fff;
-    font-size: 11px;
-    line-height: 12px;
-    font-weight: 500;
-    border-radius: 50%;
     background-color: var(--main-color);
+    border-radius: 50%;
+    color: #fff;
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    height: 20px;
+    line-height: 12px;
+    margin-top: 14px;
+    text-align: center;
+    width: 20px;
 }

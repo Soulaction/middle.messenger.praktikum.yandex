@@ -1,25 +1,21 @@
-import s from "./DialogItem.module.pcss";
-import Block from "../../core/Block/Block.ts";
-import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
+import s from './DialogItem.module.pcss';
+import Block from '../../core/Block/Block.ts';
+import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
+import { Chat } from '../../types/Chat.ts';
 
 type ChatProps = {
-    iconChatLink: string;
-    selected?: boolean;
-    nameChat: string;
-    lastMsg: string;
-    time: string;
-    countMsg: number;
-}
+  selected?: boolean;
+} & Chat;
 
 export class DialogItem extends Block {
-    constructor(chatProps: BlockProperties<ChatProps>) {
-        super({
-            ...chatProps
-        });
-    }
+  constructor(chatProps: BlockProperties<ChatProps>) {
+    super({
+      ...chatProps,
+    });
+  }
 
-    override render(): string {
-        return `<li class="${s.chatItem} {{#if selected}}${s.chatItemSelected}{{/if}}">
+  override render(): string {
+    return `<li class="${s.chatItem} {{#if selected}}${s.chatItemSelected}{{/if}}">
                     <div class="${s.chatBlock}">
                         <img class="${s.chatIcon}" src="{{iconChatLink}}" alt="Иконка чата"/>
                         <div class="${s.chatInfo}">
@@ -32,5 +28,5 @@ export class DialogItem extends Block {
                         </div>
                     </div>
                 </li>`;
-    }
+  }
 }

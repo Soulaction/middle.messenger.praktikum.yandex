@@ -1,1 +1,1 @@
-export {ProfileEditedPage} from './ProfileEditPage.ts';
+export { ProfileEditedPage } from './ProfileEditPage.ts';
