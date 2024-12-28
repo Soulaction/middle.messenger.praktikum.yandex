@@ -61,11 +61,11 @@ export class CreateChatModal extends Block {
 
   override render(): string {
     return `
-                 <form class="form-modal" name="chat-create">
-                     <h1 class="title-modal">{{titleModal}}</h1>
-                     {{{InputFormName}}}
-                     {{{Button}}}
-                 </form>
-                `;
+             <form class="form-modal" name="chat-create">
+                 <h1 class="title-modal">{{titleModal}}</h1>
+                 {{{InputFormName}}}
+                 {{{Button}}}
+             </form>
+            `;
   }
 }

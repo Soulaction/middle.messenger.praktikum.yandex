@@ -37,6 +37,7 @@ export class ValidationForm<T> {
     const formValue: { [K in keyof T]?: T[K] } = {};
 
     Array.from(this._form!.elements).forEach(elForm => {
+      // при необходимости можно добавить другие элементы формы
       if (elForm instanceof HTMLInputElement) {
         formValue[elForm.name as keyof T] = elForm.value as T[keyof T];
       }

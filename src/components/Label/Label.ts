@@ -19,4 +19,3 @@ export class Label extends Block {
     return `<label class="${s.label} {{className}}" for="{{for}}">{{label}}</label>`;
   }
 }
-
