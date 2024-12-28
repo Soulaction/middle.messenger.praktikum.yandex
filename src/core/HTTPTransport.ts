@@ -84,5 +84,4 @@ class HTTPTransport {
   }
 }
 
-
 export default new HTTPTransport();
