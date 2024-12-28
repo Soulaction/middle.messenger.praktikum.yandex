@@ -38,7 +38,7 @@ export class App {
         this.appContainer.appendChild(profilePage.getContent());
         profilePage.dispatchComponentDidMount();
         break;
-      case '/profile-edit-page':
+      case '/profile-edit':
         const profileEditedPage = new ProfileEditedPage();
         this.appContainer.appendChild(profileEditedPage.getContent());
         profileEditedPage.dispatchComponentDidMount();

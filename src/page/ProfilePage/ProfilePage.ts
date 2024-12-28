@@ -24,7 +24,7 @@ export class ProfilePage extends Block {
             label: 'Изменить данные',
           },
           events: {
-            click: (event: Event) => navigate('/profile-edit-page', event),
+            click: (event: Event) => navigate('/profile-edit', event),
           },
         }),
         LinkChangePassword: new Link({
