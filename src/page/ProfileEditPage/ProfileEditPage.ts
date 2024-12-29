@@ -36,6 +36,8 @@ export class ProfileEditedPage extends Block {
             type: 'email',
             placeholder: 'Введите почтовый адрес',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormProfileLogin: new InputFormProfile<FormDataProfileEdite>({
@@ -45,6 +47,8 @@ export class ProfileEditedPage extends Block {
             type: 'text',
             placeholder: 'Введите логин',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormProfileFirstName: new InputFormProfile<FormDataProfileEdite>({
@@ -54,6 +58,8 @@ export class ProfileEditedPage extends Block {
             type: 'text',
             placeholder: 'Введите имя',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormProfileSecondName: new InputFormProfile<FormDataProfileEdite>({
@@ -63,6 +69,8 @@ export class ProfileEditedPage extends Block {
             type: 'text',
             placeholder: 'Введите фамилию',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormProfileDisplayName: new InputFormProfile<FormDataProfileEdite>({
@@ -72,6 +80,8 @@ export class ProfileEditedPage extends Block {
             type: 'text',
             placeholder: 'Введите имя в чате',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormProfilePhone: new InputFormProfile<FormDataProfileEdite>({
@@ -81,6 +91,8 @@ export class ProfileEditedPage extends Block {
             type: 'tel',
             placeholder: 'Введите номер телефона',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         CircleButton: new CircleButton({

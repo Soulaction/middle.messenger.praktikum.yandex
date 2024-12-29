@@ -193,14 +193,10 @@ export class MessageBlock extends Block {
                           <h2 class="${s.noMessageTitle}">Нет сообщений, начните диалог</h2>
                      </div>
                      {{/if}}
-                     <form class="${s.sendMsgForm}" name="send-msg">
-                         <div  class="${s.sendMsgInputBlock}">
+                     <form class="${s.sendMsgInputBlock}" name="send-msg">
                             {{{ButtonIconClip}}}
                             <input class="${s.sendMsgInput}" name="message" placeholder="Сообщение"/>
                             {{{CircleButton}}}
-                         </div>
-                         
-                         {{{ErrorMessage}}}
                      </form>
                   
                     {{{ContextMenuClip}}}

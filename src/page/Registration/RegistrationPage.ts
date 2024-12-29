@@ -30,6 +30,8 @@ export class RegistrationPage extends Block {
             type: 'email',
             placeholder: 'Введите почтовый адрес',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormLogin: new InputForm<FormDataRegistration>({
@@ -39,6 +41,8 @@ export class RegistrationPage extends Block {
             placeholder: 'Введите логин',
             type: 'text',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormFirstName: new InputForm<FormDataRegistration>({
@@ -48,6 +52,8 @@ export class RegistrationPage extends Block {
             placeholder: 'Введите имя',
             type: 'text',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormSecondName: new InputForm<FormDataRegistration>({
@@ -57,6 +63,8 @@ export class RegistrationPage extends Block {
             placeholder: 'Введите фамилию',
             type: 'text',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormPhone: new InputForm<FormDataRegistration>({
@@ -66,6 +74,8 @@ export class RegistrationPage extends Block {
             placeholder: 'Введите номер телефона',
             type: 'tel',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormPassword: new InputForm<FormDataRegistration>({
@@ -75,7 +85,8 @@ export class RegistrationPage extends Block {
             placeholder: 'Введите пароль',
             type: 'password',
             validationService,
-            inputChange: () => checkEqualPassword(validationService),
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => this.changePassword(event.target as HTMLInputElement),
           },
         }),
         InputFormPasswordAgain: new InputForm<FormDataRegistration>({
@@ -85,7 +96,8 @@ export class RegistrationPage extends Block {
             placeholder: 'Повторите пароль',
             type: 'password',
             validationService,
-            inputChange: () => checkEqualPassword(validationService),
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => this.changePassword(event.target as HTMLInputElement),
           },
         }),
         ButtonRegistration: new Button({
@@ -134,6 +146,11 @@ export class RegistrationPage extends Block {
         errors: errorsForm.second_name,
       },
     });
+  }
+
+  changePassword(event: HTMLInputElement): void {
+    this.validationService.setFormData(event);
+    checkEqualPassword(this.validationService);
   }
 
   registration(event: Event): void {

@@ -56,13 +56,7 @@ export class UploadFileModal extends Block {
   }
 
   override componentDidMount() {
-    this.validationService.init('upload-file', {
-      file: {
-        errors: {
-          required: { rule: true, message: 'Нужно выбрать файл' },
-        },
-      },
-    });
+    this.validationService.init('upload-file');
   }
 
   uploadFile(event: Event): void {
@@ -77,7 +71,6 @@ export class UploadFileModal extends Block {
                      <h1 class="title-modal">{{titleModal}}</h1>
                      {{{UploadButton}}}
                      {{{Button}}}
-                     {{{Error}}}
                  </form>
                 `;
   }

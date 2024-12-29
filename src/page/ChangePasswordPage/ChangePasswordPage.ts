@@ -33,6 +33,8 @@ export class ChangePasswordPage extends Block {
             type: 'password',
             placeholder: 'Введите старый пароль',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormProfileNewPsw: new InputFormProfile<FormDataChangePassword>({
@@ -42,7 +44,8 @@ export class ChangePasswordPage extends Block {
             type: 'password',
             placeholder: 'Введите новый пароль',
             validationService,
-            inputChange: () => checkEqualPassword(validationService),
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => this.changePassword(event.target as HTMLInputElement),
           },
         }),
         InputFormProfileAgainNewPsw: new InputFormProfile<FormDataChangePassword>({
@@ -52,7 +55,8 @@ export class ChangePasswordPage extends Block {
             type: 'password',
             placeholder: 'Повторите пароль',
             validationService,
-            inputChange: () => checkEqualPassword(validationService),
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => this.changePassword(event.target as HTMLInputElement),
           },
         }),
         CircleButton: new CircleButton({
@@ -89,6 +93,11 @@ export class ChangePasswordPage extends Block {
         errors: errorsForm.password,
       },
     });
+  }
+
+  changePassword(event: HTMLInputElement): void {
+    this.validationService.setFormData(event);
+    checkEqualPassword(this.validationService);
   }
 
   save(event: Event): void {

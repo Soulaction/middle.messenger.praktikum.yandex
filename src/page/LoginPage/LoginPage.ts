@@ -26,6 +26,8 @@ export class LoginPage extends Block {
             type: 'text',
             placeholder: 'Введите логин',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         InputFormPassword: new InputForm<FormDataLogin>({
@@ -35,6 +37,8 @@ export class LoginPage extends Block {
             placeholder: 'Введите пароль',
             type: 'password',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         ButtonLogin: new Button({

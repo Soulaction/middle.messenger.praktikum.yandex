@@ -13,7 +13,8 @@ type InputFormProps<T> = {
   type?: string;
   placeholder: string;
   validationService: ValidationForm<T>;
-  inputChange?: () => void;
+  blur?: (event: Event) => void;
+  inputChange?: (event: Event) => void;
 };
 
 export class InputForm<T> extends Block {
@@ -37,6 +38,7 @@ export class InputForm<T> extends Block {
             placeholder: inputFormProps.props?.placeholder,
           },
           events: {
+            blur: inputFormProps.props?.blur as EventBlock,
             input: inputFormProps.props?.inputChange as EventBlock,
           },
         }),

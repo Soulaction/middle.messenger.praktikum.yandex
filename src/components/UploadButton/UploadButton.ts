@@ -28,16 +28,14 @@ export class UploadButton extends Block {
 
   override render(): string {
     return `
-                  <div class="{{class}}">
-                        <label class="${s.label}"
-                               for="input-file">
-                                {{label}}
-                        </label>
+                <label class="${s.label} {{class}}"
+                       for="input-file">
+                        {{label}}
                         <input id="input-file"
                                class="${s.input}"
                                name="{{name}}"
                                type="file"/>
-                  </div>
+                </label>
                 `;
   }
 }
