@@ -1,7 +1,11 @@
-import {App} from "./App.ts";
-import './styles/index.pcss';
+import { App } from './App.ts';
+import './styles/global.pcss';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const app = new App();
+  const app = new App();
+  app.render();
+
+  window.addEventListener('pushstate', () => {
     app.render();
-})
+  });
+});

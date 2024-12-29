@@ -1,7 +1,7 @@
-export {LoginPage} from './login';
-export {RegistrationPage} from './registration';
-export {ChatsPage} from './chats';
-export {ProfilePage} from './profile';
-export {ProfileEdit} from './profile-edit';
-export {ChangePassword} from './change-password';
-export {ErrorPage} from './error';
+export { LoginPage } from './LoginPage';
+export { RegistrationPage } from './Registration';
+export { ChatPage } from './ChatPage';
+export { ProfilePage } from './ProfilePage';
+export { ProfileEditedPage } from './ProfileEditPage';
+export { ChangePasswordPage } from './ChangePasswordPage';
+export { ErrorPage } from './ErrorPage';

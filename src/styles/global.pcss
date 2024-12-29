@@ -1,0 +1,129 @@
+@font-face {
+    font-family: Inter;
+    font-weight: 500;
+    src: url('/fonts/Inter-Medium.ttf') format('woff');
+}
+
+@font-face {
+    font-family: Inter;
+    font-weight: 600;
+    src: url('/fonts/Inter-SemiBold.ttf') format('woff');
+}
+
+:root {
+    --main-color: #3369F3;
+    --danger-color: #ff2f2f;
+    --grey-color: #999;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #fff;
+    font-family: Inter, Arial, sans-serif;
+}
+
+.page-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    width: 100vw;
+}
+
+/* Страница авторизации */
+.form-authorization-wrapper {
+    border-radius: 12px;
+    box-shadow: 0 0 6px 0 rgb(0 0 0 / 20%);
+    display: flex;
+    flex-direction: column;
+    max-width: 340px;
+    min-height: 450px;
+    width: 100%;
+
+    & .authorization-title {
+        font-size: 20px;
+        line-height: 20px;
+        margin: 50px 0 0;
+        text-align: center;
+    }
+
+    & .authorization-form {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        margin: 40px 30px 30px;
+
+        & .input-wrapper {
+            display: flex;
+            flex-direction: column;
+
+            &:last-of-type {
+                margin-bottom: 47px;
+            }
+        }
+    }
+
+    & .authorization-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: auto;
+    }
+}
+
+/* Страница профиля */
+.page-profile {
+    display: flex;
+}
+
+.left-panel {
+    align-items: center;
+    border-right: 1px solid #eaeaea;
+    display: flex;
+    justify-content: center;
+    max-width: 64px;
+    width: 100%;
+}
+
+.user-info {
+    margin-top: 60px;
+    max-width: 510px;
+    width: 100%;
+
+    & .user-info-label {
+           color: #1e1e1e;
+           font-size: 16px;
+           line-height: 16px;
+           margin-right: 9px;
+           white-space: nowrap;
+    }
+}
+
+/* Модальное окно */
+.form-modal {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title-modal {
+    color: #1e1e1e;
+    font-size: 15px;
+    line-height: 20px
+}
+
+.submit-btn-modal {
+    margin-top: auto;
+}
+
+.input-for-modal {
+    margin-top: 50px;
+    width: 100%;
+}

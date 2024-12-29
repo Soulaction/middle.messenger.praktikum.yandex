@@ -1,0 +1,29 @@
+.user-avatar {
+    border-radius: 50%;
+    display: block;
+    height: 130px;
+    object-fit: cover;
+    width: 130px;
+}
+
+.user-avatar-wrapper {
+    position: relative;
+}
+
+.user-avatar-wrapper:hover::before {
+    align-content: center;
+    background-color: rgb(0 0 0 / 50%);
+    border-radius: 50%;
+    color: #fff;
+    content: 'Поменять\Aаватар';
+    cursor: pointer;
+    font-size: 13px;
+    height: 100%;
+    left: 0;
+    line-height: 14px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    white-space: pre-wrap;
+    width: 100%;
+}
