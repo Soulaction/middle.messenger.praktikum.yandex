@@ -3,4 +3,5 @@ export type FormError = {
   pattern: string;
   maxlength: string;
   minlength: string;
+  customError: string;
 };

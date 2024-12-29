@@ -26,6 +26,8 @@ export class RemoveUserModal extends Block {
             placeholder: 'Введите логин',
             className: 'input-for-modal',
             validationService,
+            blur: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
+            inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
         Button: new Button({

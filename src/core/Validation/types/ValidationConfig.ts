@@ -2,7 +2,7 @@ import { FormError } from './FormError.ts';
 
 export type InitFormDataErrors = {
   [key in keyof Partial<FormError>]: {
-    rule: key extends 'required' ? boolean
+    rule: key extends 'required' | 'customError' ? boolean
       : key extends 'pattern' ? RegExp
         : number;
     message: string;

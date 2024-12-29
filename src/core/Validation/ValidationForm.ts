@@ -26,9 +26,6 @@ export class ValidationForm<T> {
           errors: [],
         };
         this._initFormData = initFormData;
-
-        elForm.addEventListener('input', (evt: Event) => this._changeForm(evt.target as HTMLInputElement));
-        elForm.addEventListener('blur', (evt: Event) => this._changeForm(evt.target as HTMLInputElement));
       }
     });
   }
@@ -61,6 +58,9 @@ export class ValidationForm<T> {
 
       } else if (errorsConfig.errors.minlength && errorsConfig.errors.minlength.rule > +input.value) {
         errors.push(errorsConfig.errors.minlength.message);
+
+      } else if (errorsConfig.errors.customError && errorsConfig.errors.customError.rule) {
+        errors.push(errorsConfig.errors.customError.message);
       }
     }
 
@@ -70,7 +70,7 @@ export class ValidationForm<T> {
     };
   }
 
-  private _changeForm(input: HTMLInputElement): void {
+  setFormData(input: HTMLInputElement): void {
     this._setInfoFormData(input);
     this._nextValueForm(this.formValue);
 
@@ -96,16 +96,19 @@ export class ValidationForm<T> {
     }
   }
 
-  setError(controlName: string, value: string): void {
-    if (!this.formValue[controlName as keyof T]!.errors.includes(value)) {
-      this.formValue[controlName as keyof T]!.errors.push(value);
+  setError(controlName: string, message: string): void {
+    if (!this.formValue[controlName as keyof T]!.errors.includes(message)) {
+      this._initFormData[controlName as keyof T]!.errors = {
+        ...this._initFormData[controlName as keyof T]!.errors,
+        customError: { rule: true, message },
+      };
       this.dispatchBlurFormItem((this._form!.elements).namedItem(controlName) as HTMLElement);
     }
   }
 
   removeError(controlName: string, value: string): void {
     if (this.formValue[controlName as keyof T]!.errors.includes(value)) {
-      this.formValue[controlName as keyof T]!.errors = this.formValue[controlName as keyof T]!.errors.filter(err => err !== value);
+      delete this._initFormData[controlName as keyof T]!.errors.customError;
       this.dispatchBlurFormItem((this._form!.elements).namedItem(controlName) as HTMLElement);
     }
 
