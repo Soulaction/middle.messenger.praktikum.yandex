@@ -1,81 +1,76 @@
-import Handlebars from 'handlebars';
-import * as Pages from './page';
-
-import Label from './components/label/Label';
-import Input from './components/input/Input';
-import ErrorMessage from './components/errorMessage/ErrorMessage.ts';
-import Button from './components/button/Button';
-import Link from './components/link/Link';
-import Chat from './components/chat/Chat';
-import {chats} from "./utils/const.ts";
-
-Handlebars.registerPartial('Label', Label);
-Handlebars.registerPartial('Input', Input);
-Handlebars.registerPartial('ErrorMessage', ErrorMessage);
-Handlebars.registerPartial('Button', Button);
-Handlebars.registerPartial('Link', Link);
-Handlebars.registerPartial('Chat', Chat);
+import { ErrorPage, ChangePasswordPage, LoginPage, ProfilePage, RegistrationPage } from './page';
+import { ProfileEditedPage } from './page';
+import { ChatPage } from './page';
+import { navigate } from './utils/utils.ts';
 
 export class App {
-    appContainer: HTMLDivElement;
-    state: { urlPage: string };
+  appContainer: HTMLElement;
 
-    constructor() {
-        const appContainer: HTMLDivElement | null = document.getElementById('app') as HTMLDivElement;
-        if (!appContainer) {
-            throw new Error('Not found app div');
-        }
-        this.appContainer = appContainer;
-        this.state = {urlPage: window.location.pathname};
+  constructor() {
+    const appContainer: HTMLElement | null = document.getElementById('app') as HTMLElement;
+    if (!appContainer) {
+      throw new Error('Not found app div');
     }
+    this.appContainer = appContainer;
+  }
 
-    render(): void {
-        let template: HandlebarsTemplateDelegate;
-        let templateData = {};
-        switch (this.state.urlPage) {
-            case '/registration':
-                template = Handlebars.compile(Pages.RegistrationPage);
-                break;
-            case '/chats':
-                template = Handlebars.compile(Pages.ChatsPage);
-                templateData = {chats: chats};
-                break;
-            case '/':
-            case '/login':
-                template = Handlebars.compile(Pages.LoginPage);
-                break;
-            case '/profile':
-                template = Handlebars.compile(Pages.ProfilePage);
-                break;
-            case '/profile-edit':
-                template = Handlebars.compile(Pages.ProfileEdit);
-                break;
-            case '/profile-password':
-                template = Handlebars.compile(Pages.ChangePassword);
-                break;
-            case '/not-found':
-                template = Handlebars.compile(Pages.ErrorPage);
-                templateData = {code: 404, errorText: 'Не туда попали'};
-                break;
-            case '/server-error':
-                template = Handlebars.compile(Pages.ErrorPage);
-                templateData = {code: 500, errorText: 'Мы уже фиксим'};
-                break;
-            default:
-                this.changePage('/not-found');
-                return;
-        }
-        this.appContainer.innerHTML = template(templateData);
-        this.addEventListeners();
+  render(): void {
+    this.appContainer.innerHTML = '';
+    switch (window.location.pathname) {
+      case '/registration':
+        const regPage = new RegistrationPage();
+        this.appContainer.appendChild(regPage.getContent());
+        regPage.dispatchComponentDidMount();
+        break;
+      case '/chat':
+        const chatsPage = new ChatPage();
+        this.appContainer.appendChild(chatsPage.getContent());
+        chatsPage.dispatchComponentDidMount();
+        break;
+      case '/':
+      case '/login':
+        const loginPage = new LoginPage();
+        this.appContainer.appendChild(loginPage.getContent());
+        loginPage.dispatchComponentDidMount();
+        break;
+      case '/profile':
+        const profilePage = new ProfilePage();
+        this.appContainer.appendChild(profilePage.getContent());
+        profilePage.dispatchComponentDidMount();
+        break;
+      case '/profile-edit':
+        const profileEditedPage = new ProfileEditedPage();
+        this.appContainer.appendChild(profileEditedPage.getContent());
+        profileEditedPage.dispatchComponentDidMount();
+        break;
+      case '/profile-password':
+        const changePasswordPage = new ChangePasswordPage();
+        this.appContainer.appendChild(changePasswordPage.getContent());
+        changePasswordPage.dispatchComponentDidMount();
+        break;
+      case '/not-found':
+        const errorPage = new ErrorPage({
+          props: {
+            code: '404',
+            errorText: 'Не туда попали',
+          },
+        });
+        this.appContainer.appendChild(errorPage.getContent());
+        errorPage.dispatchComponentDidMount();
+        break;
+      case '/server-error':
+        const errorServerPage = new ErrorPage({
+          props: {
+            code: '500',
+            errorText: 'Мы уже фиксим',
+          },
+        });
+        this.appContainer.appendChild(errorServerPage.getContent());
+        errorServerPage.dispatchComponentDidMount();
+        break;
+      default:
+        navigate('/not-found');
+        return;
     }
-
-    addEventListeners(): void {
-
-    }
-
-    changePage(url: string): void {
-        this.state.urlPage = url;
-        window.location.pathname = url;
-        this.render();
-    }
+  }
 }

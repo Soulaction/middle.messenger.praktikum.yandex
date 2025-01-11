@@ -15,7 +15,7 @@
 ## Ссылки на страницы приложения
 1. [Авторизация](https://messenger-sa.netlify.app/login);
 2. [Регистрация](https://messenger-sa.netlify.app/registration);
-3. [Список чатов](https://messenger-sa.netlify.app/chats);
+3. [Список чатов](https://messenger-sa.netlify.app/chat);
 4. [Профиль](https://messenger-sa.netlify.app/profile);
 5. [Редактирование профиля](https://messenger-sa.netlify.app/profile-edit);
 6. [Смена пароля](https://messenger-sa.netlify.app/profile-password);
