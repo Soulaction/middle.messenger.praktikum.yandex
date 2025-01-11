@@ -1,10 +1,11 @@
 import { Link } from '../../components/Link/Link.ts';
 import { Button } from '../../components/Button/Button.ts';
 import { InputForm } from '../../components/InputForm/InputForm.ts';
-import { checkEqualPassword, navigate } from '../../utils/utils.ts';
+import { checkEqualPassword } from '../../utils/utils.ts';
 import Block from '../../core/Block/Block.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
-import { errorsForm } from '../../utils/const.ts';
+import {errorsForm, RoutePath} from '../../utils/const.ts';
+import {navigate} from "../../core/utils/navigate.ts";
 
 export type FormDataRegistration = {
   email: string;
@@ -114,7 +115,7 @@ export class RegistrationPage extends Block {
             label: 'Войти',
           },
           events: {
-            click: (event: Event) => navigate('/login', event),
+            click: (event: Event) => this.goToAuthPage(event),
           },
         }),
       },
@@ -146,6 +147,11 @@ export class RegistrationPage extends Block {
         errors: errorsForm.second_name,
       },
     });
+  }
+
+  goToAuthPage(event: Event): void {
+    event.preventDefault();
+    navigate().go(RoutePath.signIn);
   }
 
   changePassword(event: HTMLInputElement): void {

@@ -7,7 +7,8 @@ import { CreateChatModal } from '../../modals/CreateChatModal/CreateChatModal.ts
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon.ts';
 import Block from '../../core/Block/Block.ts';
 import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
-import { navigate } from '../../utils/utils.ts';
+import {navigate} from "../../core/utils/navigate.ts";
+import {RoutePath} from "../../utils/const.ts";
 
 export type DialogListProps = {
   ChatList: DialogItem[]
@@ -33,7 +34,7 @@ export class DialogList extends Block {
         }),
         LinkProfile: new LinkProfile({
           events: {
-            click: (event: Event) => navigate('/profile', event),
+            click: (event: Event) => this.goToSettingProfilePage(event),
           },
         }),
         SearchInput: new SearchInput({
@@ -48,6 +49,11 @@ export class DialogList extends Block {
         ChatList: dialogListProps.props!.ChatList,
       },
     });
+  }
+
+  goToSettingProfilePage(event: Event): void {
+    event.preventDefault();
+    navigate().go(RoutePath.settings);
   }
 
   override render(): string {

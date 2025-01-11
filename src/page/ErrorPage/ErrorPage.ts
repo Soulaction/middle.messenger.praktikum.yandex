@@ -2,7 +2,8 @@ import { Link } from '../../components/Link/Link.ts';
 import s from './ErrorPage.module.pcss';
 import Block from '../../core/Block/Block.ts';
 import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
-import { navigate } from '../../utils/utils.ts';
+import {navigate} from "../../core/utils/navigate.ts";
+import {RoutePath} from "../../utils/const.ts";
 
 export type ErrorProps = {
   code: string;
@@ -20,11 +21,16 @@ export class ErrorPage extends Block {
             label: 'Назад к чатам',
           },
           events: {
-            click: (event: Event) => navigate('/chat', event),
+            click: (event: Event) => this.goToMessagePage(event),
           },
         }),
       },
     });
+  }
+
+  goToMessagePage(event: Event): void {
+    event.preventDefault();
+    navigate().go(RoutePath.messenger);
   }
 
   override render(): string {

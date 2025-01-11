@@ -5,8 +5,8 @@ import { AvatarUser } from '../../components/AvatarUser';
 import { CircleButton } from '../../components/CircleButton/CircleButton';
 import Block from '../../core/Block/Block.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
-import { errorsForm } from '../../utils/const.ts';
-import { navigate } from '../../utils/utils.ts';
+import {errorsForm, RoutePath} from '../../utils/const.ts';
+import {navigate} from "../../core/utils/navigate.ts";
 
 export type FormDataProfileEdite = {
   email: string;
@@ -100,7 +100,7 @@ export class ProfileEditedPage extends Block {
             type: 'button',
           },
           events: {
-            click: (event: Event) => navigate('/chat', event),
+            click: (event: Event) => this.goToMessagePage(event),
           },
         }),
         Button: new Button({
@@ -135,6 +135,11 @@ export class ProfileEditedPage extends Block {
         errors: errorsForm.phone,
       },
     });
+  }
+
+  goToMessagePage(event: Event): void {
+    event.preventDefault();
+    navigate().go(RoutePath.messenger);
   }
 
   save(event: Event): void {

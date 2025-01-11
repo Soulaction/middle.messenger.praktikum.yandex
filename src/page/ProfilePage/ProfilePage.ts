@@ -5,7 +5,8 @@ import { AvatarUser } from '../../components/AvatarUser';
 import s from './ProfilePage.module.pcss';
 import { CircleButton } from '../../components/CircleButton/CircleButton';
 import Block from '../../core/Block/Block.ts';
-import { navigate } from '../../utils/utils.ts';
+import {navigate} from "../../core/utils/navigate.ts";
+import {RoutePath} from "../../utils/const.ts";
 
 export class ProfilePage extends Block {
   userService: UserService;
@@ -24,7 +25,7 @@ export class ProfilePage extends Block {
             label: 'Изменить данные',
           },
           events: {
-            click: (event: Event) => navigate('/profile-edit', event),
+            click: (event: Event) => this.goToMessagePage(event),
           },
         }),
         LinkChangePassword: new Link({
@@ -32,7 +33,7 @@ export class ProfilePage extends Block {
             label: 'Изменить пароль',
           },
           events: {
-            click: (event: Event) => navigate('/profile-password', event),
+            click: (event: Event) => this.goToMessagePage(event),
           },
         }),
         LinkChangeExit: new Link({
@@ -41,7 +42,7 @@ export class ProfilePage extends Block {
             danger: true,
           },
           events: {
-            click: (event: Event) => navigate('/login', event),
+            click: (event: Event) => this.goToMessagePage(event),
           },
         }),
         CircleButton: new CircleButton({
@@ -49,7 +50,7 @@ export class ProfilePage extends Block {
             type: 'button',
           },
           events: {
-            click: (event: Event) => navigate('/chat', event),
+            click: (event: Event) => this.goToMessagePage(event),
           },
         }),
       },
@@ -61,6 +62,11 @@ export class ProfilePage extends Block {
     const userInfoItems: Record<string, UserInfoItem> = this.userService.getUserInfoProfile();
 
     this.setChildren(userInfoItems);
+  }
+
+  goToMessagePage(event: Event): void {
+    event.preventDefault();
+    navigate().go(RoutePath.messenger);
   }
 
   override render(): string {

@@ -16,14 +16,7 @@ export class Modal extends Block {
   }
 
   openModel(): void {
-    this.show();
-  }
-
-  override show(): void {
-    const content = this.getContent();
-    if (content) {
-      content.style.display = 'flex';
-    }
+    super.show();
   }
 
   hideModal(event: Event): void {

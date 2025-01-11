@@ -1,12 +1,13 @@
 import { InputFormProfile } from '../../components/InputFormProfile/InputFormProfile.ts';
 import { Button } from '../../components/Button/Button.ts';
-import { checkEqualPassword, navigate } from '../../utils/utils.ts';
+import { checkEqualPassword } from '../../utils/utils.ts';
 import s from './ChangePassword.module.pcss';
 import { AvatarUser } from '../../components/AvatarUser';
 import { CircleButton } from '../../components/CircleButton/CircleButton';
 import Block from '../../core/Block/Block.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
-import { errorsForm } from '../../utils/const.ts';
+import {errorsForm, RoutePath} from '../../utils/const.ts';
+import {navigate} from "../../core/utils/navigate.ts";
 
 export type FormDataChangePassword = {
   oldPassword: string;
@@ -64,7 +65,7 @@ export class ChangePasswordPage extends Block {
             type: 'button',
           },
           events: {
-            click: (event: Event) => navigate('/chat', event),
+            click: (event: Event) => this.goToMessagePage(event),
           },
         }),
         Button: new Button({
@@ -94,6 +95,11 @@ export class ChangePasswordPage extends Block {
       },
     });
   }
+
+    goToMessagePage(event: Event): void {
+        event.preventDefault();
+        navigate().go(RoutePath.messenger);
+    }
 
   changePassword(event: HTMLInputElement): void {
     this.validationService.setFormData(event);

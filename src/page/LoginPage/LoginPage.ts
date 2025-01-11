@@ -1,10 +1,10 @@
-import { InputForm } from '../../components/InputForm/InputForm.ts';
-import { Button } from '../../components/Button/Button.ts';
-import { Link } from '../../components/Link/Link.ts';
+import {InputForm} from '../../components/InputForm/InputForm.ts';
+import {Button} from '../../components/Button/Button.ts';
+import {Link} from '../../components/Link/Link.ts';
 import Block from '../../core/Block/Block.ts';
-import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
-import { navigate } from '../../utils/utils.ts';
-import { errorsForm } from '../../utils/const.ts';
+import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
+import {errorsForm, RoutePath} from '../../utils/const.ts';
+import {navigate} from "../../core/utils/navigate.ts";
 
 
 export type FormDataLogin = {
@@ -55,7 +55,7 @@ export class LoginPage extends Block {
             label: 'Нет аккаунта?',
           },
           events: {
-            click: (event: Event) => navigate('/registration', event),
+            click: (event: Event) => this.goToRegistrationPage(event),
           },
         }),
       },
@@ -72,6 +72,11 @@ export class LoginPage extends Block {
         errors: errorsForm.password,
       },
     });
+  }
+
+  goToRegistrationPage(event: Event): void {
+    event.preventDefault();
+    navigate().go(RoutePath.signUp);
   }
 
   login(event: Event): void {
