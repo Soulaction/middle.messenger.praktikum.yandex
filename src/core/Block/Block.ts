@@ -19,7 +19,7 @@ export default class Block {
 
   protected props: object;
 
-  protected children: Record<string, Block>;
+  protected children: Record<string, Block | null>;
 
   protected lists: Record<string, Block[]>;
 
@@ -68,7 +68,7 @@ export default class Block {
   private _componentDidMount(): void {
     this.componentDidMount();
     Object.values(this.children).forEach(child => {
-      child.dispatchComponentDidMount();
+      child && child.dispatchComponentDidMount();
     });
   }
 
@@ -108,7 +108,7 @@ export default class Block {
     Object.assign(this.lists, nextList);
   };
 
-  public setChildren = (nextList: Record<string, Block>): void => {
+  public setChildren = (nextList: Record<string, Block | null>): void => {
     if (!nextList) {
       return;
     }
@@ -121,7 +121,7 @@ export default class Block {
     const listHTMLRow: PropsForHandlebars = {};
 
     Object.entries(this.children).forEach(([key, child]) => {
-      childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`;
+      child && (childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`);
     });
     const tmplId: string = crypto.randomUUID();
     Object.entries(this.lists).forEach(([key]) => {
@@ -143,6 +143,10 @@ export default class Block {
       }
     });
     Object.values(this.children).forEach(child => {
+      if(!child) {
+        return;
+      }
+
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
       if (stub) {
         stub.replaceWith(child.getContent());

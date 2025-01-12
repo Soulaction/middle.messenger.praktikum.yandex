@@ -87,7 +87,7 @@ export enum RoutePath {
     signUp = '/sign-up',
     settings = '/settings',
     messenger = '/messenger',
-    error = '/error'
+    notFound = '*'
 }
 
 export const routeItems: RouteItem<ErrorProps>[] = [
@@ -102,13 +102,18 @@ export const routeItems: RouteItem<ErrorProps>[] = [
     {
         pathname: RoutePath.settings,
         Component: ProfilePage,
+        blockProps: {
+            props: {
+                mode: 'profileInfo',
+            },
+        }
     },
     {
         pathname: RoutePath.messenger,
         Component: ChatPage
     },
     {
-        pathname: RoutePath.error,
+        pathname: RoutePath.notFound,
         Component: ErrorPage,
         blockProps: {
             props: {

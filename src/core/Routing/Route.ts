@@ -24,7 +24,7 @@ export class Route {
     }
 
     go(pathname: string): void {
-        if (isEqualSrt(pathname, this.pathname)) {
+        if (isEqualSrt(pathname, this.pathname) || this.pathname === '*') {
             this.pathname = pathname;
             this.render();
         }
@@ -42,7 +42,7 @@ export class Route {
             this.setContentToApp(this.appContainer, this.block);
             return;
         }
-
+        this.block.dispatchComponentDidMount();
         this.block.show();
     }
 }

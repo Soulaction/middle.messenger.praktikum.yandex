@@ -6,6 +6,7 @@ export class Router {
     private appContainer!: HTMLElement;
     private static instance: Router;
     private currentRoute: Route | null = null;
+    private forEvryOneRoute: Route | null = null;
     public routes: Route[] = [];
     public readonly history: History = window.history;
 
@@ -25,7 +26,6 @@ export class Router {
     private start(): void {
         // Реагируем на изменения в адресной строке и вызываем перерисовку
         window.addEventListener('popstate', (event: PopStateEvent) => {
-            console.log(event);
             if (event.currentTarget) {
                 this.onRoute((event.currentTarget as Window).location.pathname);
             }
@@ -34,7 +34,7 @@ export class Router {
     }
 
     private onRoute(pathname: string): void {
-        const route = this.getRoute(pathname);
+        const route = this.getRoute(pathname) ?? this.forEvryOneRoute;
         if (!route) {
             return;
         }
@@ -60,7 +60,11 @@ export class Router {
     init(routeItems: RouteItem[]): void {
         routeItems.forEach(routeItem => {
             const route = new Route(this.appContainer, routeItem);
-            this.routes.push(route);
+            if (routeItem.pathname === '*') {
+                this.forEvryOneRoute = route
+            } else {
+                this.routes.push(route);
+            }
         });
         this.start();
     }

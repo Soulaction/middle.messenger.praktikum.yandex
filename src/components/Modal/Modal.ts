@@ -24,7 +24,6 @@ export class Modal extends Block {
       super.hide();
       event.stopPropagation();
     }
-
   }
 
   override render(): string {

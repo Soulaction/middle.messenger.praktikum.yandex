@@ -34,12 +34,12 @@ export class AvatarUser extends Block {
 
   override render(): string {
     return `
-                <div>               
-                    {{{UploadFileModal}}}
-                    <div class="${s.userAvatarWrapper}">
-                        <img class="${s.UserAvatar}" src="{{imgUrl}}" alt="Иконка профиля"/>
-                    </div>
+            <div>               
+                {{{UploadFileModal}}}
+                <div class="${s.userAvatarWrapper}">
+                    <img class="${s.userAvatar}" src="{{imgUrl}}" alt="Иконка профиля"/>
                 </div>
+            </div>
         `;
   }
 }

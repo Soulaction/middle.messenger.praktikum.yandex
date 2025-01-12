@@ -1,12 +1,9 @@
-import { InputFormProfile } from '../../components/InputFormProfile/InputFormProfile.ts';
-import { Button } from '../../components/Button/Button.ts';
-import s from './ProfileEditPage.module.pcss';
-import { AvatarUser } from '../../components/AvatarUser';
-import { CircleButton } from '../../components/CircleButton/CircleButton';
+import {InputFormProfile} from '../InputFormProfile/InputFormProfile.ts';
+import {Button} from '../Button/Button.ts';
+import s from './ProfileEdit.module.pcss';
 import Block from '../../core/Block/Block.ts';
-import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
-import {errorsForm, RoutePath} from '../../utils/const.ts';
-import {navigate} from "../../core/utils/navigate.ts";
+import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
+import {errorsForm} from '../../utils/const.ts';
 
 export type FormDataProfileEdite = {
   email: string;
@@ -17,18 +14,13 @@ export type FormDataProfileEdite = {
   phone: string;
 };
 
-export class ProfileEditedPage extends Block {
+export class ProfileEdited extends Block {
   validationService: ValidationForm<FormDataProfileEdite>;
 
   constructor() {
     const validationService = new ValidationForm<FormDataProfileEdite>();
     super({
       children: {
-        AvatarUser: new AvatarUser({
-          props: {
-            imgUrl: '/images/profile.png',
-          },
-        }),
         InputFormProfileEmail: new InputFormProfile<FormDataProfileEdite>({
           props: {
             label: 'Почта',
@@ -95,14 +87,6 @@ export class ProfileEditedPage extends Block {
             inputChange: (event: Event) => validationService.setFormData(event.target as HTMLInputElement),
           },
         }),
-        CircleButton: new CircleButton({
-          props: {
-            type: 'button',
-          },
-          events: {
-            click: (event: Event) => this.goToMessagePage(event),
-          },
-        }),
         Button: new Button({
           props: {
             label: 'Сохранить',
@@ -137,11 +121,6 @@ export class ProfileEditedPage extends Block {
     });
   }
 
-  goToMessagePage(event: Event): void {
-    event.preventDefault();
-    navigate().go(RoutePath.messenger);
-  }
-
   save(event: Event): void {
     event.preventDefault();
     this.validationService.checkValidity();
@@ -150,25 +129,17 @@ export class ProfileEditedPage extends Block {
 
   override render(): string {
     return `
-                <main class="page-profile">
-                    <div class="left-panel">
-                        {{{CircleButton}}}
-                    </div>
-                    <div class="page-wrapper page-profile-content">
-                        {{{AvatarUser}}}
-                        <form class="user-info" name="edit-profile">
-                                {{{InputFormProfileEmail}}}
-                                {{{InputFormProfileLogin}}}
-                                {{{InputFormProfileFirstName}}}
-                                {{{InputFormProfileSecondName}}}
-                                {{{InputFormProfileDisplayName}}}
-                                {{{InputFormProfilePhone}}}
-                            <footer class="${s.userEditDataFooter}">
-                                {{{Button}}}
-                            </footer>
-                        </form>
-                    </div>
-                </main>
+           <form class="user-info ${s.userInfoIndent}" name="edit-profile">
+                   {{{InputFormProfileEmail}}}
+                   {{{InputFormProfileLogin}}}
+                   {{{InputFormProfileFirstName}}}
+                   {{{InputFormProfileSecondName}}}
+                   {{{InputFormProfileDisplayName}}}
+                   {{{InputFormProfilePhone}}}
+               <footer class="${s.userEditDataFooter}">
+                   {{{Button}}}
+               </footer>
+           </form>
         `;
   }
 }
