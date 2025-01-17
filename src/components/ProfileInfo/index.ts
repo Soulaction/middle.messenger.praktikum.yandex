@@ -1,1 +1,1 @@
-export { ProfileInfo } from './ProfileInfo.ts';
+export { ProfileInfoWithStore } from './ProfileInfo.ts';

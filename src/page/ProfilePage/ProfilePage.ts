@@ -3,11 +3,11 @@ import s from './ProfilePage.module.pcss';
 import Block from '../../core/Block/Block.ts';
 import {navigate} from "../../core/utils/navigate.ts";
 import {RoutePath} from "../../utils/const.ts";
-import {ProfileInfo} from "../../components/ProfileInfo";
+import {ProfileInfoWithStore} from "../../components/ProfileInfo";
 import {CircleButton} from "../../components/CircleButton/CircleButton.ts";
 import {ModeProfile} from "../../types/ModeProfile.ts";
 import {ChangePasswordProfile} from "../../components/ChangePasswordProfile";
-import {ProfileEdited} from "../../components/ProfileEdit/ProfileEdit.ts";
+import {ProfileEditedWithStore} from "../../components/ProfileEdit/ProfileEdit.ts";
 
 export class ProfilePage extends Block {
     private blockMode: string = '';
@@ -33,6 +33,7 @@ export class ProfilePage extends Block {
     }
 
     protected override componentDidMount() {
+        debugger
         this.changeMode('profileInfo');
     }
 
@@ -44,7 +45,7 @@ export class ProfilePage extends Block {
     changeMode(mode: ModeProfile): void {
         switch (mode) {
             case "changeProfile":
-                const profileEditedPage = new ProfileEdited();
+                const profileEditedPage = new ProfileEditedWithStore({});
                 this.blockMode = '{{{ProfileEditedPage}}}';
 
                 this.setChildren({
@@ -52,7 +53,7 @@ export class ProfilePage extends Block {
                     ProfileEditedPage: profileEditedPage,
                     ChangePasswordProfile: null
                 });
-                profileEditedPage.componentDidMount();
+                profileEditedPage.dispatchComponentDidMount();
                 break;
             case "changePassword":
                 const changePasswordProfile = new ChangePasswordProfile();
@@ -63,10 +64,10 @@ export class ProfilePage extends Block {
                     ProfileEditedPage: null,
                     ChangePasswordProfile: changePasswordProfile,
                 });
-                changePasswordProfile.componentDidMount();
+                changePasswordProfile.dispatchComponentDidMount();
                 break;
             default:
-                const profileInfo = new ProfileInfo({
+                const profileInfo = new ProfileInfoWithStore({
                     props: {
                         changeMode: (mode: ModeProfile) => this.changeMode(mode)
                     }
@@ -78,7 +79,7 @@ export class ProfilePage extends Block {
                     ProfileEditedPage: null,
                     ChangePasswordProfile: null,
                 });
-                profileInfo.componentDidMount();
+                profileInfo.dispatchComponentDidMount();
         }
     }
 

@@ -5,7 +5,7 @@ import Block from '../../core/Block/Block.ts';
 import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
 import {errorsForm, RoutePath} from '../../utils/const.ts';
 import {navigate} from "../../core/utils/navigate.ts";
-
+import authController from "../../controllers/AuthController.ts";
 
 export type FormDataLogin = {
   login: string;
@@ -81,8 +81,9 @@ export class LoginPage extends Block {
 
   login(event: Event): void {
     event.preventDefault();
-    this.validationService.checkValidity();
-    console.log(this.validationService.getFormValue());
+    if (this.validationService.checkValidity()) {
+      authController.login(this.validationService.getFormValue() as FormDataLogin);
+    }
   }
 
   override render(): string {

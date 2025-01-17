@@ -1,13 +1,20 @@
 import s from './ChatPage.module.pcss';
-import { MessageBlock } from '../../components/MessageBlock/MessageBlock.ts';
-import { DialogList } from '../../components/DialogList/DialogList.ts';
-import { MessageItem } from '../../components/MessageItem/MessageItem';
-import { ChatService } from '../../services/ChatService/ChatService.ts';
-import { DialogItem } from '../../components/DialogItem/DialogItem.ts';
-import { ChatApi } from '../../api/ChatApi.ts';
-import { Chat } from '../../types/Chat.ts';
-import { Message } from '../../types/Message.ts';
+import {MessageBlock} from '../../components/MessageBlock/MessageBlock.ts';
+import {DialogList} from '../../components/DialogList/DialogList.ts';
+import {MessageItem} from '../../components/MessageItem/MessageItem';
+import {ChatService} from '../../services/ChatService/ChatService.ts';
+import {DialogItem} from '../../components/DialogItem/DialogItem.ts';
+import {ChatApi} from '../../api/ChatApi.ts';
+import {Chat} from '../../types/Chat.ts';
+import {Message} from '../../types/Message.ts';
 import Block from '../../core/Block/Block.ts';
+import {wrapStore} from "../../core/utils/wrapStore.ts";
+import {User} from "../../types/User.ts";
+import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
+
+type ChatPageProps = {
+  user?: User
+}
 
 export class ChatPage extends Block {
   chatApi: ChatApi;
@@ -16,7 +23,7 @@ export class ChatPage extends Block {
 
   chats: Chat[] = [];
 
-  constructor() {
+  constructor(chatPageProps: BlockProperties<ChatPageProps>) {
 
     super({
       children: {
@@ -28,6 +35,7 @@ export class ChatPage extends Block {
       },
     });
     this.chatService = new ChatService();
+    console.log(chatPageProps);
     this.chatApi = new ChatApi();
   }
 
@@ -61,3 +69,5 @@ export class ChatPage extends Block {
                 </main>`;
   }
 }
+
+export const ProfileInfoWithStore = wrapStore((state) => ({user: state.user}))(ChatPage);

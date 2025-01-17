@@ -2,6 +2,7 @@ import EventBus, { EventCallback } from '../EventBus.ts';
 import Handlebars from 'handlebars';
 import { BlockProps, BlockProperties, EventBlock } from './types/BlockProps.ts';
 import { PropsForHandlebars } from './types/PropsForHandlebars.ts';
+import {Indexed} from "../types/Indexed.ts";
 
 export default class Block {
   static EVENTS = {
@@ -72,14 +73,14 @@ export default class Block {
     });
   }
 
-  protected componentDidMount(): void {
+  protected componentDidMount(){
   }
 
   public dispatchComponentDidMount(): void {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: BlockProps, newProps: BlockProps): void {
+  private _componentDidUpdate(oldProps: Indexed, newProps: Indexed): void {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;

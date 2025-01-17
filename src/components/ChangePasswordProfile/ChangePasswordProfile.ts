@@ -66,7 +66,7 @@ export class ChangePasswordProfile extends Block {
     this.validationService = validationService;
   }
 
-  override componentDidMount() {
+  override  componentDidMount() {
     this.validationService.init('edit-password', {
       oldPassword: {
         errors: errorsForm.password,

@@ -4,6 +4,7 @@ import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
 
 type InputProps = {
   className?: string;
+  value?: string;
   rightPlaceholder?: boolean;
   id?: string;
   type?: string;
@@ -23,6 +24,7 @@ export class Input extends Block {
                 <input class="${s.input} {{className}} {{#if rightPlaceholder}}${s.rightPlaceholder}{{/if}}"
                        id="{{id}}"
                        name="{{name}}"
+                       value="{{value}}"
                        type="{{type}}"
                        placeholder="{{placeholder}}"
                        />

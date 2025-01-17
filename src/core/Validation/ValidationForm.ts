@@ -86,14 +86,21 @@ export class ValidationForm<T> {
     });
   }
 
-  checkValidity(): void {
+  checkValidity(): boolean {
+    let isValidate: boolean = true;
+
     if (this._form) {
       Array.from(this._form.elements).forEach(elForm => {
         if (elForm instanceof HTMLInputElement) {
           this.dispatchBlurFormItem(elForm);
+
+          if(this.formValue[elForm.name as keyof T]!.errors.length > 0) {
+            isValidate = false
+          }
         }
       });
     }
+    return isValidate;
   }
 
   setError(controlName: string, message: string): void {
@@ -111,7 +118,6 @@ export class ValidationForm<T> {
       delete this._initFormData[controlName as keyof T]!.errors.customError;
       this.dispatchBlurFormItem((this._form!.elements).namedItem(controlName) as HTMLElement);
     }
-
   }
 
   private dispatchBlurFormItem(element: HTMLElement): void {

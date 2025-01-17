@@ -9,6 +9,7 @@ import Block from '../../core/Block/Block.ts';
 type InputFormProfileProps<T> = {
   label: string;
   name: string;
+  value?: string;
   type?: string;
   placeholder: string;
   validationService: ValidationForm<T>;
@@ -18,6 +19,7 @@ type InputFormProfileProps<T> = {
 
 export class InputFormProfile<T> extends Block {
   constructor(inputFormProfileProps: BlockProperties<InputFormProfileProps<T>>) {
+    debugger
     super({
       props: {
         name: inputFormProfileProps.props?.name ?? '',
@@ -29,6 +31,7 @@ export class InputFormProfile<T> extends Block {
             id: inputFormProfileProps.props?.name,
             rightPlaceholder: true,
             name: inputFormProfileProps.props?.name,
+            value: inputFormProfileProps.props?.value,
             type: inputFormProfileProps.props?.type,
             placeholder: inputFormProfileProps.props?.placeholder,
           },

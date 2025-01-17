@@ -1,9 +1,8 @@
 import {Message} from '../types/Message.ts';
 import {InitFormDataErrors} from '../core/Validation/types/ValidationConfig.ts';
 import {Chat} from '../types/Chat.ts';
-import {RouteItem} from "../core/Routing/types/RouteItem.ts";
-import {ChatPage, ErrorPage, LoginPage, ProfilePage, RegistrationPage} from "../page";
-import {ErrorProps} from "../page/ErrorPage/ErrorPage.ts";
+
+export const BASE_URL_HTTP: string = 'https://ya-praktikum.tech/api/v2';
 
 export const chats: Chat[] = [
     {
@@ -90,40 +89,6 @@ export enum RoutePath {
     notFound = '*'
 }
 
-export const routeItems: RouteItem<ErrorProps>[] = [
-    {
-        pathname: RoutePath.signIn,
-        Component: LoginPage
-    },
-    {
-        pathname: RoutePath.signUp,
-        Component: RegistrationPage
-    },
-    {
-        pathname: RoutePath.settings,
-        Component: ProfilePage,
-        blockProps: {
-            props: {
-                mode: 'profileInfo',
-            },
-        }
-    },
-    {
-        pathname: RoutePath.messenger,
-        Component: ChatPage
-    },
-    {
-        pathname: RoutePath.notFound,
-        Component: ErrorPage,
-        blockProps: {
-            props: {
-                code: '404',
-                errorText: 'Не туда попали',
-            },
-        }
-    }
-];
-
 export const errorsForm: { [key in string]: InitFormDataErrors } = {
     first_name: {
         pattern: {
@@ -162,7 +127,7 @@ export const errorsForm: { [key in string]: InitFormDataErrors } = {
     },
     phone: {
         pattern: {
-            rule: /^(\+{1}\d{9,15})|(\d{10,15})$/,
+            rule: /^\d{10,15}$/,
             message: 'От 10 до 15 символов, состоит из цифр, может начинается с плюса',
         },
     },
