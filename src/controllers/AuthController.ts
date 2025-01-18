@@ -35,7 +35,6 @@ export class AuthController {
     }
 
     public async getAuthUserInfo(): Promise<void> {
-        console.log(location.pathname);
         try {
             const user = await authApi.getAuthUserInfo();
             if ([RoutePath.signIn, RoutePath.signUp].includes(location.pathname as RoutePath)) {

@@ -10,7 +10,6 @@ import {Message} from '../../types/Message.ts';
 import Block from '../../core/Block/Block.ts';
 import {wrapStore} from "../../core/utils/wrapStore.ts";
 import {User} from "../../types/User.ts";
-import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
 
 type ChatPageProps = {
   user?: User
@@ -23,7 +22,7 @@ export class ChatPage extends Block {
 
   chats: Chat[] = [];
 
-  constructor(chatPageProps: BlockProperties<ChatPageProps>) {
+  constructor() {
 
     super({
       children: {
@@ -35,7 +34,6 @@ export class ChatPage extends Block {
       },
     });
     this.chatService = new ChatService();
-    console.log(chatPageProps);
     this.chatApi = new ChatApi();
   }
 

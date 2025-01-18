@@ -8,6 +8,7 @@ import {ModeProfile} from "../../types/ModeProfile.ts";
 import {wrapStore} from "../../core/utils/wrapStore.ts";
 import {User} from "../../types/User.ts";
 import authController from "../../controllers/AuthController.ts";
+import {EqualType, isEqual} from "../../core/utils/isEqual.ts";
 
 type ProfilePageProps = {
     changeMode: (modeProfile: ModeProfile) => void;
@@ -51,14 +52,13 @@ class ProfileInfo extends Block {
         this.changeMode = profilePageProps.props!.changeMode;
     }
 
-    override componentDidMount() {
-        const user = (this.props as ProfilePageProps).user;
-        if(!user) {
-            return;
+    override componentDidUpdate(oldProps: EqualType, newProps: EqualType): boolean {
+        const isChangeUserData = !!newProps?.user && !isEqual(oldProps?.user, newProps?.user);
+        if (isChangeUserData) {
+            const userInfoItems: Record<string, UserInfoItem> = this.userService.createUserInfoItem(newProps.user);
+            this.setChildren(userInfoItems);
         }
-        const userInfoItems: Record<string, UserInfoItem> = this.userService.createUserInfoItem(user);
-
-        this.setChildren(userInfoItems);
+        return !isChangeUserData;
     }
 
     changeProfileMode(event: Event, mode: ModeProfile): void {
@@ -74,7 +74,7 @@ class ProfileInfo extends Block {
     override render(): string {
         return `
             <div class="user-info">
-                <h1 class="${s.userName}">Дмитрий</h1>
+                <h1 class="${s.userName}">{{user.first_name}}</h1>
                 {{{UserInfoItemEmail}}}
                 <div class="${s.userInfoBorder}"></div>
                 {{{UserInfoItemLogin}}}

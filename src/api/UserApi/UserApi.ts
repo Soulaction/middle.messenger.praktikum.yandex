@@ -3,6 +3,7 @@ import {BaseApi} from "../BaseApi.ts";
 import {BASE_URL_HTTP} from "../../utils/const.ts";
 import {SearchUser} from "./types/SearchUser.ts";
 import {UserUpdate} from "./types/UserUpdate.ts";
+import {UpdatePassword} from "./types/UpdatePassword.ts";
 
 class UserApi extends BaseApi {
     constructor(baseURL: string) {
@@ -21,8 +22,8 @@ class UserApi extends BaseApi {
         return this.http.put<User, UserUpdate>('/profile', {data: searchUser, credentials: true});
     }
 
-    changeUserPassword(searchUser: SearchUser): Promise<string> {
-        return this.http.put<string, SearchUser>('/password', {data: searchUser, credentials: true});
+    changeUserPassword(searchUser: UpdatePassword): Promise<string> {
+        return this.http.put<string, UpdatePassword>('/password', {data: searchUser, credentials: true});
     }
 }
 

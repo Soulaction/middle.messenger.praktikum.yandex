@@ -100,13 +100,13 @@ export class HTTPTransport {
                 }
             };
 
-            xhr.onabort = reject;
-            xhr.onerror = reject;
+            xhr.onabort = () => reject({reason: 'abort'});
+            xhr.onerror = () => reject({reason: 'network error'});
+            xhr.ontimeout = () => reject({reason: 'timeout'});
 
             xhr.timeout = timeout
             xhr.responseType = responseType;
             xhr.withCredentials = credentials;
-            xhr.ontimeout = reject;
 
             if (isGet || !data) {
                 xhr.send();

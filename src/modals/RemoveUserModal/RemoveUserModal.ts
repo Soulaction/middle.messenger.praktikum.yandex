@@ -20,6 +20,7 @@ export class RemoveUserModal extends Block {
       children: {
         InputFormLogin: new InputForm<FormDataRemoveUser>({
           props: {
+            id: 'login-remove',
             label: 'Логин',
             name: 'login',
             type: 'login',

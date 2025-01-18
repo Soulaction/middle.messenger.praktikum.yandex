@@ -1,15 +1,16 @@
 import s from './AvatarUser.module.pcss';
 import Block from '../../core/Block/Block.ts';
-import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
-import { Modal } from '../Modal/Modal.ts';
-import { UploadFileModal } from '../../modals/UploadFileModal/UploadFileModal.ts';
+import {Modal} from '../Modal/Modal.ts';
+import {UploadFileModal} from '../../modals/UploadFileModal/UploadFileModal.ts';
+import {wrapStore} from "../../core/utils/wrapStore.ts";
+import {getAvatar} from "../../utils/utils.ts";
 
 export type AvatarUserProps = {
-  imgUrl: string;
+  imgUrl?: string;
 };
 
-export class AvatarUser extends Block {
-  constructor(avatarUserProps: BlockProperties<AvatarUserProps>) {
+class AvatarUser extends Block {
+  constructor() {
     const uploadFileModal = new Modal({
       children: {
         ContentModal: new UploadFileModal({
@@ -21,8 +22,6 @@ export class AvatarUser extends Block {
     });
 
     super({
-      ...avatarUserProps
-      ,
       children: {
         UploadFileModal: uploadFileModal,
       },
@@ -37,9 +36,15 @@ export class AvatarUser extends Block {
             <div>               
                 {{{UploadFileModal}}}
                 <div class="${s.userAvatarWrapper}">
-                    <img class="${s.userAvatar}" src="{{imgUrl}}" alt="Иконка профиля"/>
+                    <img class="${s.userAvatar}" 
+                         src="{{imgUrl}}" 
+                         alt="Иконка профиля"/>
                 </div>
             </div>
         `;
   }
 }
+
+export const AvatarUserWithStore = wrapStore<Partial<AvatarUserProps>>((state) => (
+    {imgUrl: getAvatar(state.user?.data.avatar)}
+))(AvatarUser);

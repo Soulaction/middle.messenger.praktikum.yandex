@@ -15,11 +15,6 @@ export const routeItems: RouteItem<ErrorProps>[] = [
     {
         pathname: RoutePath.settings,
         Component: ProfilePage,
-        blockProps: {
-            props: {
-                mode: 'profileInfo',
-            },
-        }
     },
     {
         pathname: RoutePath.messenger,

@@ -21,6 +21,7 @@ export class LoginPage extends Block {
       children: {
         InputFormLogin: new InputForm<FormDataLogin>({
           props: {
+            id: 'login-auth',
             label: 'Логин',
             name: 'login',
             type: 'text',

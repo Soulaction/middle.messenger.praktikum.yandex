@@ -1,4 +1,3 @@
-import {AvatarUser} from '../../components/AvatarUser';
 import s from './ProfilePage.module.pcss';
 import Block from '../../core/Block/Block.ts';
 import {navigate} from "../../core/utils/navigate.ts";
@@ -8,6 +7,7 @@ import {CircleButton} from "../../components/CircleButton/CircleButton.ts";
 import {ModeProfile} from "../../types/ModeProfile.ts";
 import {ChangePasswordProfile} from "../../components/ChangePasswordProfile";
 import {ProfileEditedWithStore} from "../../components/ProfileEdit/ProfileEdit.ts";
+import {AvatarUserWithStore} from "../../components/AvatarUser";
 
 export class ProfilePage extends Block {
     private blockMode: string = '';
@@ -15,11 +15,7 @@ export class ProfilePage extends Block {
     constructor() {
         super({
             children: {
-                AvatarUser: new AvatarUser({
-                    props: {
-                        imgUrl: '/images/profile.png',
-                    },
-                }),
+                AvatarUser: new AvatarUserWithStore({}),
                 CircleButton: new CircleButton({
                     props: {
                         type: 'button',
@@ -33,7 +29,6 @@ export class ProfilePage extends Block {
     }
 
     protected override componentDidMount() {
-        debugger
         this.changeMode('profileInfo');
     }
 

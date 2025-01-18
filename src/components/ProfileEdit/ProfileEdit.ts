@@ -81,6 +81,7 @@ export class ProfileEdited extends Block {
                 }),
                 InputFormProfileLogin: new InputFormProfile<FormDataProfileEdite>({
                     props: {
+                        id: 'login-edit',
                         label: 'Логин',
                         name: 'login',
                         value: newProps.user?.login,

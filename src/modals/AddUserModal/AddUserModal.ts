@@ -20,6 +20,7 @@ export class AddUserModal extends Block {
       children: {
         InputFormLogin: new InputForm<FormDataAddUser>({
           props: {
+            id: 'login-add',
             label: 'Логин',
             name: 'login',
             type: 'login',
