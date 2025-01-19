@@ -1,35 +1,7 @@
 import {Message} from '../types/Message.ts';
 import {InitFormDataErrors} from '../core/Validation/types/ValidationConfig.ts';
-import {Chat} from '../types/Chat.ts';
 
 export const BASE_URL_HTTP: string = 'https://ya-praktikum.tech/api/v2';
-
-export const chats: Chat[] = [
-    {
-        id: '1',
-        iconChatLink: '/images/img-chat.png',
-        nameChat: 'Андрей',
-        lastMsg: 'Привет',
-        time: '10:49',
-        countMsg: 2,
-    },
-    {
-        id: '2',
-        iconChatLink: '/images/img-chat.png',
-        nameChat: 'Владимир',
-        lastMsg: 'Привет',
-        time: '10:40',
-        countMsg: 5,
-    },
-    {
-        id: '3',
-        iconChatLink: '/images/img-chat.png',
-        nameChat: 'Виталя',
-        lastMsg: null,
-        time: null,
-        countMsg: null,
-    },
-];
 
 export const message: Message[] = [
     {

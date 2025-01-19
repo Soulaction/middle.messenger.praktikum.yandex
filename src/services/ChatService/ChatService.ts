@@ -1,7 +1,7 @@
-import { Chat } from '../../types/Chat';
 import { DialogItem } from '../../components/DialogItem/DialogItem';
 import { MessageItem } from '../../components/MessageItem/MessageItem.ts';
 import { Message } from '../../types/Message.ts';
+import {Chat} from "../../api/ChatApi/types/Chats.ts";
 
 export class ChatService {
 

@@ -9,7 +9,6 @@ export function isEqual(a: EqualType, b: EqualType): boolean {
         return a === b;
     }
 
-
     if (Object.keys(a).length !== Object.keys(b).length) {
         return false;
     }
