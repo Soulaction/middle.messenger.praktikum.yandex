@@ -2,6 +2,8 @@
     cursor: pointer;
 
     &:first-of-type::before, &::after{
+        position: relative;
+        z-index: -1;
         border-top: 1px solid #eaeaea;
         content: "";
         display: block;

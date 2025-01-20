@@ -21,7 +21,8 @@ export class ChatController {
 
     public async deleteChat(chatId: number): Promise<void> {
         try {
-           await chatApi.deleteChat(chatId);
+            await chatApi.deleteChat(chatId);
+            store.set('chats.data', store.getState().chats?.data.filter((item) => item.id !== chatId));
         } catch (e) {
             store.set('chats.error', (e as XMLHttpRequest).response.reason);
         }

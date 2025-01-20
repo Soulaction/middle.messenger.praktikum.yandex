@@ -32,6 +32,7 @@ export class DialogItem extends Block {
                             {{#if unread_count}}<span class="${s.chatCountMsg}">{{unread_count}}</span>{{/if}}
                         </div>
                     </div>
+                    {{{ContextMenu}}}
                 </li>`;
     }
 }

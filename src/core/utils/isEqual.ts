@@ -14,8 +14,8 @@ export function isEqual(a: EqualType, b: EqualType): boolean {
     }
 
     for (let key in a) {
-        if (typeof a[key] === 'object' && typeof b[key] === 'object') {
-            return isEqual(a[key], b[key])
+        if (typeof a[key] === 'object' && typeof b[key] === 'object' && !isEqual(a[key], b[key])) {
+            return false;
         }
 
         if (a[key] !== b[key]) {
