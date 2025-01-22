@@ -7,7 +7,7 @@ export enum WSTransportEvents {
     Close = 'close',
 }
 
-export class WSTransport extends EventBus{
+export class WSTransport extends EventBus {
     private instance: WebSocket;
 
     constructor(urlWebSocket: string) {
@@ -16,22 +16,31 @@ export class WSTransport extends EventBus{
     }
 
     connection(): Promise<void> {
-        return new Promise(() => {
+        return new Promise((res) => {
+            this.on(WSTransportEvents.Connect, () => res());
             this.subscribe();
         })
     }
 
-    private subscribe(): void{
-        this.instance.addEventListener('open', () => {
+    send(data: unknown): void {
+        this.instance.send(JSON.stringify(data));
+    }
+
+    private subscribe(): void {
+        this.instance.addEventListener('open', (open) => {
+            console.log('open', open);
             this.emit(WSTransportEvents.Connect);
         });
         this.instance.addEventListener('message', (data) => {
-            this.emit(WSTransportEvents.Message, data);
+            console.log('message', data);
+            this.emit(WSTransportEvents.Message, JSON.stringify(data));
         });
-        this.instance.addEventListener('error', () => {
-            this.emit(WSTransportEvents.Error);
+        this.instance.addEventListener('error', (error) => {
+            console.log('error', error);
+            this.emit(WSTransportEvents.Error, error);
         });
-        this.instance.addEventListener('close', () => {
+        this.instance.addEventListener('close', (close) => {
+            console.log('close', close);
             this.emit(WSTransportEvents.Close);
         });
     }

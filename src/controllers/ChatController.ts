@@ -1,6 +1,7 @@
 import store from "../core/Store.ts";
 import chatApi from "../api/ChatApi/ChatApi.ts";
 import {UsersToChat} from "../api/ChatApi/types/UsersToChat.ts";
+import messageController from "./MessageController.ts";
 
 export class ChatController {
     public async getChats(): Promise<void> {
@@ -53,9 +54,14 @@ export class ChatController {
         }
     }
 
-    public async getChatToken(id: string): Promise<void> {
+    public async getChatToken(id: number): Promise<void> {
         try {
-            await chatApi.getChatToken(id);
+            const {token} = await chatApi.getChatToken(id);
+            const idUser: number | undefined = store.getState().user?.data.id;
+
+            if (token && idUser) {
+                messageController.connection(`/${idUser}/${id}/${token}`);
+            }
         } catch (e) {
             store.set('chats.error', (e as XMLHttpRequest).response.reason);
         }

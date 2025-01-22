@@ -11,7 +11,10 @@ type ChatProps = {
 export class DialogItem extends Block {
     constructor(chatProps: BlockProperties<ChatProps>) {
         if (chatProps.props) {
-            chatProps.props.avatar = getAvatar(chatProps.props?.avatar)
+            chatProps.props = {
+                ...chatProps.props,
+                avatar: getAvatar(chatProps.props?.avatar)
+            }
         }
 
         super({

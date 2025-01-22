@@ -1,14 +1,10 @@
 import s from './ChatPage.module.pcss';
-import {DialogList, DialogListWithStore} from '../../components/DialogList/DialogList.ts';
 import {ChatService} from '../../services/ChatService/ChatService.ts';
 import Block from '../../core/Block/Block.ts';
-import {User} from "../../types/User.ts";
 import {Chat} from "../../api/ChatApi/types/Chats.ts";
 import {ChatController} from "../../controllers/ChatController.ts";
-
-type ChatPageProps = {
-  user?: User
-}
+import {MessageBlockWithStore} from "../../components/MessageBlock/MessageBlock.ts";
+import {DialogListWithStore} from "../../components/DialogList/DialogList.ts";
 
 export class ChatPage extends Block {
   chatApi: ChatController;
@@ -22,7 +18,7 @@ export class ChatPage extends Block {
     super({
       children: {
         DialogList: new DialogListWithStore({}),
-        // MessageBlock: new MessageBlock({}),
+        MessageBlock: new MessageBlockWithStore({}),
       },
     });
     this.chatService = new ChatService();
@@ -50,7 +46,7 @@ export class ChatPage extends Block {
   override render(): string {
     return `<main class="${s.pageChatsWrapper}">
                     {{{DialogList}}}
-<!--                    {{{MessageBlock}}}-->
+                    {{{MessageBlock}}}
                 </main>`;
   }
 }

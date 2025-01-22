@@ -6,4 +6,5 @@ export type StoreApplication = {
     user: CommonInfoStoreElement<User>,
     chats: CommonInfoStoreElement<Chat[]>,
     selectedChat: CommonInfoStoreElement<Chat>,
+    message: CommonInfoStoreElement<Chat>,
 };

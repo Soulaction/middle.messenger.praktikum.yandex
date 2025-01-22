@@ -1,8 +1,7 @@
 import {BlockProperties} from "../../Block/types/BlockProps.ts";
 import Block from "../../Block/Block.ts";
 
-export type RouteItem<T extends object = any> = {
+export type RouteItem = {
     pathname: string,
-    Component: new(blockProp: BlockProperties<T>) => Block,
-    blockProps?: BlockProperties
+    Component: new(blockProp: BlockProperties) => Block,
 }

@@ -2,6 +2,7 @@ import {Message} from '../types/Message.ts';
 import {InitFormDataErrors} from '../core/Validation/types/ValidationConfig.ts';
 
 export const BASE_URL_HTTP: string = 'https://ya-praktikum.tech/api/v2';
+export const BASE_URL_WS: string = 'wss://ya-praktikum.tech/ws/chats';
 
 export const message: Message[] = [
     {

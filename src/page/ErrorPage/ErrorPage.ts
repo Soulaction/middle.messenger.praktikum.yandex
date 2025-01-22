@@ -5,16 +5,10 @@ import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
 import {navigate} from "../../core/utils/navigate.ts";
 import {RoutePath} from "../../utils/const.ts";
 
-export type ErrorProps = {
-  code: string;
-  errorText: string;
-};
-
 export class ErrorPage extends Block {
 
-  constructor(errorProps: BlockProperties<ErrorProps>) {
+  constructor() {
     super({
-      ...errorProps,
       children: {
         Link: new Link({
           props: {
@@ -36,8 +30,8 @@ export class ErrorPage extends Block {
   override render(): string {
     return `
                 <main class="page-wrapper">
-                    <h1 class="${s.errorTitle}">{{code}}</h1>
-                    <p class="${s.errorText}">{{errorText}}</p>
+                    <h1 class="${s.errorTitle}">404</h1>
+                    <p class="${s.errorText}">Не туда попали</p>
                     {{{Link}}}
                 </main>
         `;

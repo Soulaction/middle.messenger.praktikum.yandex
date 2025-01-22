@@ -32,6 +32,11 @@ export class ChatService {
                 contextMenu.openContextMenu({top, left});
             }
 
+            const selectedDialog = async (): Promise<void> => {
+                store.set('selectedChat.data', chat);
+                await chatController.getChatToken(chat.id);
+            }
+
             return new DialogItem({
                 props: {
                     ...chat,
@@ -41,7 +46,7 @@ export class ChatService {
                     ContextMenu: contextMenu
                 },
                 events: {
-                    click: () => store.set('selectedChat.data', chat),
+                    click: () => selectedDialog(),
                     contextmenu: (event) => showMenu(event)
                 },
             });
