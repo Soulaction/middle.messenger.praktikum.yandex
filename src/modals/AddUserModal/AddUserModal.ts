@@ -62,7 +62,7 @@ export class AddUserModal extends Block {
     async addUser(event: Event): Promise<void> {
         event.preventDefault();
         if (this.validationService.checkValidity()) {
-            await this.chatController.createChat(this.validationService.getFormValue().login!);
+            await this.chatController.addUsersToChat(this.validationService.getFormValue().login!);
             store.set('isOpenModal', false);
         }
     }

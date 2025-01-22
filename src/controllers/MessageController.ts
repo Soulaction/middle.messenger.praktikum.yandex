@@ -39,7 +39,7 @@ class MessageController {
     }
 
     private listenMessage(message: unknown): void {
-        store.set('chats.error', message);
+        store.set('chats', message);
     }
 
     private listenClose(): void {

@@ -21,7 +21,6 @@ export class Modal extends Block {
 
   protected override componentDidUpdate(oldProps: Indexed, newProps: Indexed): boolean {
     console.log(oldProps);
-    debugger
     if(!newProps.isOpenModal) {
       super.hide();
     }

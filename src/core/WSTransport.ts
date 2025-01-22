@@ -27,8 +27,7 @@ export class WSTransport extends EventBus {
     }
 
     private subscribe(): void {
-        this.instance.addEventListener('open', (open) => {
-            console.log('open', open);
+        this.instance.addEventListener('open', () => {
             this.emit(WSTransportEvents.Connect);
         });
         this.instance.addEventListener('message', (data) => {
@@ -40,7 +39,7 @@ export class WSTransport extends EventBus {
             this.emit(WSTransportEvents.Error, error);
         });
         this.instance.addEventListener('close', (close) => {
-            console.log('close', close);
+            console.log('Соединение закрыто', close);
             this.emit(WSTransportEvents.Close);
         });
     }

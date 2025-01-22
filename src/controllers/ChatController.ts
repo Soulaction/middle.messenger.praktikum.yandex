@@ -3,6 +3,7 @@ import chatApi from "../api/ChatApi/ChatApi.ts";
 import {UsersToChat} from "../api/ChatApi/types/UsersToChat.ts";
 import messageController from "./MessageController.ts";
 import {getAvatar} from "../utils/utils.ts";
+import userController from "./UserController.ts";
 
 export class ChatController {
     public async getChats(): Promise<void> {
@@ -39,9 +40,18 @@ export class ChatController {
         }
     }
 
-    public async addUsersToChat(usersToChat: UsersToChat): Promise<void> {
+    public async addUsersToChat(login: string): Promise<void> {
         try {
-            await chatApi.addUsersToChat(usersToChat);
+            const idUser = await userController.getUserByLogin(login);
+            const chatId = store.getState().selectedChat?.data.id;
+
+            if (idUser && chatId) {
+                const usersToChat: UsersToChat = {
+                    users: [idUser],
+                    chatId,
+                };
+                await chatApi.addUsersToChat(usersToChat);
+            }
         } catch (e) {
             store.set('chats.error', (e as XMLHttpRequest).response.reason);
         }
