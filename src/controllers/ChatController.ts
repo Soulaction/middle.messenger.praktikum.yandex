@@ -2,11 +2,13 @@ import store from "../core/Store.ts";
 import chatApi from "../api/ChatApi/ChatApi.ts";
 import {UsersToChat} from "../api/ChatApi/types/UsersToChat.ts";
 import messageController from "./MessageController.ts";
+import {getAvatar} from "../utils/utils.ts";
 
 export class ChatController {
     public async getChats(): Promise<void> {
         try {
-            store.set('chats.data', await chatApi.getChats());
+            const chatList = await chatApi.getChats();
+            store.set('chats.data', chatList.map(item => ({...item, avatar: getAvatar(item.avatar)})));
         } catch (e) {
             store.set('chats.error', (e as XMLHttpRequest).response.reason);
         }

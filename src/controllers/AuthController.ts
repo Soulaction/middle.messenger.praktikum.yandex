@@ -5,6 +5,7 @@ import {RoutePath} from "../utils/const.ts";
 import {FormDataRegistration} from "../page/Registration/RegistrationPage.ts";
 import store from "../core/Store.ts";
 import {FormDataLogin} from "../page/LoginPage/LoginPage.ts";
+import {getAvatar} from "../utils/utils.ts";
 
 export class AuthController {
     public async registration(formDataRegistration: FormDataRegistration): Promise<void> {
@@ -40,7 +41,7 @@ export class AuthController {
             if ([RoutePath.signIn, RoutePath.signUp].includes(location.pathname as RoutePath)) {
                 navigate().go(RoutePath.messenger)
             }
-            store.set('user.data', user);
+            store.set('user.data', {...user, avatar: getAvatar(user.avatar)});
         } catch (e) {
             if (![RoutePath.signIn, RoutePath.signUp].includes(location.pathname as RoutePath)) {
                 navigate().go(RoutePath.signIn);

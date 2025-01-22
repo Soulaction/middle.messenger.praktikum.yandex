@@ -2,7 +2,6 @@ import s from './DialogItem.module.pcss';
 import Block from '../../core/Block/Block.ts';
 import {BlockProperties} from '../../core/Block/types/BlockProps.ts';
 import {Chat} from "../../api/ChatApi/types/Chats.ts";
-import {getAvatar} from "../../utils/utils.ts";
 
 type ChatProps = {
     selected?: boolean;
@@ -10,13 +9,6 @@ type ChatProps = {
 
 export class DialogItem extends Block {
     constructor(chatProps: BlockProperties<ChatProps>) {
-        if (chatProps.props) {
-            chatProps.props = {
-                ...chatProps.props,
-                avatar: getAvatar(chatProps.props?.avatar)
-            }
-        }
-
         super({
             ...chatProps,
         });

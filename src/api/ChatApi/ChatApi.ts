@@ -1,14 +1,9 @@
-import {BASE_URL_HTTP, message} from '../../utils/const.ts';
-import {Message} from '../../types/Message.ts';
+import {BASE_URL_HTTP} from '../../utils/const.ts';
 import {BaseApi} from "../BaseApi.ts";
 import {UsersToChat} from "./types/UsersToChat.ts";
 import {Chat} from "./types/Chats.ts";
 
 export class ChatApi extends BaseApi {
-
-    getMessageForChat(id: string): Message[] {
-        return message.filter(el => el.idChat === id);
-    }
 
     constructor(baseURL: string) {
         super(baseURL);

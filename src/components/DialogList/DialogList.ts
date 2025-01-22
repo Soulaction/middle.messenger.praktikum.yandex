@@ -1,7 +1,7 @@
 import s from './DialogList.module.pcss';
 import {LinkProfile} from '../LinkProfile/LinkProfile.ts';
 import {SearchInput} from '../SearchInput/SearchInput.ts';
-import {Modal} from '../Modal/Modal.ts';
+import {Modal, ModalWithStore} from '../Modal/Modal.ts';
 import {CreateChatModal} from '../../modals/CreateChatModal/CreateChatModal.ts';
 import {ButtonIcon} from '../ButtonIcon/ButtonIcon.ts';
 import Block from '../../core/Block/Block.ts';
@@ -24,7 +24,7 @@ class DialogList extends Block {
     private chatService: ChatService = new ChatService();
 
     constructor() {
-        const createChatModal = new Modal({
+        const createChatModal = new ModalWithStore({
             children: {
                 ContentModal: new CreateChatModal({
                     props: {
@@ -41,7 +41,7 @@ class DialogList extends Block {
                         iconLink: '/icons/add-grey.svg',
                     },
                     events: {
-                        click: () => createChatModal.openModel(),
+                        click: () => (createChatModal as Modal).openModel(),
                     },
                 }),
                 LinkProfile: new LinkProfile({

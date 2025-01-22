@@ -6,7 +6,7 @@ import addIcon from '/icons/add.svg?url';
 import deleteIcon from '/icons/delete.svg?url';
 import fileIcon from '/icons/file.svg?url';
 import locationIcon from '/icons/location.svg?url';
-import {Modal} from '../Modal/Modal.ts';
+import {Modal, ModalWithStore} from '../Modal/Modal.ts';
 import {AddUserModal} from '../../modals/AddUserModal/AddUserModal.ts';
 import {RemoveUserModal} from '../../modals/RemoveUserModal/RemoveUserModal.ts';
 import Block from '../../core/Block/Block.ts';
@@ -15,7 +15,6 @@ import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
 import {wrapStore} from "../../core/utils/wrapStore.ts";
 import {Chat} from "../../api/ChatApi/types/Chats.ts";
 import {EqualType, isEqual} from "../../core/utils/isEqual.ts";
-import {getAvatar} from "../../utils/utils.ts";
 import messageController from "../../controllers/MessageController.ts";
 
 
@@ -114,13 +113,13 @@ class MessageBlock extends Block {
         } else if (newProps?.isSelectedChat) {
             queueMicrotask(() => this.validationService.init('send-msg'));
 
-            const addUserModal = new Modal({
+            const addUserModal = new ModalWithStore({
                 children: {
                     ContentModal: new AddUserModal(),
                 },
             });
 
-            const removeUserModal = new Modal({
+            const removeUserModal = new ModalWithStore({
                 children: {
                     ContentModal: new RemoveUserModal(),
                 },
@@ -151,12 +150,12 @@ class MessageBlock extends Block {
                 {
                     iconURL: addIcon,
                     text: 'Добавить пользователя',
-                    event: () => addUserModal.openModel(),
+                    event: () => (addUserModal as Modal).openModel(),
                 },
                 {
                     iconURL: deleteIcon,
                     text: 'Удалить пользователя',
-                    event: () => removeUserModal.openModel(),
+                    event: () => (removeUserModal as Modal).openModel(),
                 },
             ];
 
@@ -213,14 +212,6 @@ class MessageBlock extends Block {
 }
 
 export const MessageBlockWithStore = wrapStore<MessageBlockProps>((state) => {
-
-    if (state.selectedChat) {
-        state.selectedChat.data = {
-            ...state.selectedChat.data,
-            avatar: getAvatar(state.selectedChat.data.avatar)
-        };
-    }
-
     return {
         selectedChat: state.selectedChat?.data,
     };

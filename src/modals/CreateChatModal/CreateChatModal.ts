@@ -4,6 +4,7 @@ import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
 import Block from '../../core/Block/Block.ts';
 import {ChatController} from "../../controllers/ChatController.ts";
 import {BlockProperties} from "../../core/Block/types/BlockProps.ts";
+import store from "../../core/Store.ts";
 
 type CreateChatModalProps = {
     refreshData: () => void,
@@ -69,6 +70,7 @@ export class CreateChatModal extends Block {
         event.preventDefault();
         if (this.validationService.checkValidity()) {
             await this.chatController.createChat(this.validationService.getFormValue().name!);
+            store.set('isOpenModal', false);
             this.refreshData();
         }
     }

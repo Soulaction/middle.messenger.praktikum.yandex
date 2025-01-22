@@ -7,4 +7,5 @@ export type StoreApplication = {
     chats: CommonInfoStoreElement<Chat[]>,
     selectedChat: CommonInfoStoreElement<Chat>,
     message: CommonInfoStoreElement<Chat>,
+    isOpenModal: boolean,
 };

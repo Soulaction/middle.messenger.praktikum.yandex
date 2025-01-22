@@ -6,6 +6,7 @@ import Block from '../../core/Block/Block.ts';
 import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
 import {BlockProperties} from '../../core/Block/types/BlockProps.ts';
 import userController from "../../controllers/UserController.ts";
+import store from "../../core/Store.ts";
 
 type FormDataFile = {
     file: FileList;
@@ -69,6 +70,7 @@ export class UploadFileModal extends Block {
                     },
                 })
             });
+            store.set('isOpenModal', false);
         } else {
             this.setChildren({
                 Error: new ErrorMessage<FormDataFile>({
