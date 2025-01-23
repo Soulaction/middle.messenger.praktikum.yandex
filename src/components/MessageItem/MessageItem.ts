@@ -4,10 +4,9 @@ import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
 
 export type MessageProps = {
   linkImg: string | null;
-  text: string | null;
+  content: string | null;
   meMessage: boolean;
-  newDay: string | null
-  dateMsg: string;
+  time: string;
 };
 
 export class MessageItem extends Block {
@@ -19,16 +18,13 @@ export class MessageItem extends Block {
 
   override render(): string {
     return `<div class="${s.message} {{#if meMessage}}${s.messageMe}{{/if}}">
-                    {{#if newDay}}
-                        <h2 class="${s.dataMsg}">{{newDay}}</h2>
-                    {{/if}}
                     {{#if linkImg}}
                         <div class="${s.messageImgBlock}">
                             <img class="${s.messageImg}" src="{{linkImg}}" alt="Сообщение с картинкой"/>
-                            <span class="${s.textDate} ${s.messageImgDate}">{{dateMsg}}</span>
+                            <span class="${s.textDate} ${s.messageImgDate}">{{time}}</span>
                         </div>
                     {{else}}
-                        <p class="${s.messageText} {{#if meMessage}}${s.messageTextMe}{{/if}}">{{text}}<span class="${s.textDate} {{#if meMessage}}${s.messageTextDateMe}{{/if}}">{{dateMsg}}</span></p>
+                        <p class="${s.messageText} {{#if meMessage}}${s.messageTextMe}{{/if}}">{{content}}<span class="${s.textDate} {{#if meMessage}}${s.messageTextDateMe}{{/if}}">{{time}}</span></p>
                     {{/if}}
                 </div>`;
   }

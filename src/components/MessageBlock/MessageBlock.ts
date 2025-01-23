@@ -1,16 +1,13 @@
 import s from './MessageBlock.module.pcss';
-import {CircleButton} from '../CircleButton/CircleButton.ts';
-import {ButtonIcon} from '../ButtonIcon/ButtonIcon.ts';
-import {ContextMenu, MenuItem} from '../ContextMenu/ContextMenu.ts';
-import fileIcon from '/icons/file.svg?url';
-import locationIcon from '/icons/location.svg?url';
 import Block from '../../core/Block/Block.ts';
 import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
 import {wrapStore} from "../../core/utils/wrapStore.ts";
 import {Chat} from "../../api/ChatApi/types/Chats.ts";
 import {EqualType, isEqual} from "../../core/utils/isEqual.ts";
-import messageController from "../../controllers/MessageController.ts";
 import {MessageBlockHeaderWithStore} from "../MessageBlockHeader/MessageBlockHeader.ts";
+import {Message} from "../../types/Message.ts";
+import {ChatService} from "../../services/ChatService/ChatService.ts";
+import {MessageBlockForm} from "../MessageBlockForm/MessageBlockForm.ts";
 
 
 type FormDataMessageBlock = {
@@ -18,94 +15,48 @@ type FormDataMessageBlock = {
 };
 
 export type MessageBlockProps = {
+    isNotMsg?: boolean,
     selectedChat: Chat | undefined,
     isSelectedChat?: Chat | undefined,
+    message?: Message[]
 };
 
 class MessageBlock extends Block {
     validationService: ValidationForm<FormDataMessageBlock>;
-
-    contextMenuClip!: ContextMenu;
+    chatService: ChatService = new ChatService();
 
     constructor() {
         const validationService = new ValidationForm<FormDataMessageBlock>();
 
         super({
             children: {
-                MessageBlockHeader: new MessageBlockHeaderWithStore({}),
-                ButtonIconClip: new ButtonIcon({
-                    props: {
-                        iconLink: '/icons/clip.svg',
-                    },
-                    events: {
-                        click: event => this.showMenuClip(event),
-                    },
-                }),
-                CircleButton: new CircleButton({
-                    props: {
-                        className: s.sendMsgSubmit,
-                        type: 'submit',
-                    },
-                    events: {
-                        click: (event: Event) => this.sendMessage(event),
-                    },
-                }),
+                MessageBlockHeader: new MessageBlockHeaderWithStore({})
             }
         });
         this.validationService = validationService;
     }
 
-    sendMessage(event: Event): void {
-        event.preventDefault();
-        const {message} = this.validationService.getFormValue();
-        if (message) {
-            messageController.sendMessage(message);
-        }
-    }
-
-    showMenuClip(event: Event): void {
-        const imgIcon: HTMLImageElement = event.target as HTMLImageElement;
-        const imgIconSize: DOMRect = imgIcon.getBoundingClientRect();
-        const bottom: number = window.innerHeight - imgIconSize.top + 24;
-        const left: number = imgIconSize.left - 8;
-
-        this.contextMenuClip.openContextMenu({bottom, left});
-    }
-
     protected override componentDidUpdate(oldProps: EqualType, newProps: EqualType): boolean {
         const isChangeSelectedChat = !!newProps?.selectedChat && !isEqual(oldProps?.selectedChat, newProps?.selectedChat);
+        const isChangeSelected = !!newProps?.isSelectedChat && !isEqual(oldProps?.isSelectedChat, newProps?.isSelectedChat);
+        const isChangeMessage = !!newProps?.message && !isEqual(oldProps?.message, newProps?.message);
 
         if (isChangeSelectedChat && newProps?.selectedChat) {
             this.setProps({
                 isSelectedChat: true
             })
-        } else if (newProps?.isSelectedChat) {
-            queueMicrotask(() => this.validationService.init('send-msg'));
-            const menuItemClip: MenuItem[] = [
-                {
-                    iconURL: fileIcon,
-                    text: 'Файл',
-                    event: () => {
-                    },
-                },
-                {
-                    iconURL: locationIcon,
-                    text: 'Локация',
-                    event: () => {
-                    },
-                },
-            ];
+        } else if (isChangeSelected && newProps?.isSelectedChat) {
+            const messageBlockForm: MessageBlockForm = new MessageBlockForm();
 
-            const ContextMenuClip: ContextMenu = new ContextMenu({
-                props: {
-                    items: menuItemClip,
-                },
-            });
-
-            this.contextMenuClip = ContextMenuClip;
             this.setChildren({
-                ContextMenuClip
+                MessageBlockForm: messageBlockForm
             })
+        } else if (isChangeMessage && newProps?.message) {
+            this.setLists({MessageList: this.chatService.getMessageItems(newProps?.message)});
+        } else if(newProps?.MessageList && newProps?.MessageList.length > 0) {
+            this.setProps({
+                isNotMsg: true
+            });
         }
 
         return true;
@@ -124,13 +75,7 @@ class MessageBlock extends Block {
                              <h2 class="${s.messageTitle}">Нет сообщений, начните диалог</h2>
                         </div>
                         {{/if}}
-                        <form class="${s.sendMsgInputBlock}" name="send-msg">
-                               {{{ButtonIconClip}}}
-                               <input class="${s.sendMsgInput}" name="message" placeholder="Сообщение"/>
-                               {{{CircleButton}}}
-                        </form>
-                  
-                        {{{ContextMenuClip}}}
+                        {{{MessageBlockForm}}}                  
                     {{else}}
                          <h2 class="${s.messageTitle}">Выберете диалог</h2>   
                     {{/if}}
@@ -141,5 +86,6 @@ class MessageBlock extends Block {
 export const MessageBlockWithStore = wrapStore<MessageBlockProps>((state) => {
     return {
         selectedChat: state.selectedChat?.data,
+        message: state.message?.data
     };
 })(MessageBlock);

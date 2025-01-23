@@ -30,9 +30,8 @@ export class WSTransport extends EventBus {
         this.instance.addEventListener('open', () => {
             this.emit(WSTransportEvents.Connect);
         });
-        this.instance.addEventListener('message', (data) => {
-            console.log('message', data);
-            this.emit(WSTransportEvents.Message, JSON.stringify(data));
+        this.instance.addEventListener('message', (messageEvent) => {
+            this.emit(WSTransportEvents.Message, JSON.parse(messageEvent.data));
         });
         this.instance.addEventListener('error', (error) => {
             console.log('error', error);

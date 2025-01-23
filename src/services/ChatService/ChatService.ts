@@ -6,6 +6,7 @@ import {ContextMenu, MenuItem} from "../../components/ContextMenu/ContextMenu.ts
 import deleteIcon from "/icons/delete.svg?url";
 import chatController from "../../controllers/ChatController.ts";
 import store from "../../core/Store.ts";
+import {BASE_URL_HTTP} from "../../utils/const.ts";
 
 export class ChatService {
 
@@ -54,10 +55,15 @@ export class ChatService {
     }
 
     getMessageItems(messages: Message[]): MessageItem[] {
-        return messages.map(chat => {
+        const meId = store.getState().user?.data.id;
+
+        return messages.map(msg => {
             return new MessageItem({
                 props: {
-                    ...chat,
+                    linkImg: msg.file?.path ? `${BASE_URL_HTTP}/resources${msg.file?.path}` : null,
+                    content: msg.content,
+                    meMessage: msg.user_id === meId,
+                    time: msg.time
                 },
             });
         });

@@ -25,24 +25,6 @@ export class ChatPage extends Block {
     this.chatApi = new ChatController();
   }
 
-  // protected getMessages(indexDialog: number): void {
-  //   const chatList: DialogItem[] = this.chatService.getDialogItems(this.chats, indexDialog, this.getMessages.bind(this));
-  //   const messages: Message[] = this.chatApi.getMessageForChat(this.chats[indexDialog].id);
-  //   const messageList: MessageItem[] = this.chatService.getMessageItems(messages);
-  //
-  //   this.setChildren({ DialogList: new DialogList({ props: { ChatList: chatList } }) });
-  //   this.setChildren({
-  //     MessageBlock: new MessageBlock({
-  //       props: {
-  //         chatName: this.chats[indexDialog].nameChat,
-  //         chatIcon: this.chats[indexDialog].iconChatLink,
-  //         messageList: messageList,
-  //       },
-  //     },
-  //     ),
-  //   });
-  // }
-
   override render(): string {
     return `<main class="${s.pageChatsWrapper}">
                     {{{DialogList}}}

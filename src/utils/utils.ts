@@ -28,3 +28,7 @@ export const getAvatar = (path: string | undefined): string => {
         return '/images/profile.png'
     }
 }
+
+export const dateMessageFormated = (): string => {
+    return '';
+}

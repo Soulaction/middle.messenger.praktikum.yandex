@@ -1,6 +1,7 @@
 import {WSTransport, WSTransportEvents} from "../core/WSTransport.ts";
 import {BASE_URL_WS} from "../utils/const.ts";
 import store from "../core/Store.ts";
+import {isMessageSend} from "../utils/guards.ts";
 
 class MessageController {
     wsTransport!: WSTransport;
@@ -39,7 +40,11 @@ class MessageController {
     }
 
     private listenMessage(message: unknown): void {
-        store.set('chats', message);
+        debugger
+        if (isMessageSend(message) && message.type === 'user connected') {
+            return;
+        }
+        store.set('message.data', message);
     }
 
     private listenClose(): void {

@@ -86,7 +86,7 @@ class DialogList extends Block {
             });
         }
 
-        return !isChangeChatList || !isChangeSelectedChat;
+        return true;
     }
 
     goToSettingProfilePage(event: Event): void {

@@ -64,12 +64,18 @@ class MessageBlockHeader extends Block {
                 {
                     iconURL: addIcon,
                     text: 'Добавить пользователя',
-                    event: () => (addUserModal as Modal).openModel(),
+                    event: () => {
+                        (addUserModal as Modal).openModel();
+                        addUserModal.dispatchComponentDidMount();
+                    },
                 },
                 {
                     iconURL: deleteIcon,
                     text: 'Удалить пользователя',
-                    event: () => (removeUserModal as Modal).openModel(),
+                    event: () => {
+                        (removeUserModal as Modal).openModel();
+                        removeUserModal.dispatchComponentDidMount();
+                    },
                 },
             ];
 
