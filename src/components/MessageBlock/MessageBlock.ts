@@ -9,7 +9,6 @@ import {Message} from "../../types/Message.ts";
 import {ChatService} from "../../services/ChatService/ChatService.ts";
 import {MessageBlockForm} from "../MessageBlockForm/MessageBlockForm.ts";
 
-
 type FormDataMessageBlock = {
     message: string;
 };
@@ -50,10 +49,11 @@ class MessageBlock extends Block {
 
             this.setChildren({
                 MessageBlockForm: messageBlockForm
-            })
+            });
+            messageBlockForm.dispatchComponentDidMount();
         } else if (isChangeMessage && newProps?.message) {
             this.setLists({MessageList: this.chatService.getMessageItems(newProps?.message)});
-        } else if(newProps?.MessageList && newProps?.MessageList.length > 0) {
+        } else if (newProps?.MessageList && newProps?.MessageList.length > 0) {
             this.setProps({
                 isNotMsg: true
             });

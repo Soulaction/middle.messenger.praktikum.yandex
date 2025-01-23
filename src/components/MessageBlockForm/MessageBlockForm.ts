@@ -6,7 +6,7 @@ import Block from '../../core/Block/Block.ts';
 import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
 import messageController from "../../controllers/MessageController.ts";
 import fileIcon from '/icons/file.svg?url';
-import locationIcon from '/icons/location.svg?url';
+import {InputMessage} from "../InputMessage/InputMessage.ts";
 
 
 type FormDataMessageBlock = {
@@ -15,7 +15,6 @@ type FormDataMessageBlock = {
 
 export class MessageBlockForm extends Block {
     validationService: ValidationForm<FormDataMessageBlock>;
-
     contextMenuClip!: ContextMenu;
 
     constructor() {
@@ -27,13 +26,12 @@ export class MessageBlockForm extends Block {
                 event: () => {
                 },
             },
-            {
-                iconURL: locationIcon,
-                text: 'Локация',
-                event: () => {
-                },
-            },
         ];
+        const contextMenuClip = new ContextMenu({
+            props: {
+                items: menuItemClip,
+            },
+        });
 
         super({
             children: {
@@ -45,11 +43,12 @@ export class MessageBlockForm extends Block {
                         click: event => this.showMenuClip(event),
                     },
                 }),
-                ContextMenuClip: new ContextMenu({
-                    props: {
-                        items: menuItemClip,
+                InputMessage: new InputMessage({
+                    events: {
+                        input: (event: Event) => validationService.setFormData(event.target as HTMLInputElement)
                     },
                 }),
+                ContextMenuClip: contextMenuClip,
                 CircleButton: new CircleButton({
                     props: {
                         className: s.sendMsgSubmit,
@@ -62,6 +61,7 @@ export class MessageBlockForm extends Block {
             }
         });
         this.validationService = validationService;
+        this.contextMenuClip = contextMenuClip;
     }
 
     protected override componentDidMount(): void {
@@ -89,7 +89,7 @@ export class MessageBlockForm extends Block {
         return `
                 <form class="${s.sendMsgInputBlock}" name="send-msg">
                        {{{ButtonIconClip}}}
-                       <input class="${s.sendMsgInput}" name="message" placeholder="Сообщение"/>
+                       {{{InputMessage}}}
                        {{{CircleButton}}}
                        {{{ContextMenuClip}}}
                 </form>`;
