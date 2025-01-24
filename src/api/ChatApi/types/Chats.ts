@@ -6,9 +6,11 @@ export type Chat = {
     avatar: string,
     unread_count: number,
     created_by: number,
-    last_message: {
-        user: User,
-        time: string,
-        content: string
-    }
+    last_message?: ChatUser
+}
+
+export type ChatUser = {
+    user: Omit<User, 'id' | 'password' | 'phone' | 'display_name'>,
+    time: string,
+    content: string
 }

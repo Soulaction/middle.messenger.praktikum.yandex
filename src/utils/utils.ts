@@ -1,5 +1,5 @@
 import {ValidationForm} from '../core/Validation/ValidationForm.ts';
-import {BASE_URL_HTTP} from "./const.ts";
+import {BASE_URL_HTTP, month} from "./const.ts";
 
 export const checkEqualPassword = <T extends {
     password?: string;
@@ -29,6 +29,12 @@ export const getAvatar = (path: string | undefined): string => {
     }
 }
 
-export const dateMessageFormated = (): string => {
-    return '';
+export const dateMessageFormated = (date: string): string => {
+    const dateObj = new Date(date);
+    const dateNow = new Date();
+    if(dateObj.getDate() === dateNow.getDate()) {
+        return `${dateObj.getHours()}:${dateObj.getMinutes()}`;
+    } else {
+        return `${dateObj.getDate()}.${month[dateObj.getMonth()]}.${dateObj.getFullYear()}`;
+    }
 }

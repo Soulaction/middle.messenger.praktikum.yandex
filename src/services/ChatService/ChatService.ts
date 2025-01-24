@@ -7,6 +7,7 @@ import deleteIcon from "/icons/delete.svg?url";
 import chatController from "../../controllers/ChatController.ts";
 import store from "../../core/Store.ts";
 import {BASE_URL_HTTP} from "../../utils/const.ts";
+import {dateMessageFormated} from "../../utils/utils.ts";
 
 export class ChatService {
 
@@ -41,6 +42,9 @@ export class ChatService {
             return new DialogItem({
                 props: {
                     ...chat,
+                    isMe: chat.last_message?.user.login === store.getState().user?.data.login,
+                    time: chat.last_message ? dateMessageFormated(chat.last_message.time) : '',
+                    content: chat.last_message?.content ?? '',
                     selected: chat.id === id,
                 },
                 children: {
@@ -63,7 +67,7 @@ export class ChatService {
                     linkImg: msg.file?.path ? `${BASE_URL_HTTP}/resources${msg.file?.path}` : null,
                     content: msg.content,
                     meMessage: msg.user_id === meId,
-                    time: msg.time
+                    time: dateMessageFormated(msg.time)
                 },
             });
         });

@@ -5,6 +5,9 @@ import {Chat} from "../../api/ChatApi/types/Chats.ts";
 
 type ChatProps = {
     selected?: boolean;
+    isMe: boolean;
+    time: string,
+    content: string
 } & Chat;
 
 export class DialogItem extends Block {
@@ -20,7 +23,12 @@ export class DialogItem extends Block {
                         <img class="${s.chatIcon}" src="{{avatar}}" alt="Иконка чата"/>
                         <div class="${s.chatInfo}">
                             <h2 class="${s.chatNameChat}">{{title}}</h2>
-                            {{#if countMsg}}<p class="${s.chatLastMsg}"><span class="${s.chatLastMsgMe}">Вы: </span>{{lastMsg}}</p>{{/if}}
+                            {{#if content}}
+                                <p class="${s.chatLastMsg}">
+                                    {{#if isMe}}<span class="${s.chatLastMsgMe}">Вы: </span>{{/if}}
+                                    {{content}}
+                                </p>
+                            {{/if}}
                         </div>
                         <div class="${s.chatContent}">
                             <span class="${s.chatTime}">{{time}}</span>
