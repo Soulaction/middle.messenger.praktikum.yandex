@@ -3,6 +3,7 @@ import Block from '../../core/Block/Block.ts';
 import {BlockProperties} from '../../core/Block/types/BlockProps.ts';
 import {wrapStore} from "../../core/utils/wrapStore.ts";
 import {Indexed} from "../../core/types/Indexed.ts";
+import store from "../../core/Store.ts";
 
 export type ModalProps = {
   isOpenModal?: boolean;
@@ -21,14 +22,16 @@ export class Modal extends Block {
 
   protected override componentDidUpdate(oldProps: Indexed, newProps: Indexed): boolean {
     console.log(oldProps);
-    if(!newProps.isOpenModal) {
+    if(newProps.isOpenModal) {
+      super.show();
+    } else {
       super.hide();
     }
     return false;
   }
 
   openModel(): void {
-    super.show();
+    store.set('isOpenModal', true);
   }
 
   hideModal(event: Event): void {
@@ -54,6 +57,3 @@ export const ModalWithStore = wrapStore<ModalProps>((state) => {
     isOpenModal: state.isOpenModal,
   };
 })(Modal);
-
-const t = new ModalWithStore({});
-(t as Modal).openModel();

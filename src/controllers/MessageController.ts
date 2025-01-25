@@ -42,7 +42,6 @@ class MessageController {
     }
 
     private listenMessage(message: unknown): void {
-        debugger
         if (isMessageItem(message) && message.type !== 'user connected') {
             const storeMessages = store.getState().message?.data ?? [];
             message = [...storeMessages, message];
