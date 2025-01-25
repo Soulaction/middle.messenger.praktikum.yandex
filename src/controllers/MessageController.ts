@@ -1,7 +1,7 @@
 import {WSTransport, WSTransportEvents} from "../core/WSTransport.ts";
 import {BASE_URL_WS} from "../utils/const.ts";
 import store from "../core/Store.ts";
-import {isMessageSend} from "../utils/guards.ts";
+import {isMessageArr, isMessageItem} from "../utils/guards.ts";
 
 class MessageController {
     wsTransport!: WSTransport;
@@ -11,17 +11,19 @@ class MessageController {
         this.baseUrl = baseUrl;
     }
 
-    connection(urlWebSocket: string): void {
+    async connection(urlWebSocket: string): Promise<void> {
+        if (this.wsTransport) {
+            this.wsTransport.close();
+        }
         this.wsTransport = new WSTransport(this.baseUrl + urlWebSocket);
-        this.wsTransport.connection().then(() => {
-            this.subscribe(this.wsTransport);
-            this.getMessage(0);
-        });
+        await this.wsTransport.connection()
+        this.subscribe(this.wsTransport);
+        this.getMessage(0);
+
     }
 
     private subscribe(wsTransport: WSTransport): void {
         wsTransport.on(WSTransportEvents.Message, this.listenMessage);
-        wsTransport.on(WSTransportEvents.Close, this.listenClose);
         wsTransport.on(WSTransportEvents.Error, this.listenError);
     }
 
@@ -32,23 +34,24 @@ class MessageController {
         })
     }
 
-    sendMessage(message: string): void {
+    sendMessage(message: string, type: 'message' | 'file' = 'message'): void {
         this.wsTransport.send({
             content: message,
-            type: 'message',
+            type: type,
         })
     }
 
     private listenMessage(message: unknown): void {
         debugger
-        if (isMessageSend(message) && message.type === 'user connected') {
-            return;
+        if (isMessageItem(message) && message.type !== 'user connected') {
+            const storeMessages = store.getState().message?.data ?? [];
+            message = [...storeMessages, message];
+        } else if (isMessageArr(message)) {
+            message.reverse();
+        } else {
+            return
         }
         store.set('message.data', message);
-    }
-
-    private listenClose(): void {
-        console.log('close');
     }
 
     private listenError(error: unknown): void {

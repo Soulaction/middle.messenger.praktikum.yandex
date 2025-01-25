@@ -20,6 +20,7 @@ export class AuthController {
 
         try {
             await authApi.signup(user);
+            await this.getAuthUserInfo();
             navigate().go(RoutePath.messenger)
         } catch (e) {
             store.set('user.error', (e as XMLHttpRequest).response.reason);
@@ -29,7 +30,7 @@ export class AuthController {
     public async login(formDataLogin: FormDataLogin): Promise<void> {
         try {
             await authApi.signin(formDataLogin);
-            navigate().go(RoutePath.messenger)
+            await this.getAuthUserInfo();
         } catch (e) {
             store.set('user.error', (e as XMLHttpRequest).response.reason);
         }

@@ -1,7 +1,6 @@
-import { Link } from '../../components/Link/Link.ts';
+import {Link} from '../../components/Link/Link.ts';
 import s from './ErrorPage.module.pcss';
 import Block from '../../core/Block/Block.ts';
-import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
 import {navigate} from "../../core/utils/navigate.ts";
 import {RoutePath} from "../../utils/const.ts";
 

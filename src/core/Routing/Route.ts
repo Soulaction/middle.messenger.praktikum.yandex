@@ -10,12 +10,12 @@ export class Route {
     private blockProps: BlockProperties;
     public pathname: string;
 
-    constructor(appContainer: HTMLElement, {pathname, Component, blockProps}: RouteItem) {
+    constructor(appContainer: HTMLElement, {pathname, Component}: RouteItem) {
         this.appContainer = appContainer;
         this.pathname = pathname;
         this.blockClass = Component;
         this.block = null;
-        this.blockProps = blockProps ?? {};
+        this.blockProps = {};
     }
 
     private setContentToApp(appContainer: HTMLElement, block: Block): void {

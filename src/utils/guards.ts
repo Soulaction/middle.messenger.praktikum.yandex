@@ -1,6 +1,6 @@
-import {MessageSend} from "../types/MessageSend.ts";
+import {Message} from "../types/Message.ts";
 
-export const isMessageSend = (data: unknown): data is MessageSend => {
+export const isMessageItem = (data: unknown): data is Message => {
     return (
         typeof data === 'object'
         && data !== null
@@ -8,5 +8,12 @@ export const isMessageSend = (data: unknown): data is MessageSend => {
         && 'type' in data
         && typeof data.content === 'string'
         && typeof data.type === 'string'
-    )
+    );
+}
+
+export const isMessageArr = (data: unknown): data is Message[] => {
+    return (
+        typeof data === 'object'
+        && Array.isArray(data)
+    );
 }

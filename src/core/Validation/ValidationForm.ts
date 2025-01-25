@@ -30,6 +30,16 @@ export class ValidationForm<T> {
         });
     }
 
+    reset(): void {
+        this._form?.reset();
+        Object.keys(this.formValue).forEach((key) => {
+            if(this.formValue[key as keyof T]) {
+                this.formValue[key as keyof T]!.value = null;
+                this.formValue[key as keyof T]!.errors = [];
+            }
+        })
+    }
+
     getFormValue(): { [K in keyof T]?: T[K] } {
         const formValue: { [K in keyof T]?: T[K] } = {};
 

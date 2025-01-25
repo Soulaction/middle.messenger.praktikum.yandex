@@ -1,9 +1,16 @@
 .message {
     margin-bottom: 10px;
+    width: 50%;
+}
+
+.message:first-of-type {
+    margin-top: auto;
 }
 
 .message-me {
+    display: flex;
     align-self: end;
+    justify-content: flex-end;
 }
 
 .message-img-block {
@@ -16,6 +23,8 @@
     border-radius: 12px;
     display: block;
     object-fit: contain;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .message-img-block .message-img-date {
@@ -41,6 +50,7 @@
     padding: 11px;
     white-space: pre-line;
     width: fit-content;
+    word-break: break-all;
 }
 
 .message-text-me {
@@ -52,11 +62,11 @@
     color: var(--grey-color);
 }
 
-.message-text-date-me {
+.text-date-icon {
     color: var(--main-color);
 }
 
-.message-text-date-me::before {
+.text-date-icon::before {
     background: url("/icons/read.svg") no-repeat;
     content: "";
     display: inline-block;

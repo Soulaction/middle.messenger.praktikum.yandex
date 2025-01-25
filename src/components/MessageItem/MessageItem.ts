@@ -24,7 +24,7 @@ export class MessageItem extends Block {
                             <span class="${s.textDate} ${s.messageImgDate}">{{time}}</span>
                         </div>
                     {{else}}
-                        <p class="${s.messageText} {{#if meMessage}}${s.messageTextMe}{{/if}}">{{content}}<span class="${s.textDate} {{#if meMessage}}${s.messageTextDateMe}{{/if}}">{{time}}</span></p>
+                        <p class="${s.messageText} {{#if meMessage}}${s.messageTextMe}{{/if}}">{{content}}<span class="${s.textDate} {{#if meMessage}}${s.textDateIcon}{{/if}}">{{time}}</span></p>
                     {{/if}}
                 </div>`;
   }

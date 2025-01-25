@@ -63,6 +63,7 @@ export class AddUserModal extends Block {
         event.preventDefault();
         if (this.validationService.checkValidity()) {
             await this.chatController.addUsersToChat(this.validationService.getFormValue().login!);
+            this.validationService.reset();
             store.set('isOpenModal', false);
         }
     }

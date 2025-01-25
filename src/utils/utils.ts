@@ -33,8 +33,8 @@ export const dateMessageFormated = (date: string): string => {
     const dateObj = new Date(date);
     const dateNow = new Date();
     if(dateObj.getDate() === dateNow.getDate()) {
-        return `${dateObj.getHours()}:${dateObj.getMinutes()}`;
+        return `${String(dateObj.getHours()).padStart(2, '0')}:${String(dateObj.getMinutes()).padStart(2, '0')}`;
     } else {
-        return `${dateObj.getDate()}.${month[dateObj.getMonth()]}.${dateObj.getFullYear()}`;
+        return `${String(dateObj.getDate()).padStart(2, '0')} ${month[dateObj.getMonth()]}.${dateObj.getFullYear()}`;
     }
 }

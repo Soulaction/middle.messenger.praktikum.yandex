@@ -18,11 +18,11 @@ export type Options<T> = {
 
 export type HTTPMethod = <K = any, T = any>(url: string, options?: Options<T>) => Promise<K>;
 
-function queryStringify<T extends { [key in string]: string | number }>(data: T) {
+function queryStringify<T extends { [key in string]: string }>(data: T) {
     if (typeof data !== 'object') {
         throw new Error('Data must be object');
     }
-    return `?${new URLSearchParams().toString()}`;
+    return `?${new URLSearchParams(data).toString()}`;
 }
 
 function isXMLHttpRequestBody(value: unknown): value is XMLHttpRequestBodyInit {
@@ -81,7 +81,7 @@ export class HTTPTransport {
 
             let queryParams: string = '';
             if (isGet && !!data) {
-                queryParams = queryStringify(data as unknown as { [key in string]: string | number })
+                queryParams = queryStringify(data as unknown as { [key in string]: string })
             }
 
             xhr.open(method, `${fullURL}${queryParams}`);

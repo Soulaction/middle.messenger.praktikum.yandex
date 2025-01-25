@@ -32,14 +32,6 @@ export class ChatController {
         }
     }
 
-    public async uploadChatAvatar(formData: FormData): Promise<void> {
-        try {
-            await chatApi.uploadChatAvatar(formData);
-        } catch (e) {
-            store.set('chats.error', (e as XMLHttpRequest).response.reason);
-        }
-    }
-
     public async addUsersToChat(login: string): Promise<void> {
         try {
             const idUser = await userController.getUserByLogin(login);
@@ -72,7 +64,7 @@ export class ChatController {
             const idUser: number | undefined = store.getState().user?.data.id;
 
             if (token && idUser) {
-                messageController.connection(`/${idUser}/${id}/${token}`);
+                await messageController.connection(`/${idUser}/${id}/${token}`);
             }
         } catch (e) {
             store.set('chats.error', (e as XMLHttpRequest).response.reason);

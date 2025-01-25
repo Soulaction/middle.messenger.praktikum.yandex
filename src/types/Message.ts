@@ -1,4 +1,6 @@
 export type Message = {
+  id: number;
+  is_read: boolean;
   chat_id: number;
   time: string;
   type: string;
