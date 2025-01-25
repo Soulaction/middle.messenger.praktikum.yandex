@@ -2,6 +2,8 @@ import { Button } from '../../components/Button/Button.ts';
 import { InputForm } from '../../components/InputForm/InputForm.ts';
 import Block from '../../core/Block/Block.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
+import store from "../../core/Store.ts";
+import {ChatController} from "../../controllers/ChatController.ts";
 
 type FormDataRemoveUser = {
   login: string;
@@ -9,6 +11,7 @@ type FormDataRemoveUser = {
 
 export class RemoveUserModal extends Block {
   validationService: ValidationForm<FormDataRemoveUser>;
+  chatController: ChatController = new ChatController();
 
   constructor() {
     const validationService = new ValidationForm<FormDataRemoveUser>();
@@ -56,19 +59,22 @@ export class RemoveUserModal extends Block {
     });
   }
 
-  deleteUser(event: Event): void {
+  async deleteUser(event: Event): Promise<void> {
     event.preventDefault();
-    this.validationService.checkValidity();
-    console.log(this.validationService.getFormValue());
+    if (this.validationService.checkValidity()) {
+      await this.chatController.deleteUsersFromChat(this.validationService.getFormValue().login!);
+      this.validationService.reset();
+      store.set('isOpenModal', false);
+    }
   }
 
   override render(): string {
     return `
-                 <form class="form-modal" name="remove-user">
-                     <h1 class="title-modal">{{titleModal}}</h1>
-                     {{{InputFormLogin}}}
-                     {{{Button}}}
-                 </form>
-                `;
+             <form class="form-modal" name="remove-user">
+                 <h1 class="title-modal">{{titleModal}}</h1>
+                 {{{InputFormLogin}}}
+                 {{{Button}}}
+             </form>
+            `;
   }
 }

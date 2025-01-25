@@ -23,7 +23,7 @@ type ProfileEditedProps = {
     user?: User
 }
 
-export class ProfileEdited extends Block {
+class ProfileEdited extends Block {
     validationService: ValidationForm<FormDataProfileEdite> = new ValidationForm<FormDataProfileEdite>();
 
     constructor() {

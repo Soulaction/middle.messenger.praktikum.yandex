@@ -34,14 +34,9 @@ export class ChatController {
 
     public async addUsersToChat(login: string): Promise<void> {
         try {
-            const idUser = await userController.getUserByLogin(login);
-            const chatId = store.getState().selectedChat?.data.id;
+            const usersToChat = await this.getUsersToChatInfo(login);
 
-            if (idUser && chatId) {
-                const usersToChat: UsersToChat = {
-                    users: [idUser],
-                    chatId,
-                };
+            if (usersToChat) {
                 await chatApi.addUsersToChat(usersToChat);
             }
         } catch (e) {
@@ -50,9 +45,13 @@ export class ChatController {
     }
 
 
-    public async deleteUsersFromChat(usersToChat: UsersToChat): Promise<void> {
+    public async deleteUsersFromChat(login: string): Promise<void> {
         try {
-            await chatApi.deleteUsersFromChat(usersToChat);
+            const usersToChat = await this.getUsersToChatInfo(login);
+
+            if (usersToChat) {
+                await chatApi.deleteUsersFromChat(usersToChat);
+            }
         } catch (e) {
             store.set('chats.error', (e as XMLHttpRequest).response.reason);
         }
@@ -68,6 +67,25 @@ export class ChatController {
             }
         } catch (e) {
             store.set('chats.error', (e as XMLHttpRequest).response.reason);
+        }
+    }
+
+    public async getUsersToChatInfo(login: string): Promise<UsersToChat | null> {
+        try {
+            const idUser = await userController.getUserByLogin(login);
+            const chatId = store.getState().selectedChat?.data.id;
+
+            if (idUser && chatId) {
+                const usersToChat: UsersToChat = {
+                    users: [idUser],
+                    chatId,
+                };
+                return usersToChat
+            }
+            return null;
+        } catch (e) {
+            store.set('chats.error', (e as XMLHttpRequest).response.reason);
+            return null;
         }
     }
 }
