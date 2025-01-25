@@ -2,6 +2,8 @@ import { Button } from '../../components/Button/Button.ts';
 import { InputForm } from '../../components/InputForm/InputForm.ts';
 import Block from '../../core/Block/Block.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
+import { ChatController } from '../../controllers/ChatController.ts';
+import store from '../../core/Store.ts';
 
 export type FormDataAddUser = {
   login: string;
@@ -9,6 +11,8 @@ export type FormDataAddUser = {
 
 export class AddUserModal extends Block {
   validationService: ValidationForm<FormDataAddUser>;
+
+  chatController: ChatController = new ChatController();
 
   constructor() {
     const validationService = new ValidationForm<FormDataAddUser>();
@@ -20,6 +24,7 @@ export class AddUserModal extends Block {
       children: {
         InputFormLogin: new InputForm<FormDataAddUser>({
           props: {
+            id: 'login-add',
             label: 'Логин',
             name: 'login',
             type: 'login',
@@ -32,7 +37,7 @@ export class AddUserModal extends Block {
         }),
         Button: new Button({
           props: {
-            label: 'Поменять',
+            label: 'Добавить',
             type: 'submit',
             class: 'submit-btn-modal',
           },
@@ -57,17 +62,20 @@ export class AddUserModal extends Block {
 
   addUser(event: Event): void {
     event.preventDefault();
-    this.validationService.checkValidity();
-    console.log(this.validationService.getFormValue());
+    if (this.validationService.checkValidity()) {
+      void this.chatController.addUsersToChat(this.validationService.getFormValue().login!);
+      this.validationService.reset();
+      store.set('isAddUserModal', false);
+    }
   }
 
   override render(): string {
     return `
-                 <form class="form-modal" name="add-user">
-                     <h1 class="title-modal">{{titleModal}}</h1>
-                     {{{InputFormLogin}}}
-                     {{{Button}}}
-                 </form>
-                `;
+             <form class="form-modal" name="add-user">
+                 <h1 class="title-modal">{{titleModal}}</h1>
+                 {{{InputFormLogin}}}
+                 {{{Button}}}
+             </form>
+            `;
   }
 }

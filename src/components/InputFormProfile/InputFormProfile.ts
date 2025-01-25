@@ -7,8 +7,10 @@ import { BlockProperties, EventBlock } from '../../core/Block/types/BlockProps.t
 import Block from '../../core/Block/Block.ts';
 
 type InputFormProfileProps<T> = {
+  id?: string;
   label: string;
   name: string;
+  value?: string;
   type?: string;
   placeholder: string;
   validationService: ValidationForm<T>;
@@ -26,9 +28,10 @@ export class InputFormProfile<T> extends Block {
       children: {
         Input: new Input({
           props: {
-            id: inputFormProfileProps.props?.name,
+            id: inputFormProfileProps.props?.id ?? inputFormProfileProps.props?.name,
             rightPlaceholder: true,
             name: inputFormProfileProps.props?.name,
+            value: inputFormProfileProps.props?.value,
             type: inputFormProfileProps.props?.type,
             placeholder: inputFormProfileProps.props?.placeholder,
           },

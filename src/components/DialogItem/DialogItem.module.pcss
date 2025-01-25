@@ -1,20 +1,22 @@
 .chat-item {
     cursor: pointer;
 
-    &:first-of-type::before, &::after{
+    &:first-of-type::before, &::after {
         border-top: 1px solid #eaeaea;
         content: "";
         display: block;
         margin: 0 10px;
+        position: relative;
         width: 95%;
+        z-index: -1;
     }
 
-    &:first-of-type::before{
+    &:first-of-type::before {
         margin-top: 4px;
         transform: translateY(-2px);
     }
 
-    &::after{
+    &::after {
         margin-bottom: 4px;
         transform: translateY(2px);
     }
@@ -40,7 +42,7 @@
 }
 
 .chat-info {
-    width: 100%;
+    width: 67%;
 }
 
 .chat-name-chat {
@@ -60,6 +62,9 @@
     font-weight: 500;
     line-height: 15px;
     margin-top: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .chat-content {
@@ -74,6 +79,7 @@
     font-size: 9px;
     font-weight: 500;
     line-height: 13px;
+    white-space: nowrap;
 }
 
 .chat-count-msg {

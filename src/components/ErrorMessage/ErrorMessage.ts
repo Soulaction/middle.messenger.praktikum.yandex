@@ -8,7 +8,7 @@ type ErrorMessageProps<T> = {
   className?: string;
   formName: string;
   errorText?: string;
-  validationFormService: ValidationForm<T>;
+  validationFormService?: ValidationForm<T>;
 };
 
 export class ErrorMessage<T> extends Block {
@@ -20,7 +20,8 @@ export class ErrorMessage<T> extends Block {
 
   override componentDidMount() {
     const props = this.props as ErrorMessageProps<T>;
-    if (props) {
+
+    if (props && props.validationFormService) {
       props.validationFormService.changeValueForm((data) => {
         const error: string = (data as FormValue<Record<string, unknown>>)[props.formName]?.errors[0] ?? '';
         if (props.errorText !== error) {

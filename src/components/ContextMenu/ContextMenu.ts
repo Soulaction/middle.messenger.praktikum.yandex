@@ -13,7 +13,7 @@ export type PositionContextMenu = {
 export type MenuItem = {
   iconURL: string;
   text: string;
-  event: () => void;
+  event: (event: Event) => void;
 };
 
 type ContextMenuProps = {

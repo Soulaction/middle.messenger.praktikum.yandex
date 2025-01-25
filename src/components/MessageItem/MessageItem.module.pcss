@@ -1,18 +1,16 @@
-.data-msg {
-    color: var(--grey-color);
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 15px;
-    margin: 38px 0;
-    text-align: center;
-}
-
 .message {
     margin-bottom: 10px;
+    width: 50%;
+}
+
+.message:first-of-type {
+    margin-top: auto;
 }
 
 .message-me {
     align-self: end;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .message-img-block {
@@ -23,8 +21,10 @@
 .message-img {
     border: 1px solid #eaeaea;
     border-radius: 12px;
+    box-sizing: border-box;
     display: block;
     object-fit: contain;
+    width: 100%;
 }
 
 .message-img-block .message-img-date {
@@ -50,6 +50,7 @@
     padding: 11px;
     white-space: pre-line;
     width: fit-content;
+    word-break: break-all;
 }
 
 .message-text-me {
@@ -61,11 +62,11 @@
     color: var(--grey-color);
 }
 
-.message-text-date-me {
+.text-date-icon {
     color: var(--main-color);
 }
 
-.message-text-date-me::before {
+.text-date-icon::before {
     background: url("/icons/read.svg") no-repeat;
     content: "";
     display: inline-block;

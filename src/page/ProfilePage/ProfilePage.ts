@@ -1,66 +1,81 @@
-import { UserInfoItem } from '../../components/UserInfoItem/UserInfoItem.ts';
-import { UserService } from '../../services/UserService/UserService.ts';
-import { Link } from '../../components/Link/Link.ts';
-import { AvatarUser } from '../../components/AvatarUser';
 import s from './ProfilePage.module.pcss';
-import { CircleButton } from '../../components/CircleButton/CircleButton';
 import Block from '../../core/Block/Block.ts';
-import { navigate } from '../../utils/utils.ts';
+import { navigate } from '../../core/utils/navigate.ts';
+import { RoutePath } from '../../utils/const.ts';
+import { ProfileInfoWithStore } from '../../components/ProfileInfo';
+import { CircleButton } from '../../components/CircleButton/CircleButton.ts';
+import { ModeProfile } from '../../types/ModeProfile.ts';
+import { ChangePasswordProfile } from '../../components/ChangePasswordProfile';
+import { ProfileEditedWithStore } from '../../components/ProfileEdit';
+import { AvatarUserWithStore } from '../../components/AvatarUser';
 
 export class ProfilePage extends Block {
-  userService: UserService;
-
+  private blockMode: string = '';
 
   constructor() {
     super({
       children: {
-        AvatarUser: new AvatarUser({
-          props: {
-            imgUrl: '/images/profile.png',
-          },
-        }),
-        LinkChangeData: new Link({
-          props: {
-            label: 'Изменить данные',
-          },
-          events: {
-            click: (event: Event) => navigate('/profile-edit', event),
-          },
-        }),
-        LinkChangePassword: new Link({
-          props: {
-            label: 'Изменить пароль',
-          },
-          events: {
-            click: (event: Event) => navigate('/profile-password', event),
-          },
-        }),
-        LinkChangeExit: new Link({
-          props: {
-            label: 'Выйти',
-            danger: true,
-          },
-          events: {
-            click: (event: Event) => navigate('/login', event),
-          },
-        }),
+        AvatarUser: new AvatarUserWithStore({}),
         CircleButton: new CircleButton({
           props: {
             type: 'button',
           },
           events: {
-            click: (event: Event) => navigate('/chat', event),
+            click: (event: Event) => this.goToMessagePage(event),
           },
         }),
       },
     });
-    this.userService = new UserService();
   }
 
-  override componentDidMount() {
-    const userInfoItems: Record<string, UserInfoItem> = this.userService.getUserInfoProfile();
+  protected override componentDidMount() {
+    this.changeMode('profileInfo');
+  }
 
-    this.setChildren(userInfoItems);
+  goToMessagePage(event: Event): void {
+    event.preventDefault();
+    navigate().go(RoutePath.messenger);
+  }
+
+  changeMode(mode: ModeProfile): void {
+    switch (mode) {
+      case 'changeProfile':
+        const profileEditedPage = new ProfileEditedWithStore({});
+        this.blockMode = '{{{ProfileEditedPage}}}';
+
+        this.setChildren({
+          ProfileInfo: null,
+          ProfileEditedPage: profileEditedPage,
+          ChangePasswordProfile: null,
+        });
+        profileEditedPage.dispatchComponentDidMount();
+        break;
+      case 'changePassword':
+        const changePasswordProfile = new ChangePasswordProfile();
+        this.blockMode = '{{{ChangePasswordProfile}}}';
+
+        this.setChildren({
+          ProfileInfo: null,
+          ProfileEditedPage: null,
+          ChangePasswordProfile: changePasswordProfile,
+        });
+        changePasswordProfile.dispatchComponentDidMount();
+        break;
+      default:
+        const profileInfo = new ProfileInfoWithStore({
+          props: {
+            changeMode: (newMode: ModeProfile) => this.changeMode(newMode),
+          },
+        });
+        this.blockMode = '{{{ProfileInfo}}}';
+
+        this.setChildren({
+          ProfileInfo: profileInfo,
+          ProfileEditedPage: null,
+          ChangePasswordProfile: null,
+        });
+        profileInfo.dispatchComponentDidMount();
+    }
   }
 
   override render(): string {
@@ -71,27 +86,7 @@ export class ProfilePage extends Block {
                         </div>
                         <div class="${s.pageProfileContent}">
                             {{{AvatarUser}}}
-                            <h1 class="${s.userName}">Дмитрий</h1>
-                            <div class="user-info">
-                                {{{UserInfoItemEmail}}}
-                                <div class="${s.userInfoBorder}"></div>
-                                {{{UserInfoItemLogin}}}
-                                <div class="${s.userInfoBorder}"></div>
-                                {{{UserInfoItemFirstName}}}
-                                <div class="${s.userInfoBorder}"></div>
-                                {{{UserInfoItemSecondName}}}
-                                <div class="${s.userInfoBorder}"></div>
-                                {{{UserInfoItemNikName}}}
-                                <div class="${s.userInfoBorder}"></div>
-                                {{{UserInfoItemPhone}}}
-                                <footer class="${s.userInfoFooter}">
-                                    {{{LinkChangeData}}}
-                                    <div class="${s.userInfoBorder}"></div>
-                                    {{{LinkChangePassword}}}
-                                    <div class="${s.userInfoBorder}"></div>
-                                    {{{LinkChangeExit}}}
-                                </footer>
-                            </div>
+                            ${this.blockMode}
                         </div>
                     </main>
                 `;

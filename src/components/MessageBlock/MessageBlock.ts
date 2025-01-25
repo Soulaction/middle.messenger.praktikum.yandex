@@ -1,208 +1,96 @@
 import s from './MessageBlock.module.pcss';
-import { CircleButton } from '../CircleButton/CircleButton.ts';
-import { ButtonIcon } from '../ButtonIcon/ButtonIcon.ts';
-import { ContextMenu, MenuItem } from '../ContextMenu/ContextMenu.ts';
-import addIcon from '/icons/add.svg?url';
-import deleteIcon from '/icons/delete.svg?url';
-import fileIcon from '/icons/file.svg?url';
-import locationIcon from '/icons/location.svg?url';
-import { Modal } from '../Modal/Modal.ts';
-import { AddUserModal } from '../../modals/AddUserModal/AddUserModal.ts';
-import { RemoveUserModal } from '../../modals/RemoveUserModal/RemoveUserModal.ts';
-import { MessageItem } from '../MessageItem/MessageItem.ts';
 import Block from '../../core/Block/Block.ts';
-import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
-import { ErrorMessage } from '../ErrorMessage/ErrorMessage.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
-import { errorsForm } from '../../utils/const.ts';
-
+import { wrapStore } from '../../core/utils/wrapStore.ts';
+import { Chat } from '../../api/ChatApi/types/Chats.ts';
+import { EqualType, isEqual } from '../../core/utils/isEqual.ts';
+import { MessageBlockHeaderWithStore } from '../MessageBlockHeader/MessageBlockHeader.ts';
+import { Message } from '../../types/Message.ts';
+import { ChatService } from '../../services/ChatService/ChatService.ts';
+import { MessageBlockForm } from '../MessageBlockForm/MessageBlockForm.ts';
 
 type FormDataMessageBlock = {
   message: string;
 };
 
-
 export type MessageBlockProps = {
-  chatIcon: string;
-  chatName: string;
-  messageList: MessageItem[];
+  isNotMsg?: boolean,
+  selectedChat: Chat | undefined,
+  isSelectedChat?: Chat | undefined,
+  message?: Message[]
 };
 
-export class MessageBlock extends Block {
+class MessageBlock extends Block {
   validationService: ValidationForm<FormDataMessageBlock>;
 
-  contextMenuClip: ContextMenu;
+  chatService: ChatService = new ChatService();
 
-  contextMenuChat: ContextMenu;
-
-  isNotMsg: boolean;
-
-  constructor(messageBlockProps: BlockProperties<MessageBlockProps>) {
+  constructor() {
     const validationService = new ValidationForm<FormDataMessageBlock>();
-    const addUserModal = new Modal({
-      children: {
-        ContentModal: new AddUserModal(),
-      },
-    });
-
-    const removeUserModal = new Modal({
-      children: {
-        ContentModal: new RemoveUserModal(),
-      },
-    });
-
-    const menuItemClip: MenuItem[] = [
-      {
-        iconURL: fileIcon,
-        text: 'Файл',
-        event: () => {},
-      },
-      {
-        iconURL: locationIcon,
-        text: 'Локация',
-        event: () => {},
-      },
-    ];
-
-    const ContextMenuClip: ContextMenu = new ContextMenu({
-      props: {
-        items: menuItemClip,
-      },
-    });
-
-    const menuItem: MenuItem[] = [
-      {
-        iconURL: addIcon,
-        text: 'Добавить пользователя',
-        event: () => addUserModal.openModel(),
-      },
-      {
-        iconURL: deleteIcon,
-        text: 'Удалить пользователя',
-        event: () => removeUserModal.openModel(),
-      },
-    ];
-
-    const ContextMenuChat: ContextMenu = new ContextMenu({
-      props: {
-        items: menuItem,
-      },
-    });
-    const isNotMsg = !!messageBlockProps.props!.messageList.length;
 
     super({
-      props: {
-        chatIcon: messageBlockProps.props!.chatIcon,
-        chatName: messageBlockProps.props!.chatName,
-        isNotMsg,
-      },
       children: {
-        ButtonIconChat: new ButtonIcon({
-          props: {
-            iconLink: '/icons/menu.svg',
-            className: s.iconMenu,
-          },
-          events: {
-            click: event => this.showMenuChat(event),
-          },
-        }),
-        ButtonIconClip: new ButtonIcon({
-          props: {
-            iconLink: '/icons/clip.svg',
-          },
-          events: {
-            click: event => this.showMenuClip(event),
-          },
-        }),
-        ErrorMessage: new ErrorMessage<FormDataMessageBlock>({
-          props: {
-            className: s.errorMsg,
-            formName: 'message',
-            validationFormService: validationService,
-          },
-        }),
-        CircleButton: new CircleButton({
-          props: {
-            className: s.sendMsgSubmit,
-            type: 'submit',
-          },
-          events: {
-            click: (event: Event) => this.sendMessage(event),
-          },
-        }),
-        ContextMenuClip,
-        ContextMenuChat,
-        AddUserModal: addUserModal,
-        RemoveUserModal: removeUserModal,
-      },
-      lists: {
-        MessageList: messageBlockProps.props!.messageList,
+        MessageBlockHeader: new MessageBlockHeaderWithStore({}),
       },
     });
-    this.contextMenuClip = ContextMenuClip;
-    this.contextMenuChat = ContextMenuChat;
     this.validationService = validationService;
-    this.isNotMsg = isNotMsg;
   }
 
-  override componentDidMount() {
-    this.validationService.init('send-msg', {
-      message: {
-        errors: errorsForm.message,
-      },
-    });
-  }
+  protected override componentDidUpdate(oldProps: EqualType, newProps: EqualType): boolean {
+    const isChangeSelectedChat = !isEqual(oldProps?.selectedChat, newProps?.selectedChat);
+    const isChangeSelected = !!newProps?.isSelectedChat && !isEqual(oldProps?.isSelectedChat, newProps?.isSelectedChat);
+    const isChangeMessage = !!newProps?.message && !isEqual(oldProps?.message, newProps?.message);
 
-  sendMessage(event: Event): void {
-    event.preventDefault();
-    this.validationService.checkValidity();
-    console.log(this.validationService.getFormValue());
-  }
+    if (isChangeSelectedChat && newProps?.selectedChat) {
+      this.setProps({
+        isSelectedChat: true,
+      });
+    } else if (isChangeSelectedChat && !newProps?.selectedChat) {
+      this.setProps({
+        isSelectedChat: false,
+      });
+    } else if (isChangeSelected && newProps?.isSelectedChat) {
+      const messageBlockForm: MessageBlockForm = new MessageBlockForm();
 
-  showMenuChat(event: Event): void {
-    const imgIcon: HTMLImageElement = event.target as HTMLImageElement;
-    const imgIconSize: DOMRect = imgIcon.getBoundingClientRect();
-    const top: number = imgIconSize.bottom + 27;
-    const right: number = window.innerWidth - imgIconSize.right - 9;
+      this.setChildren({
+        MessageBlockForm: messageBlockForm,
+      });
+      messageBlockForm.dispatchComponentDidMount();
+    } else if (isChangeMessage && newProps?.message) {
+      this.setLists({ MessageList: this.chatService.getMessageItems(newProps?.message) });
+    } else if (newProps?.MessageList && newProps?.MessageList.length > 0) {
+      this.setProps({
+        isNotMsg: true,
+      });
+    }
 
-    this.contextMenuChat.openContextMenu({ top, right });
-  }
-
-  showMenuClip(event: Event): void {
-    const imgIcon: HTMLImageElement = event.target as HTMLImageElement;
-    const imgIconSize: DOMRect = imgIcon.getBoundingClientRect();
-    const bottom: number = window.innerHeight - imgIconSize.top + 24;
-    const left: number = imgIconSize.left - 8;
-
-    this.contextMenuClip.openContextMenu({ bottom, left });
+    return true;
   }
 
   override render(): string {
     return `<div class="${s.chat}">
-                     <div class="${s.chatHeader}">   
-                         <img class="${s.chatImg}" src="{{chatIcon}}" alt="Иконка собеседника">
-                         <h1 class="${s.chatName}">{{chatName}}</h1>
-                         {{{ButtonIconChat}}}
-                     </div>
-                     {{#if isNotMsg}}
-                     <div class="${s.correspondence}">
-                          {{{MessageList}}}
-                     </div>
-                     {{else}}
-                     <div class="${s.noMessage}">
-                          <h2 class="${s.noMessageTitle}">Нет сообщений, начните диалог</h2>
-                     </div>
-                     {{/if}}
-                     <form class="${s.sendMsgInputBlock}" name="send-msg">
-                            {{{ButtonIconClip}}}
-                            <input class="${s.sendMsgInput}" name="message" placeholder="Сообщение"/>
-                            {{{CircleButton}}}
-                     </form>
-                  
-                    {{{ContextMenuClip}}}
-                    {{{ContextMenuChat}}}
-                    {{{AddUserModal}}}
-                    {{{RemoveUserModal}}}
+                    {{#if isSelectedChat}}
+                        {{{MessageBlockHeader}}}
+                        {{#if isNotMsg}}
+                        <div class="${s.correspondence}">
+                             {{{MessageList}}}
+                        </div>
+                        {{else}}
+                        <div class="${s.noMessage}">
+                             <h2 class="${s.messageTitle}">Нет сообщений, начните диалог</h2>
+                        </div>
+                        {{/if}}
+                        {{{MessageBlockForm}}}                  
+                    {{else}}
+                         <h2 class="${s.messageTitle}">Выберете диалог</h2>   
+                    {{/if}}
                 </div>`;
   }
 }
+
+export const MessageBlockWithStore = wrapStore<MessageBlockProps>((state) => {
+  return {
+    selectedChat: state.selectedChat?.data,
+    message: state.message?.data,
+  };
+})(MessageBlock);

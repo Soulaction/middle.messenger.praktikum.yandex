@@ -6,35 +6,13 @@
     width: calc(100% - 40px);
 }
 
-.chat-header {
-    align-items: center;
-    display: flex;
-    margin-bottom: 10px;
-}
-
-.chat-img {
-    height: 34px;
-    width: 34px;
-}
-
-.icon-menu {
-    margin-left: auto;
-}
-
-.chat-name {
-    color: #1e1e1e;
-    font-size: 13px;
-    line-height: 13px;
-    margin-left: 10px;
-}
-
 .correspondence {
     border-bottom: 1px solid #eaeaea;
     border-top: 1px solid #eaeaea;
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content: flex-end;
+    overflow: auto;
     width: 100%;
 }
 
@@ -44,41 +22,9 @@
     width: 100%;
 }
 
-.no-message-title {
+.message-title {
     font-size: 12px;
     font-weight: 500;
     line-height: 12px;
     margin: auto;
-}
-
-.send-msg-input-block {
-    align-items: center;
-    display: flex;
-    margin-top: 11px;
-    width: 100%;
-}
-
-.error-msg {
-    margin-left: 60px;
-}
-
-.send-msg-input {
-    background-color: #efefef;
-    border: none;
-    border-radius: 30px;
-    box-sizing: border-box;
-    color: black;
-    display: block;
-    margin: 0 10px;
-    outline: none;
-    padding: 10px 20px;
-    width: 100%;
-}
-
-.send-msg-input::placeholder {
-    color: var(--grey-color);
-}
-
-.send-msg-submit {
-    transform: rotate(180deg);
 }

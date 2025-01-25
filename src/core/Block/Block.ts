@@ -2,6 +2,7 @@ import EventBus, { EventCallback } from '../EventBus.ts';
 import Handlebars from 'handlebars';
 import { BlockProps, BlockProperties, EventBlock } from './types/BlockProps.ts';
 import { PropsForHandlebars } from './types/PropsForHandlebars.ts';
+import { Indexed } from '../types/Indexed.ts';
 
 export default class Block {
   static EVENTS = {
@@ -19,7 +20,7 @@ export default class Block {
 
   protected props: object;
 
-  protected children: Record<string, Block>;
+  protected children: Record<string, Block | null>;
 
   protected lists: Record<string, Block[]>;
 
@@ -68,18 +69,20 @@ export default class Block {
   private _componentDidMount(): void {
     this.componentDidMount();
     Object.values(this.children).forEach(child => {
-      child.dispatchComponentDidMount();
+      if (child) {
+        child.dispatchComponentDidMount();
+      }
     });
   }
 
-  protected componentDidMount(): void {
+  protected componentDidMount() {
   }
 
   public dispatchComponentDidMount(): void {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: BlockProps, newProps: BlockProps): void {
+  private _componentDidUpdate(oldProps: Indexed, newProps: Indexed): void {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -108,7 +111,7 @@ export default class Block {
     Object.assign(this.lists, nextList);
   };
 
-  public setChildren = (nextList: Record<string, Block>): void => {
+  public setChildren = (nextList: Record<string, Block | null>): void => {
     if (!nextList) {
       return;
     }
@@ -121,7 +124,9 @@ export default class Block {
     const listHTMLRow: PropsForHandlebars = {};
 
     Object.entries(this.children).forEach(([key, child]) => {
-      childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`;
+      if (child) {
+        (childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`);
+      }
     });
     const tmplId: string = crypto.randomUUID();
     Object.entries(this.lists).forEach(([key]) => {
@@ -143,6 +148,10 @@ export default class Block {
       }
     });
     Object.values(this.children).forEach(child => {
+      if (!child) {
+        return;
+      }
+
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
       if (stub) {
         stub.replaceWith(child.getContent());
@@ -198,7 +207,7 @@ export default class Block {
   public show(): void {
     const content = this.getContent();
     if (content) {
-      content.style.display = 'block';
+      content.style.display = 'flex';
     }
   }
 

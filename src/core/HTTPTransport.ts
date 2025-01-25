@@ -12,40 +12,65 @@ export type Options<T> = {
   method?: METHODS;
   data?: T;
   timeout?: number;
+  credentials?: boolean;
+  responseType?: 'text' | 'arraybuffer' | 'blob' | 'document' | 'json';
 };
 
-function queryStringify<T extends { [key in string]: string | number }>(data: T) {
+export type HTTPMethod = <K = any, T = any>(url: string, options?: Options<T>) => Promise<K>;
+
+function queryStringify<T extends { [key in string]: string }>(data: T) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }
-
-  const keys = Object.keys(data);
-  return keys.reduce((result, key, index) => {
-    return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
-  }, '?');
+  return `?${new URLSearchParams(data).toString()}`;
 }
 
-class HTTPTransport {
-  get<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
-    return this.request<K, T>(url, { ...options, method: METHODS.GET });
+function isXMLHttpRequestBody(value: unknown): value is XMLHttpRequestBodyInit {
+  return (
+    typeof value === 'string' ||
+        value instanceof Document ||
+        value instanceof Blob ||
+        value instanceof ArrayBuffer ||
+        value instanceof FormData ||
+        value instanceof URLSearchParams
+  );
+}
+
+export class HTTPTransport {
+  private baseURL: string;
+
+  constructor(baseURL: string) {
+    this.baseURL = baseURL;
   }
 
-  post<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
-    return this.request<K, T>(url, { ...options, method: METHODS.POST });
-  }
+  get: HTTPMethod = (url, options?) => {
+    return this.request(url, { ...(options ?? {}), method: METHODS.GET });
+  };
 
-  put<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
-    return this.request<K, T>(url, { ...options, method: METHODS.PUT });
-  }
+  post: HTTPMethod = (url, options?) => {
+    return this.request(url, { ...options, method: METHODS.POST });
+  };
 
-  delete<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
-    return this.request<K, T>(url, { ...options, method: METHODS.DELETE });
-  }
+  put: HTTPMethod = (url, options?) => {
+    return this.request(url, { ...(options ?? {}), method: METHODS.PUT });
+  };
 
-  request<K, T extends XMLHttpRequestBodyInit>(url: string, options: Options<T> = {}): Promise<K> {
-    const { headers = {}, method, data, timeout } = options;
+  delete: HTTPMethod = (url, options?) => {
+    return this.request(url, { ...(options ?? {}), method: METHODS.DELETE });
+  };
 
-    return new Promise<K>(function (resolve, reject) {
+  request: HTTPMethod = (url, options?) => {
+    const {
+      headers = {},
+      method,
+      data,
+      timeout = 0,
+      credentials = false,
+      responseType = 'json',
+    } = options ?? {};
+    const fullURL: string = this.baseURL + url;
+
+    return new Promise(function (resolve, reject) {
       if (!method) {
         reject('No method');
         return;
@@ -54,34 +79,47 @@ class HTTPTransport {
       const xhr = new XMLHttpRequest();
       const isGet = method === METHODS.GET;
 
-      xhr.open(
-        method,
-        isGet && !!data
-          ? `${url}${queryStringify(data as unknown as { [key in string]: string | number })}`
-          : url,
-      );
+      let queryParams: string = '';
+      if (isGet && !!data) {
+        queryParams = queryStringify(data as unknown as { [key in string]: string });
+      }
+
+      xhr.open(method, `${fullURL}${queryParams}`);
 
       Object.keys(headers).forEach(key => {
         xhr.setRequestHeader(key, headers[key]);
       });
 
       xhr.onload = function () {
-        resolve(xhr as K);
+        const status = xhr.status;
+
+        if (status.toString().startsWith('4') || status.toString().startsWith('5')) {
+          reject(xhr);
+        } else {
+          resolve(xhr.response);
+        }
       };
 
-      xhr.onabort = reject;
-      xhr.onerror = reject;
+      xhr.onabort = () => reject({ reason: 'abort' });
+      xhr.onerror = () => reject({ reason: 'network error' });
+      xhr.ontimeout = () => reject({ reason: 'timeout' });
 
-      xhr.timeout = timeout ?? 0;
-      xhr.ontimeout = reject;
+      xhr.timeout = timeout;
+      xhr.responseType = responseType;
+      xhr.withCredentials = credentials;
 
       if (isGet || !data) {
         xhr.send();
-      } else {
+      } else if (isXMLHttpRequestBody(data)) {
         xhr.send(data);
+      } else {
+        try {
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.send(JSON.stringify(data));
+        } catch {
+          console.error('Error parsing body to row', data);
+        }
       }
     });
-  }
+  };
 }
-
-export default new HTTPTransport();
