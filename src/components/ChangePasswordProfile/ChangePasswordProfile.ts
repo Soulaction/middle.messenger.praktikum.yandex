@@ -86,10 +86,10 @@ export class ChangePasswordProfile extends Block {
     checkEqualPassword(this.validationService);
   }
 
-  async save(event: Event): Promise<void> {
+  save(event: Event): void {
     event.preventDefault();
     if (this.validationService.checkValidity()) {
-      await userController.changeUserPassword({
+      void userController.changeUserPassword({
         oldPassword: this.validationService.getFormValue().oldPassword!,
         newPassword: this.validationService.getFormValue().password!,
       });

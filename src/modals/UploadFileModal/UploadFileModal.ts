@@ -56,12 +56,12 @@ export class UploadFileModal extends Block {
     this.validationService.init('upload-file');
   }
 
-  async uploadFile(event: Event): Promise<void> {
+  uploadFile(event: Event): void {
     event.preventDefault();
     const file = this.validationService.formValue.file;
 
     if (file?.value && file?.value[0]) {
-      await userController.changeUserAvatar(file.value as FileList);
+      void userController.changeUserAvatar(file.value as FileList);
       this.setChildren({
         Error: new ErrorMessage<FormDataFile>({
           props: {

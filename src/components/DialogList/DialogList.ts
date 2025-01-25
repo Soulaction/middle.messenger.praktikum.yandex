@@ -65,11 +65,11 @@ class DialogList extends Block {
   }
 
   protected override componentDidMount() {
-    this.getChats();
+    void this.getChats();
   }
 
-  async getChats(): Promise<void> {
-    await this.chatController.getChats();
+  getChats(): void {
+    void this.chatController.getChats();
   }
 
   protected override componentDidUpdate(oldProps: EqualType, newProps: EqualType): boolean {

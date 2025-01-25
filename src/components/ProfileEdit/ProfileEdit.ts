@@ -148,7 +148,7 @@ class ProfileEdited extends Block {
   save(event: Event): void {
     event.preventDefault();
     if (this.validationService.checkValidity()) {
-      userController.changeUserProfile(this.validationService.getFormValue() as UserUpdate);
+      void userController.changeUserProfile(this.validationService.getFormValue() as UserUpdate);
     }
   }
 

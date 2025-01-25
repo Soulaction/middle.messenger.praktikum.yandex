@@ -24,8 +24,8 @@ class MessageController {
   }
 
   private subscribe(wsTransport: WSTransport): void {
-    wsTransport.on(WSTransportEvents.Message, this.listenMessage);
-    wsTransport.on(WSTransportEvents.Error, this.listenError);
+    wsTransport.on(WSTransportEvents.Message, this.listenMessage.bind(this));
+    wsTransport.on(WSTransportEvents.Error, this.listenError.bind(this));
   }
 
   getMessage(offset: number): void {

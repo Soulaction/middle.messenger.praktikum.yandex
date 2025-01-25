@@ -14,7 +14,7 @@ export class UploadButtonForMessage extends Block {
 
   uploadFile(inputElement: HTMLInputElement): void {
     if (inputElement.files) {
-      resourceController.sendPhotoInMessage(inputElement.files);
+      void resourceController.sendPhotoInMessage(inputElement.files);
     }
   }
 

@@ -80,10 +80,10 @@ export class LoginPage extends Block {
     navigate().go(RoutePath.signUp);
   }
 
-  async login(event: Event): Promise<void> {
+  login(event: Event): void {
     event.preventDefault();
     if (this.validationService.checkValidity()) {
-      await authController.login(this.validationService.getFormValue() as FormDataLogin);
+      void authController.login(this.validationService.getFormValue() as FormDataLogin);
     }
   }
 

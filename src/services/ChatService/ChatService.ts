@@ -19,7 +19,7 @@ export class ChatService {
           text: 'Удалить чат',
           event: (event: Event) => {
             event.stopPropagation();
-            chatController.deleteChat(chat.id);
+            void chatController.deleteChat(chat.id);
           },
         },
       ];
@@ -37,9 +37,9 @@ export class ChatService {
         contextMenu.openContextMenu({ top, left });
       };
 
-      const selectedDialog = async (): Promise<void> => {
+      const selectedDialog = (): void => {
         store.set('selectedChat.data', chat);
-        await chatController.getChatToken(chat.id);
+        void chatController.getChatToken(chat.id);
       };
 
       return new DialogItem({

@@ -67,9 +67,9 @@ class ProfileInfo extends Block {
     this.changeMode(mode);
   }
 
-  async logout(event: Event): Promise<void> {
+  logout(event: Event): void {
     event.preventDefault();
-    await authController.logout();
+    void authController.logout();
   }
 
   override render(): string {

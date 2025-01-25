@@ -160,10 +160,10 @@ export class RegistrationPage extends Block {
     checkEqualPassword(this.validationService);
   }
 
-  async registration(event: Event): Promise<void> {
+  registration(event: Event): void {
     event.preventDefault();
     if (this.validationService.checkValidity()) {
-      await authController.registration(this.validationService.getFormValue() as FormDataRegistration);
+      void authController.registration(this.validationService.getFormValue() as FormDataRegistration);
     }
   }
 

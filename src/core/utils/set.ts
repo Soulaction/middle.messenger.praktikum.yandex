@@ -2,7 +2,7 @@ import { Indexed } from '../types/Indexed.ts';
 
 export const set = <T extends Record<string, any>>(changeObject: Indexed<T>, path: string, value: unknown): void => {
   if (typeof changeObject !== 'object') {
-    throw new Error(`${changeObject} is not an object`);
+    throw new Error(`${changeObject as string} is not an object`);
   }
 
   let objectInSetValue: Indexed<T> = changeObject;

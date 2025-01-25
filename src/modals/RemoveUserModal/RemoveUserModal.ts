@@ -60,10 +60,10 @@ export class RemoveUserModal extends Block {
     });
   }
 
-  async deleteUser(event: Event): Promise<void> {
+  deleteUser(event: Event): void {
     event.preventDefault();
     if (this.validationService.checkValidity()) {
-      await this.chatController.deleteUsersFromChat(this.validationService.getFormValue().login!);
+      void this.chatController.deleteUsersFromChat(this.validationService.getFormValue().login!);
       this.validationService.reset();
       store.set('isRemoveUserModal', false);
     }

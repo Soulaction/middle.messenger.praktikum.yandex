@@ -68,10 +68,10 @@ export class CreateChatModal extends Block {
     });
   }
 
-  async createChat(event: Event): Promise<void> {
+  createChat(event: Event): void {
     event.preventDefault();
     if (this.validationService.checkValidity()) {
-      await this.chatController.createChat(this.validationService.getFormValue().name!);
+      void this.chatController.createChat(this.validationService.getFormValue().name!);
       this.validationService.reset();
       store.set('isCreateChatModal', false);
       this.refreshData();
