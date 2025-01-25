@@ -27,6 +27,9 @@ export class ChatController {
         try {
             await chatApi.deleteChat(chatId);
             store.set('chats.data', store.getState().chats?.data.filter((item) => item.id !== chatId));
+            if(store.getState().selectedChat?.data.id === chatId) {
+                store.set('selectedChat.data', null);
+            }
         } catch (e) {
             store.set('chats.error', (e as XMLHttpRequest).response.reason);
         }

@@ -15,6 +15,13 @@ export const month = [
     'янв', 'февр', 'апр', 'авг', 'сент', 'окт', 'нояб', 'дек'
 ];
 
+export enum TypeModal {
+    openUploadFileModal='openUploadFileModal',
+    createChatModal='createChatModal',
+    addUserModal='addUserModal',
+    removeUserModal='removeUserModal',
+}
+
 export const errorsForm: { [key in string]: InitFormDataErrors } = {
     first_name: {
         pattern: {

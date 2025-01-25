@@ -6,7 +6,7 @@ import {CreateChatModal} from '../../modals/CreateChatModal/CreateChatModal.ts';
 import {ButtonIcon} from '../ButtonIcon/ButtonIcon.ts';
 import Block from '../../core/Block/Block.ts';
 import {navigate} from "../../core/utils/navigate.ts";
-import {RoutePath} from "../../utils/const.ts";
+import {RoutePath, TypeModal} from "../../utils/const.ts";
 import {wrapStore} from "../../core/utils/wrapStore.ts";
 import {ChatController} from "../../controllers/ChatController.ts";
 import {EqualType, isEqual} from "../../core/utils/isEqual.ts";
@@ -25,6 +25,9 @@ class DialogList extends Block {
 
     constructor() {
         const createChatModal = new ModalWithStore({
+            props: {
+                typeModal: TypeModal.createChatModal
+            },
             children: {
                 ContentModal: new CreateChatModal({
                     props: {

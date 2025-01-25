@@ -71,7 +71,7 @@ export class CreateChatModal extends Block {
         if (this.validationService.checkValidity()) {
             await this.chatController.createChat(this.validationService.getFormValue().name!);
             this.validationService.reset();
-            store.set('isOpenModal', false);
+            store.set('isCreateChatModal', false);
             this.refreshData();
         }
     }

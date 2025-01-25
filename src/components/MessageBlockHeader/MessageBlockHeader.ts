@@ -10,6 +10,7 @@ import Block from '../../core/Block/Block.ts';
 import {wrapStore} from "../../core/utils/wrapStore.ts";
 import {Chat} from "../../api/ChatApi/types/Chats.ts";
 import {EqualType, isEqual} from "../../core/utils/isEqual.ts";
+import {TypeModal} from "../../utils/const.ts";
 
 export type MessageBlockHeaderProps = {
     selectedChat: Chat | undefined
@@ -49,12 +50,14 @@ class MessageBlockHeader extends Block {
 
         if (isChangeSelectedChat && newProps?.selectedChat) {
             const addUserModal = new ModalWithStore({
+                props: {typeModal: TypeModal.addUserModal},
                 children: {
                     ContentModal: new AddUserModal(),
                 },
             });
 
             const removeUserModal = new ModalWithStore({
+                props: {typeModal: TypeModal.removeUserModal},
                 children: {
                     ContentModal: new RemoveUserModal(),
                 },

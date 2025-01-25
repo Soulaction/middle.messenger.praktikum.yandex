@@ -2,12 +2,14 @@ import userApi from "../api/UserApi/UserApi.ts";
 import {UserUpdate} from "../api/UserApi/types/UserUpdate.ts";
 import store from "../core/Store.ts";
 import {UpdatePassword} from "../api/UserApi/types/UpdatePassword.ts";
+import {getAvatar} from "../utils/utils.ts";
 
 export class UserController {
 
     public async changeUserProfile(userUpdate: UserUpdate): Promise<void> {
         try {
-            store.set('user.data', await userApi.changeUserProfile(userUpdate));
+            const user = await userApi.changeUserProfile(userUpdate);
+            store.set('user.data', {...user, avatar: getAvatar(user.avatar)});
         } catch (e) {
             store.set('user.error', (e as XMLHttpRequest).response.reason);
         }
@@ -25,7 +27,9 @@ export class UserController {
         try {
             const formData = new FormData();
             formData.set('avatar', file[0]);
-            store.set('user.data', await userApi.changeUserAvatar(formData));
+
+            const user = await userApi.changeUserAvatar(formData);
+            store.set('user.data', {...user, avatar: getAvatar(user.avatar)});
         } catch (e) {
             store.set('user.error', (e as XMLHttpRequest).response.reason);
         }

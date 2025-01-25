@@ -36,13 +36,17 @@ class MessageBlock extends Block {
     }
 
     protected override componentDidUpdate(oldProps: EqualType, newProps: EqualType): boolean {
-        const isChangeSelectedChat = !!newProps?.selectedChat && !isEqual(oldProps?.selectedChat, newProps?.selectedChat);
+        const isChangeSelectedChat = !isEqual(oldProps?.selectedChat, newProps?.selectedChat);
         const isChangeSelected = !!newProps?.isSelectedChat && !isEqual(oldProps?.isSelectedChat, newProps?.isSelectedChat);
         const isChangeMessage = !!newProps?.message && !isEqual(oldProps?.message, newProps?.message);
 
         if (isChangeSelectedChat && newProps?.selectedChat) {
             this.setProps({
                 isSelectedChat: true
+            })
+        } else if (isChangeSelectedChat && !newProps?.selectedChat) {
+            this.setProps({
+                isSelectedChat: false
             })
         } else if (isChangeSelected && newProps?.isSelectedChat) {
             const messageBlockForm: MessageBlockForm = new MessageBlockForm();

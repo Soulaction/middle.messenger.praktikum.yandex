@@ -4,56 +4,101 @@ import {BlockProperties} from '../../core/Block/types/BlockProps.ts';
 import {wrapStore} from "../../core/utils/wrapStore.ts";
 import {Indexed} from "../../core/types/Indexed.ts";
 import store from "../../core/Store.ts";
+import {TypeModal} from "../../utils/const.ts";
 
 export type ModalProps = {
-  isOpenModal?: boolean;
+    isOpenUploadFileModal?: boolean;
+    isCreateChatModal?: boolean;
+    isAddUserModal?: boolean;
+    isRemoveUserModal?: boolean;
+    typeModal?: string;
 };
 
 export class Modal extends Block {
+    typeModal!: TypeModal;
 
-  constructor(uploadFileModalProps: BlockProperties) {
-    super({
-      ...uploadFileModalProps,
-      events: {
-        click: event => this.hideModal(event),
-      },
-    });
-  }
-
-  protected override componentDidUpdate(oldProps: Indexed, newProps: Indexed): boolean {
-    console.log(oldProps);
-    if(newProps.isOpenModal) {
-      super.show();
-    } else {
-      super.hide();
+    constructor(uploadFileModalProps: BlockProperties<ModalProps>) {
+        super({
+            ...uploadFileModalProps,
+            events: {
+                click: event => this.hideModal(event),
+            },
+        });
+        this.typeModal = uploadFileModalProps.props!.typeModal! as TypeModal;
     }
-    return false;
-  }
 
-  openModel(): void {
-    store.set('isOpenModal', true);
-  }
+    protected override componentDidUpdate(oldProps: Indexed, newProps: Indexed): boolean {
+        console.log(oldProps);
+        switch (this.typeModal) {
+            case TypeModal.openUploadFileModal:
+                this.toggleModal(newProps.isOpenUploadFileModal as boolean);
+                break;
+            case TypeModal.createChatModal:
+                this.toggleModal(newProps.isCreateChatModal as boolean);
+                break;
+            case TypeModal.addUserModal:
+                this.toggleModal(newProps.isAddUserModal as boolean);
+                break;
+            case TypeModal.removeUserModal:
+                this.toggleModal(newProps.isRemoveUserModal as boolean);
+                break;
+        }
 
-  hideModal(event: Event): void {
-    if (event.target === event.currentTarget) {
-      super.hide();
-      event.stopPropagation();
+        return false;
     }
-  }
 
-  override render(): string {
-    return `
+    toggleModal(isOpen: boolean): void {
+        if (isOpen) {
+            super.show();
+        } else {
+            super.hide();
+        }
+    }
+
+    changeStateModal(isOpen: boolean):void {
+        switch (this.typeModal) {
+            case TypeModal.addUserModal:
+                store.set('isAddUserModal', isOpen);
+                break;
+            case TypeModal.removeUserModal:
+                store.set('isRemoveUserModal', isOpen);
+                break;
+            case TypeModal.createChatModal:
+                store.set('isCreateChatModal', isOpen);
+                break;
+            case TypeModal.openUploadFileModal:
+                store.set('isOpenUploadFileModal', isOpen);
+                break
+        }
+    }
+
+    openModel(): void {
+        this.changeStateModal(true);
+    }
+
+    hideModal(event: Event): void {
+        if (event.target === event.currentTarget) {
+            this.changeStateModal(false);
+            event.stopPropagation();
+        }
+    }
+
+    override render(): string {
+        return `
                  <div class="${s.overlayPanel}">
                      <div class="${s.modal}">
                          {{{ContentModal}}}
                      </div>
                  </div>
                 `;
-  }
+    }
 }
 
 export const ModalWithStore = wrapStore<ModalProps>((state) => {
-  return {
-    isOpenModal: state.isOpenModal,
-  };
+    return {
+        isOpenUploadFileModal: state.isOpenUploadFileModal,
+        isCreateChatModal: state.isCreateChatModal,
+        isAddUserModal: state.isAddUserModal,
+        isRemoveUserModal: state.isRemoveUserModal,
+    };
 })(Modal);

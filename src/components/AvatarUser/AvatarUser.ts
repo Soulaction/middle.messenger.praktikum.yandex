@@ -3,6 +3,7 @@ import Block from '../../core/Block/Block.ts';
 import {Modal, ModalWithStore} from '../Modal/Modal.ts';
 import {UploadFileModal} from '../../modals/UploadFileModal/UploadFileModal.ts';
 import {wrapStore} from "../../core/utils/wrapStore.ts";
+import {TypeModal} from "../../utils/const.ts";
 
 export type AvatarUserProps = {
   imgUrl?: string;
@@ -11,6 +12,9 @@ export type AvatarUserProps = {
 class AvatarUser extends Block {
   constructor() {
     const uploadFileModal = new ModalWithStore({
+      props: {
+        typeModal: TypeModal.openUploadFileModal
+      },
       children: {
         ContentModal: new UploadFileModal({
           props: {

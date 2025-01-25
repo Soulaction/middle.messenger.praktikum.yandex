@@ -70,7 +70,7 @@ export class UploadFileModal extends Block {
                     },
                 })
             });
-            store.set('isOpenModal', false);
+            store.set('isOpenUploadFileModal', false);
         } else {
             this.setChildren({
                 Error: new ErrorMessage<FormDataFile>({

@@ -6,7 +6,7 @@ import {ProfileInfoWithStore} from "../../components/ProfileInfo";
 import {CircleButton} from "../../components/CircleButton/CircleButton.ts";
 import {ModeProfile} from "../../types/ModeProfile.ts";
 import {ChangePasswordProfile} from "../../components/ChangePasswordProfile";
-import {ProfileEditedWithStore} from "../../components/ProfileEdit/ProfileEdit.ts";
+import {ProfileEditedWithStore} from "../../components/ProfileEdit";
 import {AvatarUserWithStore} from "../../components/AvatarUser";
 
 export class ProfilePage extends Block {

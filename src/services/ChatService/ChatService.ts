@@ -17,7 +17,10 @@ export class ChatService {
                 {
                     iconURL: deleteIcon,
                     text: 'Удалить чат',
-                    event: async () => chatController.deleteChat(chat.id),
+                    event: (event: Event) => {
+                        event.stopPropagation();
+                        chatController.deleteChat(chat.id);
+                    },
                 },
             ];
 

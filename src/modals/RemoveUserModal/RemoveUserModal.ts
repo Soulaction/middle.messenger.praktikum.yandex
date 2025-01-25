@@ -64,7 +64,7 @@ export class RemoveUserModal extends Block {
     if (this.validationService.checkValidity()) {
       await this.chatController.deleteUsersFromChat(this.validationService.getFormValue().login!);
       this.validationService.reset();
-      store.set('isOpenModal', false);
+      store.set('isRemoveUserModal', false);
     }
   }
 
