@@ -1,11 +1,11 @@
-import {InputForm} from '../../components/InputForm/InputForm.ts';
-import {Button} from '../../components/Button/Button.ts';
-import {Link} from '../../components/Link/Link.ts';
+import { InputForm } from '../../components/InputForm/InputForm.ts';
+import { Button } from '../../components/Button/Button.ts';
+import { Link } from '../../components/Link/Link.ts';
 import Block from '../../core/Block/Block.ts';
-import {ValidationForm} from '../../core/Validation/ValidationForm.ts';
-import {errorsForm, RoutePath} from '../../utils/const.ts';
-import {navigate} from "../../core/utils/navigate.ts";
-import authController from "../../controllers/AuthController.ts";
+import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
+import { errorsForm, RoutePath } from '../../utils/const.ts';
+import { navigate } from '../../core/utils/navigate.ts';
+import authController from '../../controllers/AuthController.ts';
 
 export type FormDataLogin = {
   login: string;
@@ -80,10 +80,10 @@ export class LoginPage extends Block {
     navigate().go(RoutePath.signUp);
   }
 
-  login(event: Event): void {
+  async login(event: Event): Promise<void> {
     event.preventDefault();
     if (this.validationService.checkValidity()) {
-      authController.login(this.validationService.getFormValue() as FormDataLogin);
+      await authController.login(this.validationService.getFormValue() as FormDataLogin);
     }
   }
 

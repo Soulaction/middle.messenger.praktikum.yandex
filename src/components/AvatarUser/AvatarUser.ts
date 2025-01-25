@@ -1,9 +1,9 @@
 import s from './AvatarUser.module.pcss';
 import Block from '../../core/Block/Block.ts';
-import {Modal, ModalWithStore} from '../Modal/Modal.ts';
-import {UploadFileModal} from '../../modals/UploadFileModal/UploadFileModal.ts';
-import {wrapStore} from "../../core/utils/wrapStore.ts";
-import {TypeModal} from "../../utils/const.ts";
+import { Modal, ModalWithStore } from '../Modal/Modal.ts';
+import { UploadFileModal } from '../../modals/UploadFileModal/UploadFileModal.ts';
+import { wrapStore } from '../../core/utils/wrapStore.ts';
+import { TypeModal } from '../../utils/const.ts';
 
 export type AvatarUserProps = {
   imgUrl?: string;
@@ -13,7 +13,7 @@ class AvatarUser extends Block {
   constructor() {
     const uploadFileModal = new ModalWithStore({
       props: {
-        typeModal: TypeModal.openUploadFileModal
+        typeModal: TypeModal.openUploadFileModal,
       },
       children: {
         ContentModal: new UploadFileModal({
@@ -49,5 +49,5 @@ class AvatarUser extends Block {
 }
 
 export const AvatarUserWithStore = wrapStore<Partial<AvatarUserProps>>((state) => (
-    {imgUrl: state.user?.data?.avatar}
+  { imgUrl: state.user?.data?.avatar }
 ))(AvatarUser);

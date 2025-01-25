@@ -1,3 +1,3 @@
 export type SignupResponse = {
-    id: number
-}
+  id: number
+};

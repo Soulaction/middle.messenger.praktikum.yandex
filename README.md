@@ -13,11 +13,8 @@
 2. Веб-приложение на удалённом сервере [Netlify](https://messenger-sa.netlify.app/login)
 
 ## Ссылки на страницы приложения
-1. [Авторизация](https://messenger-sa.netlify.app/login);
-2. [Регистрация](https://messenger-sa.netlify.app/registration);
-3. [Список чатов](https://messenger-sa.netlify.app/chat);
-4. [Профиль](https://messenger-sa.netlify.app/profile);
-5. [Редактирование профиля](https://messenger-sa.netlify.app/profile-edit);
-6. [Смена пароля](https://messenger-sa.netlify.app/profile-password);
-7. [Страница 404](https://messenger-sa.netlify.app/not-found);
-8. [Страница 5**](https://messenger-sa.netlify.app/server-error).
+1. [Авторизация](https://messenger-sa.netlify.app/);
+2. [Регистрация](https://messenger-sa.netlify.app/sign-up);
+3. [Список чатов](https://messenger-sa.netlify.app/messenger);
+4. [Профиль](https://messenger-sa.netlify.app/settings);
+5. [Страница 404](https://messenger-sa.netlify.app/not-found) (так же страница "404" отображается на любой неизвестный url-путь);

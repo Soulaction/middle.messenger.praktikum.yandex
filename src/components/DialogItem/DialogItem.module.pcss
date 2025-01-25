@@ -2,13 +2,13 @@
     cursor: pointer;
 
     &:first-of-type::before, &::after {
-        position: relative;
-        z-index: -1;
         border-top: 1px solid #eaeaea;
         content: "";
         display: block;
         margin: 0 10px;
+        position: relative;
         width: 95%;
+        z-index: -1;
     }
 
     &:first-of-type::before {
@@ -62,9 +62,9 @@
     font-weight: 500;
     line-height: 15px;
     margin-top: 5px;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .chat-content {

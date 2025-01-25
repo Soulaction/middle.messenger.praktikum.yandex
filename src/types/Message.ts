@@ -17,4 +17,4 @@ type MessageFile = {
   content_type: string,
   content_size: number,
   upload_date: string,
-}
+};

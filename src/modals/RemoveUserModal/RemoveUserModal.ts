@@ -2,8 +2,8 @@ import { Button } from '../../components/Button/Button.ts';
 import { InputForm } from '../../components/InputForm/InputForm.ts';
 import Block from '../../core/Block/Block.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
-import store from "../../core/Store.ts";
-import {ChatController} from "../../controllers/ChatController.ts";
+import store from '../../core/Store.ts';
+import { ChatController } from '../../controllers/ChatController.ts';
 
 type FormDataRemoveUser = {
   login: string;
@@ -11,6 +11,7 @@ type FormDataRemoveUser = {
 
 export class RemoveUserModal extends Block {
   validationService: ValidationForm<FormDataRemoveUser>;
+
   chatController: ChatController = new ChatController();
 
   constructor() {

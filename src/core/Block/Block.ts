@@ -2,7 +2,7 @@ import EventBus, { EventCallback } from '../EventBus.ts';
 import Handlebars from 'handlebars';
 import { BlockProps, BlockProperties, EventBlock } from './types/BlockProps.ts';
 import { PropsForHandlebars } from './types/PropsForHandlebars.ts';
-import {Indexed} from "../types/Indexed.ts";
+import { Indexed } from '../types/Indexed.ts';
 
 export default class Block {
   static EVENTS = {
@@ -69,11 +69,13 @@ export default class Block {
   private _componentDidMount(): void {
     this.componentDidMount();
     Object.values(this.children).forEach(child => {
-      child && child.dispatchComponentDidMount();
+      if (child) {
+        child.dispatchComponentDidMount();
+      }
     });
   }
 
-  protected componentDidMount(){
+  protected componentDidMount() {
   }
 
   public dispatchComponentDidMount(): void {
@@ -122,7 +124,9 @@ export default class Block {
     const listHTMLRow: PropsForHandlebars = {};
 
     Object.entries(this.children).forEach(([key, child]) => {
-      child && (childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`);
+      if (child) {
+        (childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`);
+      }
     });
     const tmplId: string = crypto.randomUUID();
     Object.entries(this.lists).forEach(([key]) => {
@@ -144,7 +148,7 @@ export default class Block {
       }
     });
     Object.values(this.children).forEach(child => {
-      if(!child) {
+      if (!child) {
         return;
       }
 

@@ -1,10 +1,10 @@
 import s from './ChatPage.module.pcss';
-import {ChatService} from '../../services/ChatService/ChatService.ts';
+import { ChatService } from '../../services/ChatService/ChatService.ts';
 import Block from '../../core/Block/Block.ts';
-import {Chat} from "../../api/ChatApi/types/Chats.ts";
-import {ChatController} from "../../controllers/ChatController.ts";
-import {MessageBlockWithStore} from "../../components/MessageBlock/MessageBlock.ts";
-import {DialogListWithStore} from "../../components/DialogList/DialogList.ts";
+import { Chat } from '../../api/ChatApi/types/Chats.ts';
+import { ChatController } from '../../controllers/ChatController.ts';
+import { MessageBlockWithStore } from '../../components/MessageBlock/MessageBlock.ts';
+import { DialogListWithStore } from '../../components/DialogList/DialogList.ts';
 
 export class ChatPage extends Block {
   chatApi: ChatController;
