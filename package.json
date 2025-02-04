@@ -13,7 +13,7 @@
     "preview": "vite preview",
     "lint": "npx tsc --noEmit && npx eslint . --ext .ts && npx stylelint \"**/*.pcss\"",
     "lint:es": "eslint . --ext .ts",
-    "lint:es:fix": "eslint . --ext .ts --fix",
+    "lint:es:fix": "eslint . --ext .ts,.js --fix",
     "lint:style": "stylelint \"**/*.pcss\"",
     "lint:style:fix": "stylelint \"**/*.pcss\" --fix"
   },

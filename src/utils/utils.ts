@@ -1,4 +1,5 @@
 import { ValidationForm } from '../core/Validation/ValidationForm.ts';
+import { BASE_URL_HTTP, month } from './const.ts';
 
 export const checkEqualPassword = <T extends {
   password?: string;
@@ -20,11 +21,20 @@ export const checkEqualPassword = <T extends {
   }
 };
 
-export const navigate = <T extends object>(url: string, event?: Event, state?: T) => {
-  if (event) {
-    event.preventDefault();
+export const getAvatar = (path: string | undefined): string => {
+  if (path) {
+    return `${BASE_URL_HTTP}/resources${path}`;
+  } else {
+    return '/images/profile.png';
   }
-  history.pushState(state, '', `${url}`);
-  const eventPushState = new Event('pushstate');
-  window.dispatchEvent(eventPushState);
+};
+
+export const dateMessageFormated = (date: string): string => {
+  const dateObj = new Date(date);
+  const dateNow = new Date();
+  if (dateObj.getDate() === dateNow.getDate()) {
+    return `${String(dateObj.getHours()).padStart(2, '0')}:${String(dateObj.getMinutes()).padStart(2, '0')}`;
+  } else {
+    return `${String(dateObj.getDate()).padStart(2, '0')} ${month[dateObj.getMonth()]}.${dateObj.getFullYear()}`;
+  }
 };

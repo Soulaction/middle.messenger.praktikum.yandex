@@ -30,13 +30,27 @@ export class ValidationForm<T> {
     });
   }
 
+  reset(): void {
+    this._form?.reset();
+    Object.keys(this.formValue).forEach((key) => {
+      if (this.formValue[key as keyof T]) {
+        this.formValue[key as keyof T]!.value = null;
+        this.formValue[key as keyof T]!.errors = [];
+      }
+    });
+  }
+
   getFormValue(): { [K in keyof T]?: T[K] } {
     const formValue: { [K in keyof T]?: T[K] } = {};
 
     Array.from(this._form!.elements).forEach(elForm => {
       // при необходимости можно добавить другие элементы формы
       if (elForm instanceof HTMLInputElement) {
-        formValue[elForm.name as keyof T] = elForm.value as T[keyof T];
+        if (elForm.type === 'file') {
+          formValue[elForm.name as keyof T] = elForm.files as T[keyof T];
+        } else {
+          formValue[elForm.name as keyof T] = elForm.value as T[keyof T];
+        }
       }
     });
     return formValue;
@@ -65,7 +79,7 @@ export class ValidationForm<T> {
     }
 
     this.formValue[input.name as keyof T] = {
-      value: input.value,
+      value: input.type === 'file' ? input.files : input.value,
       errors,
     };
   }
@@ -73,7 +87,6 @@ export class ValidationForm<T> {
   setFormData(input: HTMLInputElement): void {
     this._setInfoFormData(input);
     this._nextValueForm(this.formValue);
-
   }
 
   changeValueForm(subscriber: (formValue: FormValue<T>) => void): void {
@@ -86,14 +99,21 @@ export class ValidationForm<T> {
     });
   }
 
-  checkValidity(): void {
+  checkValidity(): boolean {
+    let isValidate: boolean = true;
+
     if (this._form) {
       Array.from(this._form.elements).forEach(elForm => {
         if (elForm instanceof HTMLInputElement) {
           this.dispatchBlurFormItem(elForm);
+
+          if (this.formValue[elForm.name as keyof T]!.errors.length > 0) {
+            isValidate = false;
+          }
         }
       });
     }
+    return isValidate;
   }
 
   setError(controlName: string, message: string): void {
@@ -102,16 +122,15 @@ export class ValidationForm<T> {
         ...this._initFormData[controlName as keyof T]!.errors,
         customError: { rule: true, message },
       };
-      this.dispatchBlurFormItem((this._form!.elements).namedItem(controlName) as HTMLElement);
+      this.dispatchBlurFormItem(this._form!.elements.namedItem(controlName) as HTMLElement);
     }
   }
 
   removeError(controlName: string, value: string): void {
     if (this.formValue[controlName as keyof T]!.errors.includes(value)) {
       delete this._initFormData[controlName as keyof T]!.errors.customError;
-      this.dispatchBlurFormItem((this._form!.elements).namedItem(controlName) as HTMLElement);
+      this.dispatchBlurFormItem(this._form!.elements.namedItem(controlName) as HTMLElement);
     }
-
   }
 
   private dispatchBlurFormItem(element: HTMLElement): void {

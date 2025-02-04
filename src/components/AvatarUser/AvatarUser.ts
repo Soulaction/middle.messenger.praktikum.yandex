@@ -1,16 +1,20 @@
 import s from './AvatarUser.module.pcss';
 import Block from '../../core/Block/Block.ts';
-import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
-import { Modal } from '../Modal/Modal.ts';
+import { Modal, ModalWithStore } from '../Modal/Modal.ts';
 import { UploadFileModal } from '../../modals/UploadFileModal/UploadFileModal.ts';
+import { wrapStore } from '../../core/utils/wrapStore.ts';
+import { TypeModal } from '../../utils/const.ts';
 
 export type AvatarUserProps = {
-  imgUrl: string;
+  imgUrl?: string;
 };
 
-export class AvatarUser extends Block {
-  constructor(avatarUserProps: BlockProperties<AvatarUserProps>) {
-    const uploadFileModal = new Modal({
+class AvatarUser extends Block {
+  constructor() {
+    const uploadFileModal = new ModalWithStore({
+      props: {
+        typeModal: TypeModal.openUploadFileModal,
+      },
       children: {
         ContentModal: new UploadFileModal({
           props: {
@@ -21,25 +25,29 @@ export class AvatarUser extends Block {
     });
 
     super({
-      ...avatarUserProps
-      ,
       children: {
         UploadFileModal: uploadFileModal,
       },
       events: {
-        click: () => uploadFileModal.openModel(),
+        click: () => (uploadFileModal as Modal).openModel(),
       },
     });
   }
 
   override render(): string {
     return `
-                <div>               
-                    {{{UploadFileModal}}}
-                    <div class="${s.userAvatarWrapper}">
-                        <img class="${s.UserAvatar}" src="{{imgUrl}}" alt="Иконка профиля"/>
-                    </div>
+            <div>               
+                {{{UploadFileModal}}}
+                <div class="${s.userAvatarWrapper}">
+                    <img class="${s.userAvatar}" 
+                         src="{{imgUrl}}" 
+                         alt="Иконка профиля"/>
                 </div>
+            </div>
         `;
   }
 }
+
+export const AvatarUserWithStore = wrapStore<Partial<AvatarUserProps>>((state) => (
+  { imgUrl: state.user?.data?.avatar }
+))(AvatarUser);

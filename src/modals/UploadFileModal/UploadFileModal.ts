@@ -5,9 +5,11 @@ import { UploadButton } from '../../components/UploadButton/UploadButton.ts';
 import Block from '../../core/Block/Block.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
 import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
+import userController from '../../controllers/UserController.ts';
+import store from '../../core/Store.ts';
 
 type FormDataFile = {
-  file: string;
+  file: FileList;
 };
 
 type UploadFileModalProps = {
@@ -32,6 +34,7 @@ export class UploadFileModal extends Block {
               label: 'Выбрать файл на компьютере',
               name: 'file',
               class: s.uploadFile,
+              validationFormService: validationService,
             },
           }),
         Button: new Button({
@@ -42,12 +45,6 @@ export class UploadFileModal extends Block {
           },
           events: {
             click: (event: Event) => this.uploadFile(event),
-          },
-        }),
-        Error: new ErrorMessage<FormDataFile>({
-          props: {
-            formName: 'file',
-            validationFormService: validationService,
           },
         }),
       },
@@ -61,8 +58,29 @@ export class UploadFileModal extends Block {
 
   uploadFile(event: Event): void {
     event.preventDefault();
-    this.validationService.checkValidity();
-    console.log(this.validationService.getFormValue());
+    const file = this.validationService.formValue.file;
+
+    if (file?.value && file?.value[0]) {
+      void userController.changeUserAvatar(file.value as FileList);
+      this.setChildren({
+        Error: new ErrorMessage<FormDataFile>({
+          props: {
+            formName: 'file',
+            errorText: '',
+          },
+        }),
+      });
+      store.set('isOpenUploadFileModal', false);
+    } else {
+      this.setChildren({
+        Error: new ErrorMessage<FormDataFile>({
+          props: {
+            formName: 'file',
+            errorText: 'Выберете файл',
+          },
+        }),
+      });
+    }
   }
 
   override render(): string {
@@ -70,6 +88,7 @@ export class UploadFileModal extends Block {
                  <form class="form-modal" name="upload-file">
                      <h1 class="title-modal">{{titleModal}}</h1>
                      {{{UploadButton}}}
+                     {{{Error}}}
                      {{{Button}}}
                  </form>
                 `;

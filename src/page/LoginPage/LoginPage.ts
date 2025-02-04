@@ -3,9 +3,9 @@ import { Button } from '../../components/Button/Button.ts';
 import { Link } from '../../components/Link/Link.ts';
 import Block from '../../core/Block/Block.ts';
 import { ValidationForm } from '../../core/Validation/ValidationForm.ts';
-import { navigate } from '../../utils/utils.ts';
-import { errorsForm } from '../../utils/const.ts';
-
+import { errorsForm, RoutePath } from '../../utils/const.ts';
+import { navigate } from '../../core/utils/navigate.ts';
+import authController from '../../controllers/AuthController.ts';
 
 export type FormDataLogin = {
   login: string;
@@ -21,6 +21,7 @@ export class LoginPage extends Block {
       children: {
         InputFormLogin: new InputForm<FormDataLogin>({
           props: {
+            id: 'login-auth',
             label: 'Логин',
             name: 'login',
             type: 'text',
@@ -55,7 +56,7 @@ export class LoginPage extends Block {
             label: 'Нет аккаунта?',
           },
           events: {
-            click: (event: Event) => navigate('/registration', event),
+            click: (event: Event) => this.goToRegistrationPage(event),
           },
         }),
       },
@@ -74,10 +75,16 @@ export class LoginPage extends Block {
     });
   }
 
+  goToRegistrationPage(event: Event): void {
+    event.preventDefault();
+    navigate().go(RoutePath.signUp);
+  }
+
   login(event: Event): void {
     event.preventDefault();
-    this.validationService.checkValidity();
-    console.log(this.validationService.getFormValue());
+    if (this.validationService.checkValidity()) {
+      void authController.login(this.validationService.getFormValue() as FormDataLogin);
+    }
   }
 
   override render(): string {

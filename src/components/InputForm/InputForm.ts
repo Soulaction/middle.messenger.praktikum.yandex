@@ -8,6 +8,7 @@ import { BlockProperties, EventBlock } from '../../core/Block/types/BlockProps.t
 
 type InputFormProps<T> = {
   className?: string;
+  id?: string;
   label: string;
   name: string;
   type?: string;
@@ -32,7 +33,7 @@ export class InputForm<T> extends Block {
         }),
         Input: new Input({
           props: {
-            id: inputFormProps.props?.name,
+            id: inputFormProps.props?.id ?? inputFormProps.props?.name,
             name: inputFormProps.props?.name,
             type: inputFormProps.props?.type,
             placeholder: inputFormProps.props?.placeholder,
