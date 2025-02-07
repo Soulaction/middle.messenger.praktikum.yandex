@@ -1,19 +1,20 @@
-import sinon from 'sinon';
 import {Router} from "./Router.ts";
 import {expect} from "chai";
 import {RoutePath} from "../../utils/const.ts";
 import Block from "../Block/Block.ts";
+import {createSandbox} from "sinon";
 
 
 describe('Проверка функциональности модуля Router', () => {
-        const appContainer: HTMLElement | null = document.getElementById('app') as HTMLElement;
+    const appContainer: HTMLElement | null = document.getElementById('app') as HTMLElement;
     if (!appContainer) {
         throw new Error('Not found app div');
     }
-    let router = new Router(appContainer);
-    const initRouter = () => {
+    let router: Router;
+    const sandbox = createSandbox();
+
+    beforeEach(() => {
         router = new Router(appContainer);
-        console.log('init');
         router.init([
             {
                 pathname: RoutePath.messenger,
@@ -31,43 +32,62 @@ describe('Проверка функциональности модуля Router'
                     }
                 },
             }]);
-    };
+    });
 
-    it('Инициализация модуля - метод start', () => {
-        const stub = sinon.stub(router, 'init');
-        initRouter();
+    afterEach(() => {
+        sandbox.restore();
+    });
+
+    it('Инициализация модуля - метод init', () => {
+        router = new Router(appContainer);
+
+        const stub = sandbox.stub(router, 'init');
+        router.init([]);
         expect(stub.calledOnce).to.be.true;
-    })
+    });
+
+    it('Проверка метода getRoute', () => {
+        router = new Router(appContainer);
+
+        const route = router.getRoute(RoutePath.messenger);
+        expect(route?.pathname).to.be.eqls(RoutePath.messenger);
+    });
 
     describe('Переход по указанному url - метод go', () => {
-        beforeEach(initRouter);
-
         it('Проверка смены url', () => {
-            console.log('========================================', window.location.pathname);
             router.go(RoutePath.messenger);
-
             expect(RoutePath.messenger).to.be.eqls(window.location.pathname);
         });
 
         it('Проверка перерисовки страницы', () => {
-            console.log('========================================', window.location.pathname);
-            console.log(document);
             router.go(RoutePath.messenger);
-            console.log(document);
-            const htmlElement =  document.getElementById('messenger');
-            console.log('========================================', htmlElement);
+
+            const htmlElement = document.getElementById('messenger');
             expect(htmlElement).to.not.be.null;
         });
     })
 
+    describe('Переход по истории url назад', () => {
+        it('Проверка смены url', () => {
+            router.go(RoutePath.signUp);
+            router.go(RoutePath.messenger);
+            router.back();
 
+            window.addEventListener('popstate', () => {
+                expect(RoutePath.signUp).to.be.eqls(window.location.pathname);
+            }, {once: true});
+        });
 
+        it('Проверка перерисовки страницы', () => {
+            router.go(RoutePath.signUp);
+            router.go(RoutePath.messenger);
+            router.back();
 
-    it('Переход по истории назад - метод back', () => {
-
+            window.addEventListener('popstate', () => {
+                const htmlElement = document.getElementById('signUp');
+                expect(htmlElement).to.not.be.null;
+            }, {once: true});
+        });
     })
 
-    it('Переход по истории вперёд - метод forward', () => {
-
-    })
 });
