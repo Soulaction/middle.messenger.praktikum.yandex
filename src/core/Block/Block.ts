@@ -3,7 +3,7 @@ import Handlebars from 'handlebars';
 import { BlockProps, BlockProperties, EventBlock } from './types/BlockProps.ts';
 import { PropsForHandlebars } from './types/PropsForHandlebars.ts';
 import { Indexed } from '../types/Indexed.ts';
-import {v4} from "uuid";
+import { v4 } from 'uuid';
 
 export default class Block {
   static EVENTS = {

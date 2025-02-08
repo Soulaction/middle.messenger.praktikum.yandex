@@ -1,4 +1,4 @@
-import {JSDOM} from 'jsdom';
+import { JSDOM } from 'jsdom';
 
 const jsdom = new JSDOM('<!DOCTYPE html><html><body id="app"></body></html>', {
   url: 'https://example.org/',
