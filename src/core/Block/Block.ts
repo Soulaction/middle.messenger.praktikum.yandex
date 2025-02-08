@@ -3,6 +3,7 @@ import Handlebars from 'handlebars';
 import { BlockProps, BlockProperties, EventBlock } from './types/BlockProps.ts';
 import { PropsForHandlebars } from './types/PropsForHandlebars.ts';
 import { Indexed } from '../types/Indexed.ts';
+import {v4} from "uuid";
 
 export default class Block {
   static EVENTS = {
@@ -12,7 +13,7 @@ export default class Block {
     FLOW_RENDER: 'flow:render',
   };
 
-  protected _id: string = crypto.randomUUID();
+  protected _id: string = v4();
 
   protected _element: HTMLElement | null = null;
 
@@ -128,7 +129,7 @@ export default class Block {
         (childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`);
       }
     });
-    const tmplId: string = crypto.randomUUID();
+    const tmplId: string = v4();
     Object.entries(this.lists).forEach(([key]) => {
       listHTMLRow[key] = `<div data-id="__l_${tmplId}"></div>`;
     });
