@@ -16,7 +16,8 @@
     "lint:es": "eslint . --ext .ts",
     "lint:es:fix": "eslint . --ext .ts,.js --fix",
     "lint:style": "stylelint \"**/*.pcss\"",
-    "lint:style:fix": "stylelint \"**/*.pcss\" --fix"
+    "lint:style:fix": "stylelint \"**/*.pcss\" --fix",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/chai": "^5.0.1",

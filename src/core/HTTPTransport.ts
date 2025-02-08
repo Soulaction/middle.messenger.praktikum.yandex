@@ -18,7 +18,7 @@ export type Options<T> = {
 
 export type HTTPMethod = <K = any, T = any>(url: string, options?: Options<T>) => Promise<K>;
 
-function queryStringify<T extends { [key in string]: string }>(data: T) {
+export function queryStringify<T extends { [key in string]: string }>(data: T) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }
