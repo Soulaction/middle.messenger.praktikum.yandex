@@ -9,7 +9,7 @@ export class Router {
 
   private currentRoute: Route | null = null;
 
-  private forEvryOneRoute: Route | null = null;
+  private forEveryOneRoute: Route | null = null;
 
   public routes: Route[] = [];
 
@@ -39,7 +39,7 @@ export class Router {
   }
 
   private onRoute(pathname: string): void {
-    const route = this.getRoute(pathname) ?? this.forEvryOneRoute;
+    const route = this.getRoute(pathname) ?? this.forEveryOneRoute;
     if (!route) {
       return;
     }
@@ -66,7 +66,7 @@ export class Router {
     routeItems.forEach(routeItem => {
       const route = new Route(this.appContainer, routeItem);
       if (routeItem.pathname === '*') {
-        this.forEvryOneRoute = route;
+        this.forEveryOneRoute = route;
       } else {
         this.routes.push(route);
       }

@@ -10,30 +10,42 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "start": "tsc && vite build && node server.cjs",
+    "test": "mocha",
     "preview": "vite preview",
     "lint": "npx tsc --noEmit && npx eslint . --ext .ts && npx stylelint \"**/*.pcss\"",
     "lint:es": "eslint . --ext .ts",
     "lint:es:fix": "eslint . --ext .ts,.js --fix",
     "lint:style": "stylelint \"**/*.pcss\"",
-    "lint:style:fix": "stylelint \"**/*.pcss\" --fix"
+    "lint:style:fix": "stylelint \"**/*.pcss\" --fix",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "@types/chai": "^5.0.1",
+    "@types/mocha": "^10.0.10",
+    "@types/sinon": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "autoprefixer": "^10.4.20",
+    "chai": "^5.1.2",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
+    "husky": "^8.0.0",
+    "jsdom": "^20.0.3",
+    "mocha": "^11.1.0",
     "postcss": "^8.4.49",
     "postcss-modules": "^6.0.1",
     "postcss-preset-env": "^10.1.1",
+    "sinon": "^19.0.2",
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-order": "^6.0.4",
+    "ts-node": "^10.9.2",
     "typescript": "~5.6.2",
     "vite": "^4.3.9"
   },
   "dependencies": {
     "express": "^4.19.2",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "uuid": "^11.0.5"
   }
 }
