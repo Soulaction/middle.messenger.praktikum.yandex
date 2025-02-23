@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import Block from './Block.ts';
 
-
 describe('Проверка функциональности модуля HTTPTransport', () => {
   const appContainer: HTMLElement | null = document.getElementById('app') as HTMLElement;
   if (!appContainer) {
@@ -9,7 +8,6 @@ describe('Проверка функциональности модуля HTTPTra
   }
 
   class Messenger extends Block {
-
     protected override render(): string {
       return '<main id="messenger">{{test}}</main>';
     }

@@ -1,11 +1,7 @@
 export type EqualType = Record<string, any> | null | undefined;
 
 export function isEqual(a: EqualType, b: EqualType): boolean {
-  if ((typeof a === 'object' && a === null)
-        || a === undefined
-        || (typeof b === 'object' && b === null)
-        || b === undefined
-  ) {
+  if ((typeof a === 'object' && a === null) || a === undefined || (typeof b === 'object' && b === null) || b === undefined) {
     return a === b;
   }
 

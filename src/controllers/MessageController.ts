@@ -20,7 +20,6 @@ class MessageController {
     await this.wsTransport.connection();
     this.subscribe(this.wsTransport);
     this.getMessage(0);
-
   }
 
   private subscribe(wsTransport: WSTransport): void {

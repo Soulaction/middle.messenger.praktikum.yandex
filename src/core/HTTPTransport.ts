@@ -7,7 +7,7 @@ enum METHODS {
 
 export type Options<T> = {
   headers?: {
-    [key in string]: string
+    [key in string]: string;
   };
   method?: METHODS;
   data?: T;
@@ -28,11 +28,11 @@ export function queryStringify<T extends { [key in string]: string }>(data: T) {
 function isXMLHttpRequestBody(value: unknown): value is XMLHttpRequestBodyInit {
   return (
     typeof value === 'string' ||
-        value instanceof Document ||
-        value instanceof Blob ||
-        value instanceof ArrayBuffer ||
-        value instanceof FormData ||
-        value instanceof URLSearchParams
+    value instanceof Document ||
+    value instanceof Blob ||
+    value instanceof ArrayBuffer ||
+    value instanceof FormData ||
+    value instanceof URLSearchParams
   );
 }
 
@@ -60,14 +60,7 @@ export class HTTPTransport {
   };
 
   request: HTTPMethod = (url, options?) => {
-    const {
-      headers = {},
-      method,
-      data,
-      timeout = 0,
-      credentials = false,
-      responseType = 'json',
-    } = options ?? {};
+    const { headers = {}, method, data, timeout = 0, credentials = false, responseType = 'json' } = options ?? {};
     const fullURL: string = this.baseURL + url;
 
     return new Promise(function (resolve, reject) {
@@ -86,7 +79,7 @@ export class HTTPTransport {
 
       xhr.open(method, `${fullURL}${queryParams}`);
 
-      Object.keys(headers).forEach(key => {
+      Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
 

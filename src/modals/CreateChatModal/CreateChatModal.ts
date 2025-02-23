@@ -7,12 +7,12 @@ import { BlockProperties } from '../../core/Block/types/BlockProps.ts';
 import store from '../../core/Store.ts';
 
 type CreateChatModalProps = {
-  refreshData: () => void,
+  refreshData: () => void;
 };
 
 type FormDataCreateChat = {
-  name: string,
-  refreshData: () => void,
+  name: string;
+  refreshData: () => void;
 };
 
 export class CreateChatModal extends Block {

@@ -28,15 +28,14 @@ export class UploadFileModal extends Block {
         ...uploadFileModalProps.props,
       },
       children: {
-        UploadButton: new UploadButton(
-          {
-            props: {
-              label: 'Выбрать файл на компьютере',
-              name: 'file',
-              class: s.uploadFile,
-              validationFormService: validationService,
-            },
-          }),
+        UploadButton: new UploadButton({
+          props: {
+            label: 'Выбрать файл на компьютере',
+            name: 'file',
+            class: s.uploadFile,
+            validationFormService: validationService,
+          },
+        }),
         Button: new Button({
           props: {
             label: 'Поменять',

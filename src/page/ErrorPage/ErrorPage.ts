@@ -5,7 +5,6 @@ import { navigate } from '../../core/utils/navigate.ts';
 import { RoutePath } from '../../utils/const.ts';
 
 export class ErrorPage extends Block {
-
   constructor() {
     super({
       children: {

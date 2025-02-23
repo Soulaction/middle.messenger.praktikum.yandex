@@ -5,12 +5,11 @@ import { SigninBody } from './types/SigninBody.ts';
 import { BASE_URL_HTTP } from '../../utils/const.ts';
 
 class AuthApi extends BaseApi {
-
   signup(newUser: Omit<User, 'id' | 'avatar' | 'display_name'>): Promise<SignupResponse> {
     return this.http.post<SignupResponse, Omit<User, 'id' | 'avatar' | 'display_name'>>('/signup', {
       data: newUser,
-      credentials: true },
-    );
+      credentials: true,
+    });
   }
 
   signin(signinBody: SigninBody): Promise<string> {

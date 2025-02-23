@@ -36,11 +36,11 @@ class AvatarUser extends Block {
 
   override render(): string {
     return `
-            <div>               
+            <div>
                 {{{UploadFileModal}}}
                 <div class="${s.userAvatarWrapper}">
-                    <img class="${s.userAvatar}" 
-                         src="{{imgUrl}}" 
+                    <img class="${s.userAvatar}"
+                         src="{{imgUrl}}"
                          alt="Иконка профиля"/>
                 </div>
             </div>
@@ -48,6 +48,4 @@ class AvatarUser extends Block {
   }
 }
 
-export const AvatarUserWithStore = wrapStore<Partial<AvatarUserProps>>((state) => (
-  { imgUrl: state.user?.data?.avatar }
-))(AvatarUser);
+export const AvatarUserWithStore = wrapStore<Partial<AvatarUserProps>>((state) => ({ imgUrl: state.user?.data?.avatar }))(AvatarUser);

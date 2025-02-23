@@ -6,7 +6,7 @@ import { RouteItem } from './types/RouteItem.ts';
 export class Route {
   private appContainer: HTMLElement;
 
-  private blockClass: new(blockProp: BlockProperties) => Block;
+  private blockClass: new (blockProp: BlockProperties) => Block;
 
   private block: Block | null = null;
 

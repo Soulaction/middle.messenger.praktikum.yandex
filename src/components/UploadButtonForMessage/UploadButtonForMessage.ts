@@ -3,7 +3,6 @@ import Block from '../../core/Block/Block.ts';
 import resourceController from '../../controllers/ResourceController.ts';
 
 export class UploadButtonForMessage extends Block {
-
   constructor() {
     super({
       events: {

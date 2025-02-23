@@ -9,8 +9,7 @@ export default defineConfig({
       localsConvention: 'camelCase',
       generateScopedName: '[name]__[local]___[hash:base64:5]',
       globalModulePaths: [/global\.pcss$/],
-      getJSON: () => {
-      },
+      getJSON: () => {},
     },
     postcss: './postcss.config.js',
   },

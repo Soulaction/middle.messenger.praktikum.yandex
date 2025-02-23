@@ -6,7 +6,6 @@ import { UserUpdate } from './types/UserUpdate.ts';
 import { UpdatePassword } from './types/UpdatePassword.ts';
 
 class UserApi extends BaseApi {
-
   getUserByLogin(searchUser: SearchUser): Promise<User[]> {
     return this.http.post<User[], SearchUser>('/search', { data: searchUser, credentials: true });
   }

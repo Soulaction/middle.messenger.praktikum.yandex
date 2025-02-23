@@ -25,7 +25,7 @@ export class ContextMenu extends Block {
     super({
       ...contextMenuProps,
       lists: {
-        MenuItems: contextMenuProps.props!.items.map(item => {
+        MenuItems: contextMenuProps.props!.items.map((item) => {
           return new ContextMenuItem({
             props: {
               iconURL: item.iconURL,

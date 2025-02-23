@@ -20,9 +20,7 @@ export default class EventBus {
       throw new Error(`No event: ${event}`);
     }
 
-    this.listeners[event] = this.listeners[event].filter(
-      listener => listener !== callback,
-    );
+    this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
   public emit(event: string, ...args: unknown[]): void {
@@ -30,7 +28,7 @@ export default class EventBus {
       throw new Error(`No event: ${event}`);
     }
 
-    this.listeners[event].forEach(listener => {
+    this.listeners[event].forEach((listener) => {
       listener(...args);
     });
   }

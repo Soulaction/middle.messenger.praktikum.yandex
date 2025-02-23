@@ -6,8 +6,8 @@ import { Chat } from '../../api/ChatApi/types/Chats.ts';
 type ChatProps = {
   selected?: boolean;
   isMe: boolean;
-  time: string,
-  content: string
+  time: string;
+  content: string;
 } & Chat;
 
 export class DialogItem extends Block {

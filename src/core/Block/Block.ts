@@ -69,15 +69,14 @@ export default class Block {
 
   private _componentDidMount(): void {
     this.componentDidMount();
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       if (child) {
         child.dispatchComponentDidMount();
       }
     });
   }
 
-  protected componentDidMount() {
-  }
+  protected componentDidMount() {}
 
   public dispatchComponentDidMount(): void {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
@@ -126,7 +125,7 @@ export default class Block {
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (child) {
-        (childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`);
+        childrenHTMLRow[key] = `<div data-id="${child._id}"></div>`;
       }
     });
     const tmplId: string = v4();
@@ -140,7 +139,7 @@ export default class Block {
 
     Object.entries(this.lists).forEach(([, child]) => {
       const listCont = this._createDocumentElement('template');
-      child.forEach(item => {
+      child.forEach((item) => {
         listCont.content.append(item.getContent());
       });
       const stub = fragment.content.querySelector(`[data-id="__l_${tmplId}"]`);
@@ -148,7 +147,7 @@ export default class Block {
         stub.replaceWith(listCont.content);
       }
     });
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       if (!child) {
         return;
       }

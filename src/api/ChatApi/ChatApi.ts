@@ -4,7 +4,6 @@ import { UsersToChat } from './types/UsersToChat.ts';
 import { Chat } from './types/Chats.ts';
 
 export class ChatApi extends BaseApi {
-
   getChats(offset: number = 0, limit: number = 100, title: string = ''): Promise<Chat[]> {
     return this.http.get<Chat[]>('', { data: { offset, limit, title }, credentials: true });
   }

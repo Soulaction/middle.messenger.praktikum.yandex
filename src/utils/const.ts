@@ -11,9 +11,7 @@ export enum RoutePath {
   notFound = '*',
 }
 
-export const month = [
-  'янв', 'февр', 'апр', 'авг', 'сент', 'окт', 'нояб', 'дек',
-];
+export const month = ['янв', 'февр', 'апр', 'авг', 'сент', 'окт', 'нояб', 'дек'];
 
 export enum TypeModal {
   openUploadFileModal = 'openUploadFileModal',

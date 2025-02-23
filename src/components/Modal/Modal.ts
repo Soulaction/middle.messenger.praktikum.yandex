@@ -21,7 +21,7 @@ export class Modal extends Block {
     super({
       ...uploadFileModalProps,
       events: {
-        click: event => this.hideModal(event),
+        click: (event) => this.hideModal(event),
       },
     });
     this.typeModal = uploadFileModalProps.props!.typeModal! as TypeModal;
@@ -55,7 +55,7 @@ export class Modal extends Block {
     }
   }
 
-  changeStateModal(isOpen: boolean):void {
+  changeStateModal(isOpen: boolean): void {
     switch (this.typeModal) {
       case TypeModal.addUserModal:
         store.set('isAddUserModal', isOpen);

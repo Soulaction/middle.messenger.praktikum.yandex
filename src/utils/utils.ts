@@ -1,14 +1,17 @@
 import { ValidationForm } from '../core/Validation/ValidationForm.ts';
 import { BASE_URL_HTTP, month } from './const.ts';
 
-export const checkEqualPassword = <T extends {
-  password?: string;
-  passwordAgain?: string
-}>(validationService: ValidationForm<T>): void => {
+export const checkEqualPassword = <
+  T extends {
+    password?: string;
+    passwordAgain?: string;
+  },
+>(
+  validationService: ValidationForm<T>,
+): void => {
   const formValue = validationService.getFormValue();
 
   if ('password' in formValue && 'passwordAgain' in formValue) {
-
     const { password, passwordAgain } = formValue;
 
     if (password !== passwordAgain) {

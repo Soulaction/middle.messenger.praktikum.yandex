@@ -4,7 +4,6 @@ import { RoutePath } from '../../utils/const.ts';
 import Block from '../Block/Block.ts';
 import { createSandbox } from 'sinon';
 
-
 describe('Проверка функциональности модуля Router', () => {
   const appContainer: HTMLElement | null = document.getElementById('app') as HTMLElement;
   if (!appContainer) {
@@ -31,7 +30,8 @@ describe('Проверка функциональности модуля Router'
             return '<main id="signUp"></main>';
           }
         },
-      }]);
+      },
+    ]);
   });
 
   afterEach(() => {
@@ -73,9 +73,13 @@ describe('Проверка функциональности модуля Router'
       router.go(RoutePath.messenger);
       router.back();
 
-      window.addEventListener('popstate', () => {
-        expect(RoutePath.signUp).to.be.eqls(window.location.pathname);
-      }, { once: true });
+      window.addEventListener(
+        'popstate',
+        () => {
+          expect(RoutePath.signUp).to.be.eqls(window.location.pathname);
+        },
+        { once: true },
+      );
     });
 
     it('Проверка перерисовки страницы', () => {
@@ -83,10 +87,14 @@ describe('Проверка функциональности модуля Router'
       router.go(RoutePath.messenger);
       router.back();
 
-      window.addEventListener('popstate', () => {
-        const htmlElement = document.getElementById('signUp');
-        expect(htmlElement).to.not.eql(null);
-      }, { once: true });
+      window.addEventListener(
+        'popstate',
+        () => {
+          const htmlElement = document.getElementById('signUp');
+          expect(htmlElement).to.not.eql(null);
+        },
+        { once: true },
+      );
     });
   });
 });

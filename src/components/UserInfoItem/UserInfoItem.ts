@@ -8,7 +8,6 @@ export type UserInfoItemProps = {
 };
 
 export class UserInfoItem extends Block {
-
   constructor(userInfoItemProps: BlockProperties<UserInfoItemProps>) {
     super({
       ...userInfoItemProps,

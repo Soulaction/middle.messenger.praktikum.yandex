@@ -13,11 +13,10 @@ import { EqualType, isEqual } from '../../core/utils/isEqual.ts';
 import { TypeModal } from '../../utils/const.ts';
 
 export type MessageBlockHeaderProps = {
-  selectedChat: Chat | undefined
+  selectedChat: Chat | undefined;
 };
 
 class MessageBlockHeader extends Block {
-
   contextMenuChat!: ContextMenu;
 
   constructor() {
@@ -29,7 +28,7 @@ class MessageBlockHeader extends Block {
             className: s.iconMenu,
           },
           events: {
-            click: event => this.showMenuChat(event),
+            click: (event) => this.showMenuChat(event),
           },
         }),
       },

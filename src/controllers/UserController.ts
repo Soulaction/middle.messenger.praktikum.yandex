@@ -5,7 +5,6 @@ import { UpdatePassword } from '../api/UserApi/types/UpdatePassword.ts';
 import { getAvatar } from '../utils/utils.ts';
 
 export class UserController {
-
   public async changeUserProfile(userUpdate: UserUpdate): Promise<void> {
     try {
       const user = await userApi.changeUserProfile(userUpdate);
@@ -38,7 +37,7 @@ export class UserController {
   public async getUserByLogin(login: string): Promise<number | null> {
     try {
       const searchUsers = await userApi.getUserByLogin({ login });
-      const findUser = searchUsers.find(item => item.login === login);
+      const findUser = searchUsers.find((item) => item.login === login);
 
       if (findUser) {
         return findUser.id;

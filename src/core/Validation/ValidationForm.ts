@@ -10,7 +10,6 @@ export class ValidationForm<T> {
 
   formValue: FormValue<T> = {};
 
-
   init(nameForm: string, initFormData: InitFormData<T> = {}): void {
     this._form = document.forms.namedItem(nameForm);
 
@@ -18,9 +17,8 @@ export class ValidationForm<T> {
       throw new Error('Not found form!');
     }
 
-    Array.from(this._form.elements).forEach(elForm => {
+    Array.from(this._form.elements).forEach((elForm) => {
       if (elForm instanceof HTMLInputElement) {
-
         this.formValue[elForm.name as keyof T] = {
           value: initFormData[elForm.name as keyof T]?.value ?? '',
           errors: [],
@@ -43,7 +41,7 @@ export class ValidationForm<T> {
   getFormValue(): { [K in keyof T]?: T[K] } {
     const formValue: { [K in keyof T]?: T[K] } = {};
 
-    Array.from(this._form!.elements).forEach(elForm => {
+    Array.from(this._form!.elements).forEach((elForm) => {
       // при необходимости можно добавить другие элементы формы
       if (elForm instanceof HTMLInputElement) {
         if (elForm.type === 'file') {
@@ -63,16 +61,12 @@ export class ValidationForm<T> {
     if (errorsConfig) {
       if (errorsConfig.errors.required && errorsConfig.errors.required.rule && !input.value) {
         errors.push(errorsConfig.errors.required.message);
-
       } else if (errorsConfig.errors.pattern && !errorsConfig.errors.pattern.rule.test(input.value)) {
         errors.push(errorsConfig.errors.pattern.message);
-
       } else if (errorsConfig.errors.maxlength && errorsConfig.errors.maxlength.rule < +input.value) {
         errors.push(errorsConfig.errors.maxlength.message);
-
       } else if (errorsConfig.errors.minlength && errorsConfig.errors.minlength.rule > +input.value) {
         errors.push(errorsConfig.errors.minlength.message);
-
       } else if (errorsConfig.errors.customError && errorsConfig.errors.customError.rule) {
         errors.push(errorsConfig.errors.customError.message);
       }
@@ -103,7 +97,7 @@ export class ValidationForm<T> {
     let isValidate: boolean = true;
 
     if (this._form) {
-      Array.from(this._form.elements).forEach(elForm => {
+      Array.from(this._form.elements).forEach((elForm) => {
         if (elForm instanceof HTMLInputElement) {
           this.dispatchBlurFormItem(elForm);
 

@@ -1,10 +1,10 @@
 import { Router } from '../Routing/Router.ts';
 
 type Navigate = {
-  go: <T>(pathname: string, state?: T) => void,
-  forward: () => void,
-  back: () => void,
-  history: History
+  go: <T>(pathname: string, state?: T) => void;
+  forward: () => void;
+  back: () => void;
+  history: History;
 };
 
 export const navigate = (): Navigate => {

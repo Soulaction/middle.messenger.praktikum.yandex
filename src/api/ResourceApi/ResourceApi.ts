@@ -3,7 +3,6 @@ import { BASE_URL_HTTP } from '../../utils/const.ts';
 import { Resource } from './types/Resource.ts';
 
 class ResourceApi extends BaseApi {
-
   saveResource(formData: FormData): Promise<Resource> {
     return this.http.post<Resource>('', { data: formData, credentials: true });
   }

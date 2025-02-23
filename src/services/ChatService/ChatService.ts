@@ -10,7 +10,6 @@ import { BASE_URL_HTTP } from '../../utils/const.ts';
 import { dateMessageFormated } from '../../utils/utils.ts';
 
 export class ChatService {
-
   getDialogItems(chats: Chat[], id: number): DialogItem[] {
     return chats.map((chat) => {
       const menuItem: MenuItem[] = [
@@ -64,7 +63,7 @@ export class ChatService {
   getMessageItems(messages: Message[]): MessageItem[] {
     const meId = store.getState().user?.data.id;
 
-    return messages.map(msg => {
+    return messages.map((msg) => {
       return new MessageItem({
         props: {
           linkImg: msg.file?.path ? `${BASE_URL_HTTP}/resources${msg.file?.path}` : null,

@@ -14,7 +14,6 @@ export class ChatPage extends Block {
   chats: Chat[] = [];
 
   constructor() {
-
     super({
       children: {
         DialogList: new DialogListWithStore({}),

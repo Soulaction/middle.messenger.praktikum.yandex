@@ -14,10 +14,10 @@ type FormDataMessageBlock = {
 };
 
 export type MessageBlockProps = {
-  isNotMsg?: boolean,
-  selectedChat: Chat | undefined,
-  isSelectedChat?: Chat | undefined,
-  message?: Message[]
+  isNotMsg?: boolean;
+  selectedChat: Chat | undefined;
+  isSelectedChat?: Chat | undefined;
+  message?: Message[];
 };
 
 class MessageBlock extends Block {

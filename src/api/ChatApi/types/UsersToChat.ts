@@ -1,4 +1,4 @@
 export type UsersToChat = {
-  users: number[],
-  chatId: number,
+  users: number[];
+  chatId: number;
 };

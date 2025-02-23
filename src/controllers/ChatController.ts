@@ -9,7 +9,10 @@ export class ChatController {
   public async getChats(): Promise<void> {
     try {
       const chatList = await chatApi.getChats();
-      store.set('chats.data', chatList.map(item => ({ ...item, avatar: getAvatar(item.avatar) })));
+      store.set(
+        'chats.data',
+        chatList.map((item) => ({ ...item, avatar: getAvatar(item.avatar) })),
+      );
     } catch (e) {
       store.set('chats.error', (e as XMLHttpRequest).response.reason);
     }
@@ -26,7 +29,10 @@ export class ChatController {
   public async deleteChat(chatId: number): Promise<void> {
     try {
       await chatApi.deleteChat(chatId);
-      store.set('chats.data', store.getState().chats?.data.filter((item) => item.id !== chatId));
+      store.set(
+        'chats.data',
+        store.getState().chats?.data.filter((item) => item.id !== chatId),
+      );
       if (store.getState().selectedChat?.data.id === chatId) {
         store.set('selectedChat.data', null);
       }
@@ -46,7 +52,6 @@ export class ChatController {
       store.set('chats.error', (e as XMLHttpRequest).response.reason);
     }
   }
-
 
   public async deleteUsersFromChat(login: string): Promise<void> {
     try {

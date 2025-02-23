@@ -12,11 +12,11 @@ import { EqualType, isEqual } from '../../core/utils/isEqual.ts';
 
 type ProfilePageProps = {
   changeMode: (modeProfile: ModeProfile) => void;
-  user?: User
+  user?: User;
 };
 
 class ProfileInfo extends Block {
-  userService: UserService =  new UserService();
+  userService: UserService = new UserService();
 
   changeMode: (modeProfile: ModeProfile) => void;
 
@@ -99,6 +99,4 @@ class ProfileInfo extends Block {
   }
 }
 
-export const ProfileInfoWithStore = wrapStore<Partial<ProfilePageProps>>((state) => (
-  { user: state.user?.data }
-))(ProfileInfo);
+export const ProfileInfoWithStore = wrapStore<Partial<ProfilePageProps>>((state) => ({ user: state.user?.data }))(ProfileInfo);

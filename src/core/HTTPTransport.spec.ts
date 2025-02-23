@@ -2,7 +2,6 @@ import { createSandbox, SinonStub } from 'sinon';
 import { HTTPTransport, queryStringify } from './HTTPTransport.ts';
 import { expect } from 'chai';
 
-
 describe('Проверка функциональности модуля HTTPTransport', () => {
   const sandbox = createSandbox();
   let http: HTTPTransport;
@@ -22,7 +21,6 @@ describe('Проверка функциональности модуля HTTPTra
     expect(request.calledOnce).to.eql(true);
   });
 
-
   it('Проверка функции queryStringifySpy (преобразование объекта в url строку)', () => {
     const params = { key1: 'value1', key2: 'value2' };
     const expectedQuery = '?key1=value1&key2=value2';
@@ -40,10 +38,13 @@ describe('Проверка функциональности модуля HTTPTra
 
     await http.get(url, options);
 
-    expect(request.getCall(0).args).to.deep.equal([url, {
-      ...options,
-      method: 'GET',
-    }]);
+    expect(request.getCall(0).args).to.deep.equal([
+      url,
+      {
+        ...options,
+        method: 'GET',
+      },
+    ]);
   });
 
   it('Вызов метода POST', async () => {
@@ -52,10 +53,13 @@ describe('Проверка функциональности модуля HTTPTra
 
     await http.post(url, options);
 
-    expect(request.getCall(0).args).to.deep.equal([url, {
-      ...options,
-      method: 'POST',
-    }]);
+    expect(request.getCall(0).args).to.deep.equal([
+      url,
+      {
+        ...options,
+        method: 'POST',
+      },
+    ]);
   });
 
   it('Вызов метода PUT', async () => {
@@ -64,10 +68,13 @@ describe('Проверка функциональности модуля HTTPTra
 
     await http.put(url, options);
 
-    expect(request.getCall(0).args).to.deep.equal([url, {
-      ...options,
-      method: 'PUT',
-    }]);
+    expect(request.getCall(0).args).to.deep.equal([
+      url,
+      {
+        ...options,
+        method: 'PUT',
+      },
+    ]);
   });
 
   it('Вызов метода DELETE', async () => {
@@ -76,9 +83,12 @@ describe('Проверка функциональности модуля HTTPTra
 
     await http.delete(url, options);
 
-    expect(request.getCall(0).args).to.deep.equal([url, {
-      ...options,
-      method: 'DELETE',
-    }]);
+    expect(request.getCall(0).args).to.deep.equal([
+      url,
+      {
+        ...options,
+        method: 'DELETE',
+      },
+    ]);
   });
 });

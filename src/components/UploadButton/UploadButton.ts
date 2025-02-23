@@ -11,7 +11,6 @@ type UploadButtonProps<T> = {
 };
 
 export class UploadButton<T> extends Block {
-
   constructor(inputProps: BlockProperties<UploadButtonProps<T>>) {
     super({
       props: {

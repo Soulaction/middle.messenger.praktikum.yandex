@@ -20,7 +20,7 @@ export type FormDataProfileEdite = {
 };
 
 type ProfileEditedProps = {
-  user?: User
+  user?: User;
 };
 
 class ProfileEdited extends Block {
@@ -169,6 +169,4 @@ class ProfileEdited extends Block {
   }
 }
 
-export const ProfileEditedWithStore = wrapStore<Partial<ProfileEditedProps>>((state) => (
-  { user: state.user?.data }
-))(ProfileEdited);
+export const ProfileEditedWithStore = wrapStore<Partial<ProfileEditedProps>>((state) => ({ user: state.user?.data }))(ProfileEdited);

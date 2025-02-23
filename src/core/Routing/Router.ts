@@ -15,7 +15,6 @@ export class Router {
 
   public readonly history: History = window.history;
 
-
   constructor(appContainer: HTMLElement) {
     if (Router.instance) {
       return Router.instance;
@@ -63,7 +62,7 @@ export class Router {
   }
 
   init(routeItems: RouteItem[]): void {
-    routeItems.forEach(routeItem => {
+    routeItems.forEach((routeItem) => {
       const route = new Route(this.appContainer, routeItem);
       if (routeItem.pathname === '*') {
         this.forEveryOneRoute = route;
@@ -88,6 +87,6 @@ export class Router {
   }
 
   getRoute(pathname: string): Route | undefined {
-    return this.routes.find(route => isEqualSrt(route.pathname, pathname));
+    return this.routes.find((route) => isEqualSrt(route.pathname, pathname));
   }
 }

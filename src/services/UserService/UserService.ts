@@ -2,7 +2,6 @@ import { User } from '../../types/User.ts';
 import { UserInfoItem } from '../../components/UserInfoItem/UserInfoItem.ts';
 
 export class UserService {
-
   createUserInfoItem(user: User): Record<string, UserInfoItem> {
     return {
       UserInfoItemEmail: new UserInfoItem({

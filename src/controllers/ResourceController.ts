@@ -3,7 +3,6 @@ import resourceApi from '../api/ResourceApi/ResourceApi.ts';
 import messageController from './MessageController.ts';
 
 export class ResourceController {
-
   public async sendPhotoInMessage(file: FileList): Promise<void> {
     try {
       const formData = new FormData();
